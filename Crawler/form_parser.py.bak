@@ -1,0 +1,77 @@
+from bs4 import BeautifulSoup
+import re
+import os
+import urllib2
+import urlparse
+import requests
+import socket
+import ssl
+import sys
+import MySQLdb
+from xml.dom import minidom
+
+
+def form_parse(url, content):
+    try:
+        db = MySQLdb.connect('localhost', 'root', '', 'ejection')
+        cursor = db.cursor()
+    except Exception:
+        print ("Could not connect to database")
+        return
+
+    try:
+        page = urllib2.urlopen(url).read()
+    except Exception:
+        print ("Could not open/read the page")
+        return
+    try:
+        soup = BeautifulSoup(page)
+    except Exception, e:
+        print ("Error: error with BeautifulSoup")
+        return
+
+    form_names = []
+    method = None
+    action = None
+    params = None
+    request_id = None
+
+    number_of_inputs = []
+    input_names = []
+    actions = []
+    forms = soup.findAll(text=re.compile('Form, name attribute of'))
+    for a in forms:
+        form_names.append(a.parent.find('code').text)
+        y = a.parent.findAll(text=re.compile('[\w]*\n'))
+        no = y.pop(0)
+        number_of_inputs.append(no.lower().strip('\n').strip(' '))
+
+    print form_names
+    print number_of_inputs
+    # form names and no of inputs
+
+    forms = soup.findAll('form')
+    for form in forms:
+        # write code to iterate through each form on the page and store them
+
+        # print actions
+        # actions of forms => urls
+        inputs = soup.findAll('input')
+        for a in inputs:
+            input_names.append(a)
+
+    textarea_name = input_names.pop()
+    # textarea name
+    input_names_copy = list(input_names)
+    
+    paras = soup.findAll('p')
+    parent = []
+    class_name = ''
+    for p in paras:
+        mess_class_line = p.findAll('code')
+        for m in mess_class_line:
+            if 'One div with a class attribute of' in m.parent.text:
+                matches = re.search(r"attribute of \w+", m.parent.text)
+                class_name = matches.group(0).split(' ')[2]
+                break
+    print class_name
