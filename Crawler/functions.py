@@ -1,7 +1,14 @@
 __author__ = 'Sai'
 from bs4 import BeautifulSoup
 import mysql.connector
+import json
 import re
+
+
+def getopenconnection():
+    return mysql.connector.connect(user='root', password='',
+                                   host='localhost',
+                                   database='ejection')
 
 
 def extract_form_attrs(form):
@@ -12,15 +19,25 @@ def extract_form_attrs(form):
     # generators ftw! ps: you used a generator cause the other way required 4
     # lines. no other reason.
     attributes.append({a: form[a] for a in form.attrs if a not in ['method', 'action']})
-    return method, action, attributes
+    # using json.dumps so that the single quotes in the dict key:value pairs don't
+    # mess with the single quotes in the SQL queries.
+    return method, action, json.dumps(attributes)
     pass
 
 
-def store_form(url, form):
-    #removed code as you aren't sure if the db queries will work with the queue. 
-    #Query code is in your scripts folder on F:\xampp\htdocs\EMI\
-    #Don't forget to add later.
+def insert_query_gen(tablename, attrs):
+    # removed code as you aren't sure if the db queries will work with the queue.
+    # Query code is in your scripts folder on F:\xampp\htdocs\EMI\
+    # Don't forget to add later.
+    string = ','.join(["'"+str(x)+"'" for x in attrs])
+
+    insert_query = "INSERT INTO "+str(tablename)+" VALUES("+string+")"
+    return insert_query
     pass
+
+
+def escape_quotes(str1):
+    return (re.sub(r"'", r"\'", str(str1)))
 
 
 def process_input(input, params_list):
@@ -41,7 +58,7 @@ def process_input(input, params_list):
     # have a name. Period.
     elt_type = input.name
     # this is a set, avoids duplicates.
-    params_list.add(('', name, value, type, elt_type))
+    params_list.add(('', elt_type, type, name, value, ''))
 
 
 def check_input(input, value):
