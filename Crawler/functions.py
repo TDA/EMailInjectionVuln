@@ -12,8 +12,6 @@ def getopenconnection():
 
 
 def extract_form_attrs(form):
-    method = form.get('method') or ''
-    action = form.get('action') or ''
     attributes = []
     # this adds the attributes of the form that are not method or action.
     # generators ftw! ps: you used a generator cause the other way required 4
@@ -21,7 +19,7 @@ def extract_form_attrs(form):
     attributes.append({a: form[a] for a in form.attrs if a not in ['method', 'action']})
     # using json.dumps so that the single quotes in the dict key:value pairs don't
     # mess with the single quotes in the SQL queries.
-    return method, action, json.dumps(attributes)
+    return json.dumps(attributes)
     pass
 
 
