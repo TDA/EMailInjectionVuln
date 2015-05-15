@@ -18,11 +18,14 @@ from Crawler.celery import app
 # app = Celery('form_parser', broker='amqp://guest@localhost//')
 # Run the app like so, start the worker in the directory above:
 # celery -A Crawler worker -l info
+# call the task like so:
+# form_parse.delay(url)
+# all print statements are for logging purposes only, can be removed
 @app.task
 def form_parse(url):
     page = None
     headers = None
-
+    # set the page and headers to None
     try:
         req = urllib.request.Request(url)
         req.add_header('Referer', req.origin_req_host)
@@ -30,9 +33,13 @@ def form_parse(url):
 
         resp = urllib.request.urlopen(req)
         page = resp.read()
+        # json dump to escape single quotes and store as list/dict.
         headers = json.dumps(req.header_items())
+        # could be 400/500 and still wont result in any problem at all.
+        print (resp.status)
         print (headers)
     except Exception as e:
+        # exit if the page couldnt be read.
         print("Could not open/read the page")
         print(e)
         return
@@ -40,7 +47,10 @@ def form_parse(url):
         soup = BeautifulSoup(page)
     except Exception as e:
         print("Error: error with BeautifulSoup")
+        # once again, parsing errors mean page might not work, so better to
+        # terminate
         return
+    # set all the variables we are going to store to a default of None
     method = None
     absolute_action = None
     action = None
@@ -48,28 +58,29 @@ def form_parse(url):
     form_id = None
     xpath = None
     req_id = None
-    input_names = []
     base_url = None
     base_tag = soup.select('html > head > base')
     if base_tag:
+        # check for base tag and store that if present, will affect all the
+        # urls on the page so.
         the_base_tag = base_tag[0]
         if the_base_tag.has_attr("href"):
             base_url = the_base_tag["href"]
 
     forms = soup.findAll('form')
+    # Code to iterate through each form on the page and store them
     for form in forms:
+        # Set these variables here as there may be multiple forms on the page
+        # and we want to store each ones separately.
         attributes = []
         params = set()
         param_ids = list()
-
-        # write code to iterate through each form on the page and store them
-        # print(form)
         inputs = form.findAll('input')
+        # Check if any input exists within the form, else skip.
         if (len(inputs) > 0):
             for inp in inputs:
-                # print(inp.attrs)
-                # do input processing and store the inputs in the db, saving a
-                # reference to the form_id
+                # Processes each input and gives the name,type,value etc of
+                # each input
                 process_input(inp, params)
 
         # for p in params:
@@ -77,11 +88,17 @@ def form_parse(url):
         if (len(params) > 0):
             # means we have atleast one input field. yay!
             # extract info from the form
-            # store in db
+            # Give this a default of GET in case method isn't found on the
+            # page.
             method = form.get('method') or 'GET'
             # what happens if no action is specified? do we use the same url? or the same path?
-            # i.e: url or req.selector?
+            # i.e: url or req.selector? I am leaving this empty for now.
             action = form.get('action') or ''
+            # extract all the other arrtibutes in the form tag, like javascript
+            # handlers and such, not really required for our project, but might
+            # be useful for some other research, maybe a prevalence of js
+            # validation and its ineffectiveness :P :D
+
             attributes = extract_form_attrs(form)
             # find the absolute action if the base url was set
             if base_url != None:
@@ -98,23 +115,36 @@ def form_parse(url):
         try:
             db = getopenconnection()
             cursor = db.cursor()
-            # write a generic function to generate queries maybe?
+            # Generic function to generate queries, is not foolproof, just
+            # convenient. Forgive me, Master :D
             for param in params:
                 param_insert_query = insert_query_gen('params', param)
                 print(param_insert_query)
+                # insert every input field found into the db and store their
+                # ids so that we can connect them to the forms table.
                 cursor.execute(param_insert_query)
                 last_param_id = cursor.lastrowid
+                # lastrowid is a cool way to get the last inserted elements id
                 param_ids.append(last_param_id)
 
+            # store the requests' headers we used to fetch the page,
+            # once again not really needed unless we use this for some other research.
+            # the urls ARE required though.
             req_insert_query = insert_query_gen('requests', ('', headers, url))
             cursor.execute(req_insert_query)
             req_id = cursor.lastrowid
-            
+
+            # actual storage of the forms and all the extracted details,
+            # storing as much data as we can. Might be useful for future parts
+            # of the project.
             insert_query = insert_query_gen('form', ('', url, attributes, req_id, escape_quotes(
                 form), method, action, absolute_action, param_ids))
             print(insert_query)
             cursor.execute(insert_query)
             form_id = cursor.lastrowid
+            # update and link the params to the form they were found in. Lets
+            # us use the advantage of auto-increment without having to keep
+            # track of it ourselves
             update_query = "UPDATE params SET form_id = %s WHERE id >= %s  and id <= %s" % (
                 str(form_id), str(param_ids[0]), str(param_ids[len(param_ids)-1]))
             cursor.execute(update_query)
@@ -126,6 +156,9 @@ def form_parse(url):
             return
 
     # print(req_id)
-
+    # this return statement actually IS required for the queue to keep track
+    # of state for next step in the pipeline, that is the check_for_email
+    # step, only takes the form id and the content, remaining would just be
+    # overhead and better stored in the db.
+    return str(form_id), escape_quotes(form)
 # configuring the database with queues might need some code, check that
-# out sai.
