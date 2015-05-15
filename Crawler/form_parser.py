@@ -160,5 +160,7 @@ def form_parse(url):
     # of state for next step in the pipeline, that is the check_for_email
     # step, only takes the form id and the content, remaining would just be
     # overhead and better stored in the db.
-    return str(form_id), escape_quotes(form)
+    # forget all the above, the return wont work, only one form will be returned,
+    # not expected behaviour, so changed it
+    # return str(form_id), escape_quotes(form)
 # configuring the database with queues might need some code, check that

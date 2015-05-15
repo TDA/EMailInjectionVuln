@@ -49,3 +49,4 @@ def check_for_email_field(tuple):
             print(e)
             # just ignore and move on
             return
+        return "Found"
