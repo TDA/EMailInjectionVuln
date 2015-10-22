@@ -12,7 +12,7 @@ import sys
 import mysql.connector
 from xml.dom import minidom
 from Crawler.functions import *
-from celery import Celery
+from CeleryCrawler import Celery
 from Crawler.celery import app
 
 # This takes the feed from the queue and inserts into db if an email field is found

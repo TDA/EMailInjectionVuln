@@ -13,14 +13,14 @@ from xml.dom import minidom
 from Crawler.functions import *
 from Crawler.check_for_email import check_for_email_field
 from Crawler.form_parser import form_parse
-from celery import Celery
+from CeleryCrawler import Celery
 from Crawler.celery import app
 
 # open a db connection and retrieve all the forms that need to be checked
 # if they actually contain email fields, this starts up a celery
 # concurrent program
 @app.task
-def call_cfe():
+def call_check_for_email():
     db = getopenconnection()
     cursor = db.cursor()
     select_query = "SELECT id,xpath from form"

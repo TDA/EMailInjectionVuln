@@ -17,7 +17,7 @@ from Crawler.celery import app
 
 # app = Celery('form_parser', broker='amqp://guest@localhost//')
 # Run the app like so, start the worker in the directory above:
-# celery -A Crawler worker -l info
+# celery -A CeleryCrawler worker -l info
 # call the task like so:
 # form_parse.delay(url)
 # all print statements are for logging purposes only, can be removed
