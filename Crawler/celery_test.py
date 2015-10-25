@@ -1,6 +1,6 @@
 __author__ = 'saipc'
 
-from CeleryCrawler import Celery
+from celery import Celery
 
 app = Celery('tasks', broker='amqp://guest@localhost//')
 

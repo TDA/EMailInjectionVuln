@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 from celery import Celery
 
-app = Celery('Crawler',
+app = Celery('CeleryCrawler',
              broker='amqp://',
              backend='amqp://',
              include=['form_parser', 'check_for_email'])

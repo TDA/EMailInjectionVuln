@@ -10,9 +10,11 @@ import ssl
 import sys
 import mysql.connector
 from xml.dom import minidom
-from Crawler.functions import *
 from celery import Celery
-from Crawler.celery import app
+
+
+from Crawler.functions import *
+from Crawler.CeleryCrawler import app
 
 
 # app = Celery('form_parser', broker='amqp://guest@localhost//')
@@ -94,7 +96,7 @@ def form_parse(url):
             # what happens if no action is specified? do we use the same url? or the same path?
             # i.e: url or req.selector? I am leaving this empty for now.
             action = form.get('action') or ''
-            # extract all the other arrtibutes in the form tag, like javascript
+            # extract all the other attributes in the form tag, like javascript
             # handlers and such, not really required for our project, but might
             # be useful for some other research, maybe a prevalence of js
             # validation and its ineffectiveness :P :D

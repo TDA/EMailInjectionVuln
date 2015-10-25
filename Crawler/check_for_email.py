@@ -5,15 +5,14 @@ import os
 import urllib.request
 import urllib.error
 import urllib.parse
-import urllib.parse
 import socket
 import ssl
 import sys
 import mysql.connector
-from xml.dom import minidom
+from celery import Celery
+
 from Crawler.functions import *
-from CeleryCrawler import Celery
-from Crawler.celery import app
+from Crawler.CeleryCrawler import app
 
 # This takes the feed from the queue and inserts into db if an email field is found
 # I am particularly searching for the word 'email' instead of an email field.

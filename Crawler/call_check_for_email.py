@@ -9,12 +9,14 @@ import socket
 import ssl
 import sys
 import mysql.connector
-from xml.dom import minidom
+from celery import Celery
+
+
 from Crawler.functions import *
 from Crawler.check_for_email import check_for_email_field
 from Crawler.form_parser import form_parse
-from CeleryCrawler import Celery
-from Crawler.celery import app
+
+from Crawler.CeleryCrawler import app
 
 # open a db connection and retrieve all the forms that need to be checked
 # if they actually contain email fields, this starts up a celery
