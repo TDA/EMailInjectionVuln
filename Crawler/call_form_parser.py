@@ -7,12 +7,12 @@ import ssl
 import sys
 import mysql.connector
 from xml.dom import minidom
-from Crawler.functions import *
-from Crawler.check_for_email import check_for_email_field
-from Crawler.form_parser import form_parse
-from Crawler.call_cfe import call_cfe
-from CeleryCrawler import Celery
-from Crawler.celery import app
+from functions import *
+from check_for_email import check_for_email_field
+from form_parser import form_parse
+from call_cfe import call_cfe
+from celery import Celery
+from CeleryCrawler import app
 
 # convenience function to call the form_parser and once its done with its
 # form_parsing, call the call_check_for_email function which will in turn call the
