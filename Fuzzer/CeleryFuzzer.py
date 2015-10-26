@@ -7,7 +7,7 @@ __author__ = 'saipc'
 app = Celery('CeleryFuzzer',
              broker='amqp://',
              backend='amqp://',
-             include=['Fuzzer.email_form_retriever'])
+             include=['Fuzzer.call_email_form_retriever', 'Fuzzer.email_form_retriever'])
 
 # Optional configuration, see the application user guide.
 app.conf.update(
