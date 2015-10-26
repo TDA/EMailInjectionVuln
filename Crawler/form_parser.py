@@ -74,7 +74,7 @@ def form_parse(url):
     for form in forms:
         # Set these variables here as there may be multiple forms on the page
         # and we want to store each ones separately.
-        attributes = []
+        attributes = {}
         params = set()
         param_ids = list()
         inputs = form.findAll('input')
@@ -139,7 +139,9 @@ def form_parse(url):
             # actual storage of the forms and all the extracted details,
             # storing as much data as we can. Might be useful for future parts
             # of the project.
-            insert_query = insert_query_gen('form', ('', url, attributes, req_id, escape_quotes(
+            # using json.dumps so that the single quotes in the dict key:value pairs don't
+            # mess with the single quotes in the SQL queries.
+            insert_query = insert_query_gen('form', ('', url, json.dumps(attributes), req_id, escape_quotes(
                 form), method, action, absolute_action, param_ids))
             print(insert_query)
             cursor.execute(insert_query)

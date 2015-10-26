@@ -26,10 +26,11 @@ def email_form_retriever(row):
         # http://www.w3.org/TR/html401/interact/forms.html#h-17.13.3
         # these are the steps to reconstruct a form (as done by browser)
         for row in rows:
-            # this complicated looking line basically converts the
-            # string into a list, and gets the first element of the
-            # list, which is actually a dictionary, i have no idea
+            # this complicated looking line basically converts the --> nvm
+            # string into a list, and gets the first element of the --> nvm
+            # list, which is actually a dictionary, i have no idea --> nvm
             # why i saved it that way in the db, but i think cuz json --> Fixed this in functions
+            # now attributes is just a dict
             attributes = ast.literal_eval(row[0])
 
             method = row[1]

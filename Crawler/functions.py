@@ -16,9 +16,7 @@ def extract_form_attrs(form):
     # generators ftw! ps: you used a generator cause the other way required 4
     # lines. no other reason.
     attributes = {a: form[a] for a in form.attrs if a not in ['method', 'action']}
-    # using json.dumps so that the single quotes in the dict key:value pairs don't
-    # mess with the single quotes in the SQL queries.
-    return json.dumps(attributes)
+    return attributes
     pass
 
 
