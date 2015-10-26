@@ -17,6 +17,10 @@ from Crawler.CeleryCrawler import app
 # form_parsing, call the call_check_for_email function which will in turn call the
 # check_email_fields in a celery-concurrent way.
 
+# this is the first thing to be called for the crawler-parser, call this like so:
+# from Crawler.call_form_parser import call_fp
+# call_fp.delay([<urls>])
+
 
 @app.task(name='Crawler.call_form_parser')
 def call_fp(urls):
