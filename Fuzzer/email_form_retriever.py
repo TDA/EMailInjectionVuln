@@ -57,6 +57,7 @@ def email_form_retriever(row):
             # send this as an immutable tuple
             reconstructed_form = (attributes, method, action, input_list)
             tasks.append(fuzzer.delay(reconstructed_form))
+            # TODO have to write up the fuzzer
 
         db.commit()
 
