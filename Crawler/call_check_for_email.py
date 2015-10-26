@@ -1,5 +1,4 @@
 from __future__ import absolute_import
-from bs4 import BeautifulSoup
 import re
 import os
 import urllib.request
@@ -10,18 +9,18 @@ import ssl
 import sys
 import mysql.connector
 from celery import Celery
-
+from Crawler.CeleryCrawler import app
 
 from Crawler.functions import *
 from Crawler.check_for_email import check_for_email_field
-from Crawler.form_parser import form_parse
 
-from Crawler.CeleryCrawler import app
+
+
 
 # open a db connection and retrieve all the forms that need to be checked
 # if they actually contain email fields, this starts up a celery
 # concurrent program
-@app.task
+@app.task(name='Crawler.call_check_for_email')
 def call_check_for_email():
     db = getopenconnection()
     cursor = db.cursor()

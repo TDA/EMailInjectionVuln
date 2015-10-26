@@ -17,14 +17,14 @@ from Crawler.CeleryCrawler import app
 # This takes the feed from the queue and inserts into db if an email field is found
 # I am particularly searching for the word 'email' instead of an email field.
 # This is cause, at times, designers may have a text field with a label called email.
-# Instead of an id/name/type of email. Accessibility isn't exactly their goal. ikr.
+# Instead of an id/name/type of email. ARIA isn't exactly their goal. ikr.
 # :P :D
 # Call this script from the terminal, while the worker is running, like so:
 # check_for_email_field.delay([form_id,form_content]])
 #
 
 
-@app.task
+@app.task(name='Crawler.check_for_email')
 def check_for_email_field(tuple):
     form_id = tuple[0]
     form_content = tuple[1]
@@ -36,6 +36,10 @@ def check_for_email_field(tuple):
         # so, try inserting into the db
         # insertion might fail for duplicate form_ids
         # this is by design.
+
+        # TODO: this needs to be made more efficient,
+        # maybe have a metadata table and only check
+        # newer fields?
         try:
 
             db = getopenconnection()

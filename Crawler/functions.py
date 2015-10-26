@@ -48,8 +48,10 @@ def process_input(input, params_list):
     value = ''
     if(input.get('type') != None):
         type = input['type']
-    if(input.get('name') != None or input.get('id') != None):
-        name = input['name'] or input['id']
+    if(input.get('id') != None):
+        name = input['id']
+    if(input.get('name') != None):
+        name = input['name']
     if(input.get('value') != None):
         value = input['value']
     # no need to check if it has a name, if the inp object got passed, it will

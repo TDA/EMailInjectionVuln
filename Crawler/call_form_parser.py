@@ -1,5 +1,4 @@
 from __future__ import absolute_import
-from bs4 import BeautifulSoup
 import re
 import os
 import socket
@@ -9,7 +8,6 @@ import mysql.connector
 from celery import Celery
 
 from Crawler.functions import *
-from Crawler.check_for_email import check_for_email_field
 from Crawler.form_parser import form_parse
 from Crawler.call_check_for_email import call_check_for_email
 
@@ -20,7 +18,7 @@ from Crawler.CeleryCrawler import app
 # check_email_fields in a celery-concurrent way.
 
 
-@app.task
+@app.task(name='Crawler.call_form_parser')
 def call_fp(urls):
     tasks = []
     for url in urls:

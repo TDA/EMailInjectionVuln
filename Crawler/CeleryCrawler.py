@@ -5,7 +5,7 @@ from celery import Celery
 app = Celery('CeleryCrawler',
              broker='amqp://',
              backend='amqp://',
-             include=['form_parser', 'check_for_email'])
+             include=['Crawler.form_parser', 'Crawler.check_for_email', 'Crawler.call_form_parser', 'Crawler.call_check_for_email'])
 
 # Optional configuration, see the application user guide.
 app.conf.update(
