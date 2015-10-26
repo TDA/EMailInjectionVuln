@@ -25,11 +25,13 @@ def email_form_retriever(row):
         tasks = []
         # http://www.w3.org/TR/html401/interact/forms.html#h-17.13.3
         # these are the steps to reconstruct a form (as done by browser)
+        # here we need to retrieve the actual form fields and reconstruct the form
         for row in rows:
             # this complicated looking line basically converts the --> nvm
             # string into a list, and gets the first element of the --> nvm
             # list, which is actually a dictionary, i have no idea --> nvm
             # why i saved it that way in the db, but i think cuz json --> Fixed this in functions
+
             # now attributes is just a dict
             attributes = ast.literal_eval(row[0])
 
@@ -38,11 +40,23 @@ def email_form_retriever(row):
             params = row[3]
             # lets you reconstruct a list from its string representation
             params = ast.literal_eval(params)
-            for param in params:
-                print(param)
+            input_list = []
+            for param_id in params:
+                TABLE_NAME = 'params'
+                param_search_query = generate_search_query(TABLE_NAME, 'element_type, type, name, value', 'id', str(param_id))
+                cursor.execute(param_search_query)
+                param_row = cursor.fetchone()
 
-            # here we need to retrieve the actual form fields and reconstruct the form
-            #tasks.append(fuzzer.delay(row))
+                # construct a dict of the params of each input and append to list
+                param_dict = {'element_type' : param_row[0],
+                              'type' : param_row[1],
+                              'name' : param_row[2],
+                              'value': param_row[3]}
+                input_list.append(param_dict)
+            # now we have all the data to reconstruct the form and fuzz it
+            # send this as an immutable tuple
+            reconstructed_form = (attributes, method, action, input_list)
+            tasks.append(fuzzer.delay(reconstructed_form))
 
         db.commit()
 
