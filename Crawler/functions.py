@@ -24,13 +24,24 @@ def extract_form_attrs(form):
 
 
 def insert_query_gen(tablename, attrs):
-    # removed code as you aren't sure if the db queries will work with the queue.
-    # Query code is in your scripts folder on F:\xampp\htdocs\EMI\
-    # Don't forget to add later.
+    # simple insert query generator function
     string = ','.join(["'"+str(x)+"'" for x in attrs])
-
     insert_query = "INSERT INTO "+str(tablename)+" VALUES("+string+")"
     return insert_query
+    pass
+
+def generate_search_query(tablename, fields = None, fieldname = None, value = None):
+    # this is just a simple search query generator function
+    search_query = "SELECT "
+    if fields:
+        search_query += str(fields)
+    else:
+        search_query += "*"
+    search_query += " FROM " + tablename
+
+    if fieldname and value:
+        search_query += " WHERE %s = %s"%(fieldname, value)
+    return search_query
     pass
 
 
