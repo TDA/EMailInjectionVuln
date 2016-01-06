@@ -22,6 +22,7 @@ def email_form_retriever(row):
         print(search_query)
         cursor.execute(search_query)
         rows = cursor.fetchall()
+        print("Retrieved all forms")
         tasks = []
         # http://www.w3.org/TR/html401/interact/forms.html#h-17.13.3
         # these are the steps to reconstruct a form (as done by browser)
@@ -44,6 +45,7 @@ def email_form_retriever(row):
             for param_id in params:
                 TABLE_NAME = 'params'
                 param_search_query = generate_search_query(TABLE_NAME, 'element_type, type, name, value', 'id', str(param_id))
+                print(param_search_query)
                 cursor.execute(param_search_query)
                 param_row = cursor.fetchone()
 

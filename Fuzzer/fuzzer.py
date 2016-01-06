@@ -5,4 +5,8 @@ def fuzzer(reconstructed_form):
     # from the form, and make sure that the fuzzing is only
     # done on the email fields, also, set the GET/POST right
     # and check with localmail first before whambamming
+
+    # lets print out everything we have so we know what all we have :O
+    print(reconstructed_form)
+
     pass

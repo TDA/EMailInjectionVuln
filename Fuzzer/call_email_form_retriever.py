@@ -7,6 +7,9 @@ from Crawler.functions import *
 from Fuzzer.email_form_retriever import email_form_retriever
 from Fuzzer.CeleryFuzzer import app
 
+# from Fuzzer.call_email_form_retriever import call_email_form_retriever
+# call_email_form_retriever.delay()
+
 @app.task(name='Fuzzer.call_email_form_retriever')
 def call_email_form_retriever():
     try:
