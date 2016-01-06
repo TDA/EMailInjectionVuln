@@ -21,8 +21,10 @@ def email_form_retriever(row):
         search_query = generate_search_query(TABLE_NAME, 'attributes, method, absolute_action, params', 'id', str(form_id))
         print(search_query)
         cursor.execute(search_query)
+
+        # TODO: this SHOULD return only one row, might need to change this
         rows = cursor.fetchall()
-        print("Retrieved all forms")
+
         tasks = []
         # http://www.w3.org/TR/html401/interact/forms.html#h-17.13.3
         # these are the steps to reconstruct a form (as done by browser)
@@ -58,13 +60,14 @@ def email_form_retriever(row):
             # now we have all the data to reconstruct the form and fuzz it
             # send this as an immutable tuple
             reconstructed_form = (attributes, method, action, input_list)
-            tasks.append(fuzzer.delay(reconstructed_form))
+            #tasks.append(fuzzer.delay(reconstructed_form))
+            fuzzer(reconstructed_form)
             # TODO have to write up the fuzzer
 
         db.commit()
 
     except Exception as e:
-        print("Definitely a database issue, well, hopefully.")
+        print("Definitely a database issue, well, hopefully. We are in %s" % (__name__))
         print(e)
         return
 

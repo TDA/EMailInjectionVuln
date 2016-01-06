@@ -21,15 +21,17 @@ def call_email_form_retriever():
         print(search_query)
         cursor.execute(search_query)
         rows = cursor.fetchall()
+        print(rows[0])
         tasks = []
         for row in rows:
             # here we need to retrieve the actual form fields
             # and reconstruct the forms to be fuzzed
-            tasks.append(email_form_retriever.delay(row))
+            #tasks.append(email_form_retriever.delay(row))
+            email_form_retriever(row)
         db.commit()
 
     except Exception as e:
-        print("Definitely a database issue, well, hopefully.")
+        print("Definitely a database issue, well, hopefully. We are in %s" % (__name__))
         print(e)
         return
 
