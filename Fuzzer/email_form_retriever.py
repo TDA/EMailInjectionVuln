@@ -89,6 +89,6 @@ def email_form_retriever(row):
     except Exception as e:
         print("Definitely a database issue, well, hopefully. We are in %s" % (__name__))
         print(e)
-        return
+    return
 
 
