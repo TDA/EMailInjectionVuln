@@ -33,7 +33,8 @@ def email_form_retriever(row):
 
         # Lets get all the email forms from the db and print them for now
         FORM_TABLE_NAME = 'form'
-        search_query = generate_search_query(FORM_TABLE_NAME, 'attributes, method, absolute_action, params', 'id', str(form_id))
+        # we need the main url too
+        search_query = generate_search_query(FORM_TABLE_NAME, 'url, attributes, method, absolute_action, params', 'id', str(form_id))
         print(search_query)
         cursor.execute(search_query)
 
@@ -50,12 +51,13 @@ def email_form_retriever(row):
             # list, which is actually a dictionary, i have no idea --> nvm
             # why i saved it that way in the db, but i think cuz json --> Fixed this in functions
 
+            main_url = row[0]
             # now attributes is just a dict
-            attributes = ast.literal_eval(row[0])
+            attributes = ast.literal_eval(row[1])
 
-            method = row[1]
-            action = row[2]
-            params = row[3]
+            method = row[2]
+            action = row[3]
+            params = row[4]
             # lets you reconstruct a list from its string representation
             params = ast.literal_eval(params)
             input_list = []
@@ -77,7 +79,7 @@ def email_form_retriever(row):
                 input_list.append(param_dict)
             # now we have all the data to reconstruct the form and fuzz it
             # send this as an immutable tuple
-            reconstructed_form = (attributes, method, action, input_list)
+            reconstructed_form = (main_url, attributes, method, action, input_list)
             #tasks.append(fuzzer.delay(reconstructed_form))
             fuzzer(reconstructed_form)
             # TODO have to write up the fuzzer
