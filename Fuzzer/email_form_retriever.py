@@ -16,9 +16,24 @@ def email_form_retriever(row):
         form_id = row[1]
         db = getopenconnection()
         cursor = db.cursor()
+
+        # TODO: this should also check whether the form is already in the
+        # fuzzed_forms table, if so, skip and continue
+        FUZZED_FORMS_TABLE_NAME = 'fuzzed_forms'
+        duplicate_search_query = generate_search_query(FUZZED_FORMS_TABLE_NAME, '', 'form_id', str(form_id))
+        print(duplicate_search_query)
+        cursor.execute(duplicate_search_query)
+
+        duplicate_rows = cursor.fetchall()
+        if len(duplicate_rows) > 0:
+            print(duplicate_rows)
+            # means this form_id is already in the fuzzed_forms table => fuzzed
+            print("Form with form_id %s ALREADY FUZZED!!! returning without further checks" % str(form_id))
+            return
+
         # Lets get all the email forms from the db and print them for now
-        TABLE_NAME = 'form'
-        search_query = generate_search_query(TABLE_NAME, 'attributes, method, absolute_action, params', 'id', str(form_id))
+        FORM_TABLE_NAME = 'form'
+        search_query = generate_search_query(FORM_TABLE_NAME, 'attributes, method, absolute_action, params', 'id', str(form_id))
         print(search_query)
         cursor.execute(search_query)
 
@@ -50,6 +65,9 @@ def email_form_retriever(row):
                 print(param_search_query)
                 cursor.execute(param_search_query)
                 param_row = cursor.fetchone()
+                if param_row == None or (len(param_row)) == 0:
+                    # no such params stored, return
+                    return
 
                 # construct a dict of the params of each input and append to list
                 param_dict = {'element_type' : param_row[0],
