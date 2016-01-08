@@ -7,6 +7,11 @@ def fuzzer(reconstructed_form):
     # and check with localmail first before whambamming
 
     # lets print out everything we have so we know what all we have :O
-    print(reconstructed_form)
+    # print(reconstructed_form)
+    attributes, method, action, input_list = reconstructed_form
+    print("Attributes:", attributes)
+    print("Method:", method)
+    print("Action:", action)
+    print("Input list:", input_list)
 
     pass

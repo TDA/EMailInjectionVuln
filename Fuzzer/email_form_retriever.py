@@ -17,7 +17,7 @@ def email_form_retriever(row):
         db = getopenconnection()
         cursor = db.cursor()
 
-        # TODO: this should also check whether the form is already in the
+        # this should also check whether the form is already in the
         # fuzzed_forms table, if so, skip and continue
         FUZZED_FORMS_TABLE_NAME = 'fuzzed_forms'
         duplicate_search_query = generate_search_query(FUZZED_FORMS_TABLE_NAME, '', 'form_id', str(form_id))
