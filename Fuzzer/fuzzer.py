@@ -14,18 +14,31 @@ def fuzzer(reconstructed_form):
         # lets print out everything we have so we know what all we have :O
         # print(reconstructed_form)
         main_url, attributes, method, action, input_list = reconstructed_form
+
         print("Main URL:", main_url)
         print("Attributes:", attributes)
         print("Method:", method)
         print("Action:", action)
         print("Input list:", input_list)
 
+        # TODO: only do the following IFF the action is relative, and NOT absolute
+        # (ie) if /submit.php and NOT http://xyz.com/submit.php, since in the latter
+        # case, we can simply submit
+
+
         # parse the url
         scheme, netloc, path, params, query, fragment = urlparse(main_url, scheme='')
 
         # replace the paths last item alone with 'action'
-        print(os.path.split(path))
-        print("Final URL:", urlunparse((scheme, netloc, action, params, query, fragment)))
+        # this is for urls like: main_url = 'https://loc.com/sai/pc/ssspcs.php'
+        # the form url might be like above, so we need to submit it right to
+        # https://loc.com/sai/pc/submit.php, could there be an easier way??
+        path_vars = str(path).split('/')
+        path_vars[len(path_vars) - 1] = action
+        path = '/'.join(path_vars)
+
+        url = urlunparse((scheme, netloc, path, params, query, fragment))
+        print("Final URL:", url)
 
         method = str(method).lower()
         # Since we are using requests (yay!), we dont have
@@ -43,8 +56,6 @@ def fuzzer(reconstructed_form):
 
         # now reconstruct the form
         data = None
-        # set url to action
-        url = action
 
         # r = requests.post(url, data)
 
