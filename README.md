@@ -20,3 +20,5 @@ they parse the forms and pull up the forms that have email fields respectively.
 
 
 ### Email Analyzer
+* Thinking right about now (Jan 9) whether we need the E-Mail 
+analyzer script, seeing as we are only going to nuke them with BCC.
