@@ -14,6 +14,9 @@ def fuzzer(reconstructed_form):
         print("Method:", method)
         print("Action:", action)
         print("Input list:", input_list)
+        # sorry for these overrides
+        # TODO: remove these later, these are for testing
+        method = 'get'
         main_url = 'http://localhost:63343/htdocs/TestProject/email.htm'
         action = 'http://localhost:63343/htdocs/TestProject/MailTest.php'
 
@@ -56,16 +59,19 @@ def fuzzer(reconstructed_form):
         # to construct the url as per get or post
         if method == 'get':
             # make a get request with requests
-            # r = requests.get(url, data)
+            r = requests.get(url, data)
             pass
         elif method == 'post':
             # make a post request with requests
+            r = requests.post(url, data)
             pass
         else:
             # we dont have to do this, we handle only gets
             # or posts, no need to complicate
             return
 
+        print(r.status_code)
+        print(r.text)
 
         # r = requests.post(url, data)
 
