@@ -54,6 +54,9 @@ def fuzzer(reconstructed_form):
         # now reconstruct the form
         data = None
 
+        for a_input in input_list:
+            print(a_input)
+
         method = str(method).lower()
         # Since we are using requests (yay!), we dont have
         # to construct the url as per get or post
