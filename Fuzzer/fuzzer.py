@@ -3,6 +3,7 @@ __author__ = 'saipc'
 import requests
 import os
 from urllib.parse import *
+from Crawler.functions import *
 
 def fuzzer(reconstructed_form):
     try:
@@ -55,7 +56,9 @@ def fuzzer(reconstructed_form):
         data = None
 
         for a_input in input_list:
-            if (check_input(a_input, 'email|e-mail')):
+            print(a_input)
+            if (check_input(a_input, r"email|e-mail")):
+                # this is the field to be fuzzed
                 print("Found an email field", a_input)
             else:
                 # do nothing for now
