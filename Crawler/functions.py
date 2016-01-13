@@ -78,6 +78,7 @@ def check_input(input, value):
     elif(input.get('type') != None):
         return (re.search(search_string, input.get('type')) != None)
     return False
-    # returns true if the input field has name or id set to be the 'value'
-    # provided, else returns false.
+    # returns true if the input field has name or id
+    # or type set to be the 'value' provided,
+    # else returns false.
     pass

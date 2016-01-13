@@ -55,7 +55,11 @@ def fuzzer(reconstructed_form):
         data = None
 
         for a_input in input_list:
-            print(a_input)
+            if (check_input(a_input, 'email|e-mail')):
+                print("Found an email field", a_input)
+            else:
+                # do nothing for now
+                pass
 
         method = str(method).lower()
         # Since we are using requests (yay!), we dont have
