@@ -60,9 +60,14 @@ def fuzzer(reconstructed_form):
             if (check_input(a_input, r"email|e-mail")):
                 # this is the field to be fuzzed
                 print("Found an email field", a_input)
+                # enter the fuzzing data here
+                # also add to the data list/tuple
             else:
                 # do nothing for now
+                # TODO: this is a normal field, just enter
+                # valid, but irrelevant data
                 pass
+            # add a_input to data
 
         method = str(method).lower()
         # Since we are using requests (yay!), we dont have
@@ -77,13 +82,11 @@ def fuzzer(reconstructed_form):
             pass
         else:
             # we dont have to do this, we handle only gets
-            # or posts, no need to complicate
+            # or posts, no need to complicate by handling put etc
             return
 
         print(r.status_code)
         print(r.text)
-
-        # r = requests.post(url, data)
 
     except Exception as e:
         print("Definitely a requests issue, well, hopefully. We are in %s" % (__name__))
