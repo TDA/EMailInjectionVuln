@@ -47,13 +47,15 @@ def fuzzer(reconstructed_form):
         print("Final URL:", url)
 
 
-        # TODO have to get the individual attrs and inputs
+        # get the individual attrs and inputs
         # from the form, and make sure that the fuzzing is only
         # done on the email fields, also, set the GET/POST right
         # and check with localmail first before whambamming
 
         # now reconstruct the form
         data = None
+        # TODO: change this email to the ones we will use for fuzzing
+        payload = 'saiprash_thegreatest@yahoo.co.in%0Abcc:schand31@asu.edu'
 
         for a_input in input_list:
             print(a_input)
@@ -62,6 +64,7 @@ def fuzzer(reconstructed_form):
                 print("Found an email field", a_input)
                 # enter the fuzzing data here
                 # also add to the data list/tuple
+                # TODO: need to add the payload to the field here
             else:
                 # do nothing for now
                 # TODO: this is a normal field, just enter
@@ -70,8 +73,9 @@ def fuzzer(reconstructed_form):
             # add a_input to data
 
         method = str(method).lower()
-        # Since we are using requests (yay!), we dont have
-        # to construct the url as per get or post
+        # Since we are using requests (yay!), we don't have
+        # to construct the url as per get or post, just call
+        # r.get or r.post and it'll take care of it
         if method == 'get':
             # make a get request with requests
             r = requests.get(url, data)
