@@ -71,14 +71,14 @@ def process_input(input, params_list):
 
 def check_input(input, value):
     search_string = re.compile(value, re.IGNORECASE)
-    present = False
+    is_present = False
     if(input.get('name') != None):
-        present = (re.search(search_string, input.get('name')) != None)
+        is_present = (re.search(search_string, input.get('name')) != None)
     if(input.get('id') != None):
-        present = (re.search(search_string, input.get('id')) != None)
+        is_present = (re.search(search_string, input.get('id')) != None)
     if(input.get('type') != None):
-        present = (re.search(search_string, input.get('type')) != None)
-    return present
+        is_present = (re.search(search_string, input.get('type')) != None)
+    return is_present
     # returns true if the input field has name or id
     # or type set to be the 'value' provided,
     # else returns false.
