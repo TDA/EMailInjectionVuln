@@ -18,6 +18,12 @@ class KnownEMailValues(unittest.TestCase):
     actual_output = ''
     expected_output = ''
 
+# to run a main program inside the modules, run like so:
+# python3 -m Tests.email_form_retriever_tests
+if __name__ == '__main__':
+    print("hello")
+    unittest.main()
+
 def start_test():
     print("Test Started")
     unittest.main()
