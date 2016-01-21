@@ -17,8 +17,13 @@ but can definitely be reused with other projects.
 they parse the forms and pull up the forms that have email fields respectively.
 
 ### Fuzzer
-
+1. call_email_form_retriever makes a db query to get the forms with email fields,
+then reconstucts them into a proper ast structure, 
+and then does a parallel pass to the celery queue.
+2. fuzzer then constructs the requests with the additional headers. 
 
 ### Email Analyzer
 * Thinking right about now (Jan 9) whether we need the E-Mail 
 analyzer script, seeing as we are only going to nuke them with BCC.
+* After discussion with the prof, a minimal email analyzer script 
+that checks for x-dummy-headers, and bcc headers needs to be built.
