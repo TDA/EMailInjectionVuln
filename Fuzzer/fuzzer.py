@@ -1,3 +1,5 @@
+import random
+
 __author__ = 'saipc'
 
 import requests
@@ -42,9 +44,8 @@ def fuzzer(reconstructed_form):
             # we can directly get/post a request to the url, so
             # set url to action
             url = action
-            pass
 
-        print("Final URL:", url)
+        print("FINAL URL:", url)
 
 
         # get the individual attrs and inputs
@@ -53,17 +54,24 @@ def fuzzer(reconstructed_form):
         # and check with localmail first before whambamming
 
         # now reconstruct the form
-        data = None
+        alphabets = "abcdefghijklmnopqrstuvwxyz"
+        form_data_dict = {
+            # this complex looking iterator is like this:
+            "text": ''.join([random.choice(alphabets) for x in xrange(0, 10)])
+        }
+        data = {}
         # TODO: change this email to the ones we will use for fuzzing
         payload = 'saiprash_thegreatest@yahoo.co.in%0Abcc:schand31@asu.edu'
 
         for a_input in input_list:
-            print(a_input)
+            #print(a_input)
             if (check_input(a_input, r"email|e-mail")):
                 # this is the field to be fuzzed
-                print("Found an email field", a_input)
+                print("Found an email field", a_input["name"])
                 # enter the fuzzing data here
                 # also add to the data list/tuple
+                data[str(a_input["name"])] = payload
+                print("HERES THE DATA", data)
                 # TODO: need to add the payload to the field here
             else:
                 # do nothing for now
