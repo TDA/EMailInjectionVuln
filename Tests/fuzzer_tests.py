@@ -56,7 +56,17 @@ class FuzzerTester(unittest.TestCase):
         reconstructed_form = (main_url, attributes, method_1, action_1, input_list_1)
         fuzzer.fuzzer(reconstructed_form)
         assert(requests.get.called)
-        # self.assertEqual(actual_output, expected_output, message)
+
+        # upper case GET
+        reconstructed_form = (main_url, attributes, method_1.upper(), action_1, input_list_1)
+        fuzzer.fuzzer(reconstructed_form)
+        assert(requests.get.called)
+
+        # lower case GET
+        reconstructed_form = (main_url, attributes, method_1.lower(), action_1, input_list_1)
+        fuzzer.fuzzer(reconstructed_form)
+        assert(requests.get.called)
+
 
 # to run a main program inside the modules, run like so:
 # python3 -m Tests.email_form_retriever_tests
