@@ -116,13 +116,13 @@ def fuzzer(reconstructed_form):
         # to construct the url as per get or post, just call
         # r.get or r.post and it'll take care of it
         if method == 'get':
-            # make a get request with requests
-            r = requests.get(url, data)
-            pass
+            # make a get request with requests,
+            # and pass the payload as params
+            r = requests.get(url, params = data)
         elif method == 'post':
-            # make a post request with requests
-            r = requests.post(url, data)
-            pass
+            # make a post request with requests,
+            # and pass the payload as data
+            r = requests.post(url, data = data)
         else:
             # we dont have to do this, we handle only gets
             # or posts, no need to complicate by handling put etc
