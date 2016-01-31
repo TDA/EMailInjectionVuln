@@ -61,7 +61,7 @@ def fuzzer(reconstructed_form):
             # string using a generator syntax, then joins the list
             # created into a single string
             "text": ''.join([random.choice(alphabets) for x in range(0, 10)]),
-            "year": "1993",
+            "year": "1993", # these are for edge cases, might remove them
             "month": "07",
             "day": "03",
             "date": "03/07/1993",
@@ -73,7 +73,7 @@ def fuzzer(reconstructed_form):
             "password": ''.join([random.choice(alphabets) for x in range(0, 5)]) +
                         ''.join([random.choice(alphabets) for x in range(0, 2)]).upper() +
                         str(12) + "!#",
-            "name": "asuSefcomResearchGroup"
+            "name": "asuSefcomResearcher"
         }
         # print("FORM DATA", form_data_dict)
 
@@ -89,14 +89,27 @@ def fuzzer(reconstructed_form):
                 # enter the fuzzing data here
                 # also add to the data list/tuple
                 data[str(a_input["name"])] = payload
-                print("HERES THE DATA", data)
-                # TODO: need to add the payload to the field here
+                # need to add the payload to the field here --> DONE
             else:
                 # do nothing for now
                 # TODO: this is a normal field, just enter
                 # valid, but irrelevant data
-                pass
-            # add a_input to data
+                # if name, password, or date, directly fill from the dict
+                if (check_input(a_input, r"date")):
+                    data[str(a_input["name"])] = form_data_dict["date"]
+                    continue
+                if (check_input(a_input, r"password")):
+                    data[str(a_input["name"])] = form_data_dict["password"]
+                    continue
+                if (check_input(a_input, r"name|username")):
+                    data[str(a_input["name"])] = form_data_dict["name"]
+                    continue
+                # this is the default case where the field is a text field,
+                # only reached if its none of the above
+                if (check_input(a_input, r"text")):
+                    data[str(a_input["name"])] = form_data_dict["text"]
+                    continue
+        print("HERES THE DATA", data)
 
         method = str(method).lower()
         # Since we are using requests (yay!), we don't have

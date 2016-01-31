@@ -75,11 +75,11 @@ def check_input(input, value):
     if(input.get('name') != None):
         is_present = (re.search(search_string, input.get('name')) != None)
     if(input.get('id') != None):
-        is_present = (re.search(search_string, input.get('id')) != None)
+        # if already found, we should not reset it to false later
+        is_present = is_present or (re.search(search_string, input.get('id')) != None)
     if(input.get('type') != None):
-        is_present = (re.search(search_string, input.get('type')) != None)
+        is_present = is_present or (re.search(search_string, input.get('type')) != None)
     return is_present
-    # returns true if the input field has name or id
-    # or type set to be the 'value' provided,
+    # returns true if the input field has name OR id
+    # OR type set to be the 'value' provided,
     # else returns false.
-    pass
