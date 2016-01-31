@@ -4,10 +4,9 @@ __author__ = 'saipc'
 import re
 from Crawler.functions import *
 from Fuzzer import fuzzer
+import mock
+import requests
 import unittest
-
-def hello():
-    print("hello")
 
 # THIS IS THE TEST DATA, NOT SURE IF THIS SHOULD BE INSIDE THE CLASS
 # Sample data set
@@ -41,13 +40,22 @@ input_list_3 = [{'name': 'pass', 'value': '', 'element_type': 'input', 'type': '
 
 # fuzzer() is the thing we are testing here
 # subclass the unittest.TestCase
+
 class FuzzerTester(unittest.TestCase):
     # A testcase is created by subclassing unittest.TestCase. The individual
     # tests are defined with methods whose names start with the word "test".
     # This naming convention informs the test runner about which methods represent tests.
-    def test_get(self):
-        actual_output = ''
-        expected_output = ''
+
+    # mock up the requests lib, no
+    # need to generate actual requests
+    requests = mock.Mock()
+    requests.post = mock.Mock()
+
+    def test_send_get_request(self):
+        requests.get = mock.Mock()
+        reconstructed_form = (main_url, attributes, method_1, action_1, input_list_1)
+        fuzzer.fuzzer(reconstructed_form)
+        assert(requests.get.called)
         # self.assertEqual(actual_output, expected_output, message)
 
 # to run a main program inside the modules, run like so:
