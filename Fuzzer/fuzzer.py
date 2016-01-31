@@ -7,18 +7,7 @@ import os
 from urllib.parse import *
 from Crawler.functions import *
 
-def fuzzer(reconstructed_form):
-    try:
-        # lets print out everything we have so we know what all we have :O
-        # print(reconstructed_form)
-        main_url, attributes, method, action, input_list = reconstructed_form
-        # print("Main URL:", main_url)
-        # print("Attributes:", attributes)
-        # print("Method:", method)
-        # print("Action:", action)
-        # print("Input list:", input_list)
-
-
+def construct_url(action, main_url):
         # only do the following IFF the action is relative, and NOT absolute
         # (ie) if /submit.php and NOT http://xyz.com/submit.php, since in the latter
         # case, we can simply submit
@@ -40,9 +29,21 @@ def fuzzer(reconstructed_form):
             # we can directly get/post a request to the url, so
             # set url to action
             url = action
-
         print("FINAL URL:", url)
+        return url
 
+def fuzzer(reconstructed_form):
+    try:
+        # lets print out everything we have so we know what all we have :O
+        # print(reconstructed_form)
+        main_url, attributes, method, action, input_list = reconstructed_form
+        # print("Main URL:", main_url)
+        # print("Attributes:", attributes)
+        # print("Method:", method)
+        # print("Action:", action)
+        # print("Input list:", input_list)
+
+        url = construct_url(action, main_url)
 
         # get the individual attrs and inputs
         # from the form, and make sure that the fuzzing is only

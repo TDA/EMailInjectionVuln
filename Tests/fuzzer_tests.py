@@ -50,6 +50,12 @@ class FuzzerTester(unittest.TestCase):
     # need to generate actual requests
     requests = mock.Mock()
 
+    def test_construct_url(self):
+        # check if both produce the same final url
+        url1 = fuzzer.construct_url(action_1, main_url)
+        url2 = fuzzer.construct_url(action_2, main_url)
+        self.assertEqual(url1, url2, "The generated URLS are not the same")
+
     def test_send_get_request(self):
         requests.get = mock.Mock()
         reconstructed_form = (main_url, attributes, method_1, action_1, input_list_1)
