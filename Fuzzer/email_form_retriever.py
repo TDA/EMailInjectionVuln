@@ -82,7 +82,7 @@ def email_form_retriever(row):
             reconstructed_form = (main_url, attributes, method, action, input_list)
             #tasks.append(fuzzer.delay(reconstructed_form))
             fuzzer(reconstructed_form)
-            # TODO have to write up the fuzzer
+            # have to write up the fuzzer --> DONE
 
         db.commit()
 

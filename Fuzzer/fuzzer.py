@@ -11,11 +11,9 @@ def construct_url(action, main_url):
         # only do the following IFF the action is relative, and NOT absolute
         # (ie) if /submit.php and NOT http://xyz.com/submit.php, since in the latter
         # case, we can simply submit
-
         if not str(action).startswith('http:'):
             # parse the url
             scheme, netloc, path, params, query, fragment = urlparse(main_url, scheme='')
-
             # replace the paths last item alone with 'action'
             # this is for urls like: main_url = 'https://loc.com/sai/pc/ssspcs.php'
             # the form url might be like above, so we need to submit it right to
@@ -29,7 +27,7 @@ def construct_url(action, main_url):
             # we can directly get/post a request to the url, so
             # set url to action
             url = action
-        print("FINAL URL:", url)
+        # print("FINAL URL:", url)
         return url
 
 def fuzzer(reconstructed_form):
@@ -72,7 +70,6 @@ def fuzzer(reconstructed_form):
                         str(12) + "!#",
             "name": "asuSefcomResearcher"
         }
-        # print("FORM DATA", form_data_dict)
 
         data = {}
         # TODO: change this email to the ones we will use for fuzzing
@@ -87,8 +84,7 @@ def fuzzer(reconstructed_form):
                 data[str(a_input["name"])] = payload
                 # need to add the payload to the field here --> DONE
             else:
-                # do nothing for now
-                # TODO: this is a normal field, just enter
+                # this is a normal field, just enter
                 # valid, but irrelevant data
                 # if name, password, or date, directly fill from the dict
                 if (check_input(a_input, r"date")):
