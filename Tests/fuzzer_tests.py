@@ -6,6 +6,8 @@ from Crawler.functions import *
 from Fuzzer import fuzzer
 import unittest
 
+def hello():
+    print("hello")
 
 # THIS IS THE TEST DATA, NOT SURE IF THIS SHOULD BE INSIDE THE CLASS
 # Sample data set

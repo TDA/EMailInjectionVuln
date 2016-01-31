@@ -7,9 +7,7 @@ from Crawler.functions import *
 
 import unittest
 import mock
-
-def hello():
-    print("hello")
+from Tests import fuzzer_tests
 
 # call_email_form_retriever() is the thing we are testing here
 # subclass the unittest.TestCase
@@ -17,14 +15,14 @@ class KnownEMailValues(unittest.TestCase):
     # A testcase is created by subclassing unittest.TestCase. The individual
     # tests are defined with methods whose names start with the word "test".
     # This naming convention informs the test runner about which methods represent tests.
-    @mock.patch('email_form_retriever_tests.hello')
-    def test_is_equal_values(self, mock_hello):
+    fuzzer_tests.hello = mock.Mock()
+    def test_is_equal_values(self):
         actual_output = ''
         expected_output = ''
         # self.assertEqual(actual_output, expected_output)
         self.assertEqual("foo", "foo", "foo is not equal to foo")
-        hello()
-        mock_hello.assert_has_calls()
+        fuzzer_tests.hello()
+        assert(fuzzer_tests.hello.called)
 
 # to run a main program inside the modules, run like so:
 # python3 -m Tests.email_form_retriever_tests
