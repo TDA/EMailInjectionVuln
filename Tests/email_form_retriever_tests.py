@@ -1,28 +1,30 @@
 from __future__ import absolute_import
 __author__ = 'saipc'
 
-from bs4 import BeautifulSoup
 import re
-import ast
-import mysql.connector
 
 from Crawler.functions import *
-from Fuzzer.call_email_form_retriever import call_email_form_retriever
-
 
 import unittest
+import mock
+
+def hello():
+    print("hello")
 
 # call_email_form_retriever() is the thing we are testing here
 # subclass the unittest.TestCase
 class KnownEMailValues(unittest.TestCase):
     # A testcase is created by subclassing unittest.TestCase. The individual
-    # tests are defined with methods whose names start with the letters test.
+    # tests are defined with methods whose names start with the word "test".
     # This naming convention informs the test runner about which methods represent tests.
-    def test_is_equal_values(self):
+    @mock.patch('email_form_retriever_tests.hello')
+    def test_is_equal_values(self, mock_hello):
         actual_output = ''
         expected_output = ''
         # self.assertEqual(actual_output, expected_output)
         self.assertEqual("foo", "foo", "foo is not equal to foo")
+        hello()
+        mock_hello.assert_has_calls()
 
 # to run a main program inside the modules, run like so:
 # python3 -m Tests.email_form_retriever_tests

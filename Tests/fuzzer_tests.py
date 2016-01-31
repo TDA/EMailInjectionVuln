@@ -1,5 +1,13 @@
+from __future__ import absolute_import
 __author__ = 'saipc'
 
+import re
+from Crawler.functions import *
+from Fuzzer import fuzzer
+import unittest
+
+
+# THIS IS THE TEST DATA, NOT SURE IF THIS SHOULD BE INSIDE THE CLASS
 # Sample data set
 main_url = 'http://localhost:63343/htdocs/TestProject/email.htm'
 attributes = [{'data-hi': 'hi'}]
@@ -28,4 +36,28 @@ input_list_3 = [{'name': 'pass', 'value': '', 'element_type': 'input', 'type': '
                 {'name': '', 'value': 'Signup', 'element_type': 'input', 'type': 'submit'}]
 
 # this is the format : main_url, attributes, method, action, input_list = reconstructed_form
+
+# fuzzer() is the thing we are testing here
+# subclass the unittest.TestCase
+class FuzzerTester(unittest.TestCase):
+    # A testcase is created by subclassing unittest.TestCase. The individual
+    # tests are defined with methods whose names start with the word "test".
+    # This naming convention informs the test runner about which methods represent tests.
+    def test_get(self):
+        actual_output = ''
+        expected_output = ''
+        # self.assertEqual(actual_output, expected_output, message)
+
+# to run a main program inside the modules, run like so:
+# python3 -m Tests.email_form_retriever_tests
+# with verbosity, python3 -m Tests.email_form_retriever_tests --verbose OR -v
+if __name__ == '__main__':
+    # print("hello")
+    unittest.main()
+
+def start_test():
+    print("Test Started")
+    unittest.main()
+
+
 reconstructed_form = ()

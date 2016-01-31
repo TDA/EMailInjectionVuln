@@ -12,11 +12,11 @@ def fuzzer(reconstructed_form):
         # lets print out everything we have so we know what all we have :O
         # print(reconstructed_form)
         main_url, attributes, method, action, input_list = reconstructed_form
-        print("Main URL:", main_url)
-        print("Attributes:", attributes)
-        print("Method:", method)
-        print("Action:", action)
-        print("Input list:", input_list)
+        # print("Main URL:", main_url)
+        # print("Attributes:", attributes)
+        # print("Method:", method)
+        # print("Action:", action)
+        # print("Input list:", input_list)
         # sorry for these overrides
         # TODO: remove these later, these are for testing
         method = 'get'
@@ -82,7 +82,6 @@ def fuzzer(reconstructed_form):
         payload = 'saiprash_thegreatest@yahoo.co.in%0Abcc:schand31@asu.edu'
 
         for a_input in input_list:
-            #print(a_input)
             if (check_input(a_input, r"email|e-mail")):
                 # this is the field to be fuzzed
                 print("Found an email field", a_input["name"])
