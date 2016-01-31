@@ -57,8 +57,26 @@ def fuzzer(reconstructed_form):
         alphabets = "abcdefghijklmnopqrstuvwxyz"
         form_data_dict = {
             # this complex looking iterator is like this:
-            "text": ''.join([random.choice(alphabets) for x in xrange(0, 10)])
+            # it chooses 10 random letters from the alphabets
+            # string using a generator syntax, then joins the list
+            # created into a single string
+            "text": ''.join([random.choice(alphabets) for x in range(0, 10)]),
+            "year": "1993",
+            "month": "07",
+            "day": "03",
+            "date": "03/07/1993",
+            # this complex looking iterator is like this:
+            # it chooses 5 random letters from the alphabets
+            # followed by 2 uppercase letters, 2 numbers, and
+            # 2 special characters, mainly to get through weak
+            # password checks
+            "password": ''.join([random.choice(alphabets) for x in range(0, 5)]) +
+                        ''.join([random.choice(alphabets) for x in range(0, 2)]).upper() +
+                        str(12) + "!#",
+            "name": "asuSefcomResearchGroup"
         }
+        # print("FORM DATA", form_data_dict)
+
         data = {}
         # TODO: change this email to the ones we will use for fuzzing
         payload = 'saiprash_thegreatest@yahoo.co.in%0Abcc:schand31@asu.edu'
