@@ -19,9 +19,9 @@ def fuzzer(reconstructed_form):
         # print("Input list:", input_list)
         # sorry for these overrides
         # TODO: remove these later, these are for testing
-        method = 'get'
-        main_url = 'http://localhost:63343/htdocs/TestProject/email.htm'
-        action = 'http://localhost:63343/htdocs/TestProject/MailTest.php'
+        # method = 'get'
+        # main_url = 'http://localhost:63343/htdocs/TestProject/email.htm'
+        # action = 'http://localhost:63343/htdocs/TestProject/MailTest.php'
 
         # only do the following IFF the action is relative, and NOT absolute
         # (ie) if /submit.php and NOT http://xyz.com/submit.php, since in the latter

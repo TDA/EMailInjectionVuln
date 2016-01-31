@@ -49,24 +49,38 @@ class FuzzerTester(unittest.TestCase):
     # mock up the requests lib, no
     # need to generate actual requests
     requests = mock.Mock()
-    requests.post = mock.Mock()
 
     def test_send_get_request(self):
         requests.get = mock.Mock()
         reconstructed_form = (main_url, attributes, method_1, action_1, input_list_1)
         fuzzer.fuzzer(reconstructed_form)
-        assert(requests.get.called)
+        self.assertTrue(requests.get.called, "Get request failed")
 
         # upper case GET
         reconstructed_form = (main_url, attributes, method_1.upper(), action_1, input_list_1)
         fuzzer.fuzzer(reconstructed_form)
-        assert(requests.get.called)
+        self.assertTrue(requests.get.called, "GET request failed")
 
         # lower case GET
         reconstructed_form = (main_url, attributes, method_1.lower(), action_1, input_list_1)
         fuzzer.fuzzer(reconstructed_form)
-        assert(requests.get.called)
+        self.assertTrue(requests.get.called, "get request failed")
 
+    def test_send_post_request(self):
+        requests.post = mock.Mock()
+        reconstructed_form = (main_url, attributes, method_2, action_1, input_list_1)
+        fuzzer.fuzzer(reconstructed_form)
+        self.assertTrue(requests.post.called, "Post request failed")
+
+        # upper case POST
+        reconstructed_form = (main_url, attributes, method_2.upper(), action_1, input_list_1)
+        fuzzer.fuzzer(reconstructed_form)
+        self.assertTrue(requests.post.called, "POST request failed")
+
+        # lower case POST
+        reconstructed_form = (main_url, attributes, method_2.lower(), action_1, input_list_1)
+        fuzzer.fuzzer(reconstructed_form)
+        self.assertTrue(requests.post.called, "post request failed")
 
 # to run a main program inside the modules, run like so:
 # python3 -m Tests.email_form_retriever_tests
@@ -78,6 +92,3 @@ if __name__ == '__main__':
 def start_test():
     print("Test Started")
     unittest.main()
-
-
-reconstructed_form = ()
