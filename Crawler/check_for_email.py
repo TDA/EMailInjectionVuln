@@ -37,7 +37,8 @@ def check_for_email_field(tuple):
         # insertion might fail for duplicate form_ids
         # this is by design.
 
-        # TODO: this needs to be made more efficient,
+        # this needs to be made more efficient,
+        # --> Adam says this is fine, no issues, so IGNORE
         # maybe have a metadata table and only check
         # newer fields?
         try:
