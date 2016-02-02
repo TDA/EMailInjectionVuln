@@ -101,7 +101,7 @@ def fuzzer(reconstructed_form):
                 if (check_input(a_input, r"text")):
                     data[str(a_input["name"])] = form_data_dict["text"]
                     continue
-        print("HERES THE DATA", data)
+        # print("HERES THE DATA", data)
 
         method = str(method).lower()
         # Since we are using requests (yay!), we don't have
@@ -120,10 +120,13 @@ def fuzzer(reconstructed_form):
             # or posts, no need to complicate by handling put etc
             return
 
-        print(r.status_code)
-        print(r.text)
+        # print(r.status_code)
+        # print(r.text)
+        # this is only for testing that the data is right,
+        # we do not do anything with the data
+        # print("HERES THE DATA afterwards", data)
+        return data
 
     except Exception as e:
         print("Definitely a requests issue, well, hopefully. We are in %s" % (__name__))
         print(e)
-    return

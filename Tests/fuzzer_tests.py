@@ -19,6 +19,7 @@ method_2 = 'Post'
 # test both types of url in the form
 action_1 = 'MailTest.php'
 action_2 = 'http://localhost:63343/htdocs/TestProject/MailTest.php'
+test_payload = 'saiprash_thegreatest@yahoo.co.in%0Abcc:schand31@asu.edu'
 
 # test all types of input fields in the form
 input_list_1 = [{'name': 'pass', 'value': '', 'element_type': 'input', 'type': 'password'},
@@ -88,9 +89,20 @@ class FuzzerTester(unittest.TestCase):
         fuzzer.fuzzer(reconstructed_form)
         self.assertTrue(requests.post.called, "post request failed")
 
+    def test_fuzzer_data(self):
+        requests.get = mock.Mock()
+        requests.post = mock.Mock()
+        # check if the fuzzer is injecting the data properly
+        # even if the fields are different etc
+        reconstructed_form = (main_url, attributes, method_1, action_1, input_list_1)
+        data = fuzzer.fuzzer(reconstructed_form)
+        # print("HERES THE RECEIVED DATA", data)
+        # now data needs to contain the test payload
+        self.assertEqual(test_payload, data["email"], "Payload is incorrect")
+
 # to run a main program inside the modules, run like so:
-# python3 -m Tests.email_form_retriever_tests
-# with verbosity, python3 -m Tests.email_form_retriever_tests --verbose OR -v
+# python3 -m Tests.fuzzer_tests
+# with verbosity, python3 -m Tests.fuzzer_tests --verbose OR -v
 if __name__ == '__main__':
     # print("hello")
     unittest.main()
