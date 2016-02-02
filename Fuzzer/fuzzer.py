@@ -78,7 +78,7 @@ def fuzzer(reconstructed_form):
         for a_input in input_list:
             if (check_input(a_input, r"email|e-mail")):
                 # this is the field to be fuzzed
-                print("Found an email field", a_input["name"])
+                # print("Found an email field", a_input["name"])
                 # enter the fuzzing data here
                 # also add to the data list/tuple
                 data[str(a_input["name"])] = payload
