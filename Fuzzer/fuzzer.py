@@ -68,7 +68,8 @@ def fuzzer(reconstructed_form):
             "password": ''.join([random.choice(alphabets) for x in range(0, 5)]) +
                         ''.join([random.choice(alphabets) for x in range(0, 2)]).upper() +
                         str(12) + "!#",
-            "name": "asuSefcomResearcher"
+            "name": "asuSefcomResearcher",
+            "submit": "submit"
         }
 
         data = {}
@@ -86,7 +87,8 @@ def fuzzer(reconstructed_form):
             else:
                 # this is a normal field, just enter
                 # valid, but irrelevant data
-                # if name, password, or date, directly fill from the dict
+                # if name, password, or date, OR submit!!!
+                #  directly fill from the dict
                 if (check_input(a_input, r"date")):
                     data[str(a_input["name"])] = form_data_dict["date"]
                     continue
@@ -95,6 +97,9 @@ def fuzzer(reconstructed_form):
                     continue
                 if (check_input(a_input, r"name|username")):
                     data[str(a_input["name"])] = form_data_dict["name"]
+                    continue
+                if (check_input(a_input, r"submit")):
+                    data[str(a_input["submit"])] = form_data_dict["submit"]
                     continue
                 # this is the default case where the field is a text field,
                 # only reached if its none of the above
