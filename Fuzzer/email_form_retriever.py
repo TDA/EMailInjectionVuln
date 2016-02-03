@@ -42,6 +42,7 @@ def reconstruct_form(cursor, row):
     # now we have all the data to reconstruct the form and fuzz it
     # send this as an immutable tuple
     reconstructed_form = (main_url, attributes, method, action, input_list)
+    return reconstructed_form
 
 @app.task(name='Fuzzer.email_form_retriever')
 def email_form_retriever(row):
