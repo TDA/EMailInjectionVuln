@@ -98,8 +98,9 @@ def fuzzer(reconstructed_form):
                 if (check_input(a_input, r"name|username")):
                     data[str(a_input["name"])] = form_data_dict["name"]
                     continue
+                # TODO: find if submit button needs to be checked/fuzzed
                 if (check_input(a_input, r"submit")):
-                    data[str(a_input["submit"])] = form_data_dict["submit"]
+                    data["submit"] = form_data_dict["submit"]
                     continue
                 # this is the default case where the field is a text field,
                 # only reached if its none of the above

@@ -126,7 +126,7 @@ class FuzzerTester(unittest.TestCase):
         # test if the fuzzer injects stuff when no email is present
         values = [data[key] for key in data]
         print(values)
-        # TODO: find if submit button needs to be checked/fuzzed
+
         self.assertTrue(test_payload not in values, "Payload injected incorrectly")
 
 
