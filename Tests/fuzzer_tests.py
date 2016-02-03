@@ -125,7 +125,7 @@ class FuzzerTester(unittest.TestCase):
         data = fuzzer.fuzzer(reconstructed_form)
         # test if the fuzzer injects stuff when no email is present
         values = [data[key] for key in data]
-        print(values)
+        # print(values)
 
         self.assertTrue(test_payload not in values, "Payload injected incorrectly")
 
