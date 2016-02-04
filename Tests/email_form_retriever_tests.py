@@ -46,6 +46,11 @@ class EMailFormRetrieverTester(unittest.TestCase):
         # print(reconstructed_form)
         self.assertEqual(expected_reconstructed_form, reconstructed_form, "Form was not formed properly")
 
+    def test_email_form_retriever(self):
+        # NOTE: this REQUIRES THE DATABASE TO BE RUNNING
+        fuzzer = mock.Mock()
+        row = [01, 5]
+
 
 # to run a main program inside the modules, run like so:
 # python3 -m Tests.email_form_retriever_tests

@@ -50,7 +50,6 @@ def email_form_retriever(row):
         form_id = row[1]
         db = getopenconnection()
         cursor = db.cursor()
-
         # this should also check whether the form is already in the
         # fuzzed_forms table, if so, skip and continue
         FUZZED_FORMS_TABLE_NAME = 'fuzzed_forms'
