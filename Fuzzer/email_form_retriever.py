@@ -62,7 +62,7 @@ def email_form_retriever(row):
         if len(duplicate_rows) > 0:
             # print(duplicate_rows)
             # means this form_id is already in the fuzzed_forms table => fuzzed
-            print("Form with form_id %s ALREADY FUZZED!!! returning without further checks" % str(form_id))
+            # print("Form with form_id %s ALREADY FUZZED!!! returning without further checks" % str(form_id))
             # close the db connection
             db.close()
             return "Form with form_id %s ALREADY FUZZED!!!" % str(form_id)

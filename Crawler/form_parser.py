@@ -34,11 +34,11 @@ def form_parse(url):
         # json dump to escape single quotes and store as list/dict.
         headers = json.dumps(req.header_items())
         # could be 400/500 and still wont result in any problem at all.
-        print (resp.status)
-        print (headers)
+        # print (resp.status)
+        # print (headers)
     except Exception as e:
         # exit if the page couldnt be read.
-        print("Could not open/read the page")
+        # print("Could not open/read the page")
         print(e)
         return("Could not open/read the page")
     try:
@@ -139,7 +139,7 @@ def form_parse(url):
             # mess with the single quotes in the SQL queries.
             insert_query = insert_query_gen('form', ('', url, json.dumps(attributes), req_id, escape_quotes(
                 form), method, action, absolute_action, param_ids))
-            print(insert_query)
+            # print(insert_query)
             cursor.execute(insert_query)
             form_id = cursor.lastrowid
             # update and link the params to the form they were found in. Lets
