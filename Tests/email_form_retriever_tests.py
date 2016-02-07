@@ -9,6 +9,7 @@ import unittest
 import mock
 from Tests import fuzzer_tests
 from Fuzzer import email_form_retriever
+from Fuzzer import fuzzer
 
 main_url = 'http://localhost:63343/htdocs/TestProject/email.htm'
 # set this as a string cuz the script will parse
@@ -39,17 +40,39 @@ class EMailFormRetrieverTester(unittest.TestCase):
         assert(fuzzer_tests.hello.called)
 
     def test_reconstruct_form(self):
-        cursor = mock.Mock()
+        cursor = mock.MagicMock(name='cursor')
         row = (main_url, attributes, method, action, "[]")
         expected_reconstructed_form = (main_url, attributes_dict, method, action, [])
         reconstructed_form = email_form_retriever.reconstruct_form(cursor, row)
         # print(reconstructed_form)
         self.assertEqual(expected_reconstructed_form, reconstructed_form, "Form was not formed properly")
 
-    def test_email_form_retriever(self):
+    @mock.patch('Fuzzer.email_form_retriever.fuzzer')
+    def test_email_form_retriever_already_fuzzed(self, fuzzer):
         # NOTE: this REQUIRES THE DATABASE TO BE RUNNING
-        fuzzer = mock.Mock()
-        row = [01, 5]
+        # form_id 5 has been fuzzed already
+        row = [1, 5]
+        data = email_form_retriever.email_form_retriever(row)
+        self.assertEqual(data, "Form with form_id 5 ALREADY FUZZED!!!", "Fuzzed form not detected")
+        self.assertFalse(fuzzer.called, "Error: Fuzzer was called")
+
+    # this patch due to namespace conflict :)
+    @mock.patch('Fuzzer.email_form_retriever.fuzzer')
+    def test_email_form_retriever_new_fuzz(self, fuzzer):
+        # NOTE: this REQUIRES THE DATABASE TO BE RUNNING
+        # form_id 42 has NOT been fuzzed
+        url = "http://localhost/VV/vv.htm"
+        attributes = [{"name": "f2", "onsubmit": "do()"}]
+        method = "GET"
+        action = "iamsaipc/"
+        input_list = [{'element_type': 'input', 'value': '', 'type': 'text', 'name': 'uname2'},
+                    {'element_type': 'input', 'value': '', 'type': 'email', 'name': 'uname'}]
+        row = [1, 42]
+        data = email_form_retriever.email_form_retriever(row)
+        self.assertTrue(fuzzer.called, "Fuzzer did not get called")
+        # TODO: write for fuzzer called with right params
+        self.assertEqual(data, "Success")
+
 
 
 # to run a main program inside the modules, run like so:

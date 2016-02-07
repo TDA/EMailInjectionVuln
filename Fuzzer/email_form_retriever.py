@@ -39,6 +39,7 @@ def reconstruct_form(cursor, row):
                       'name' : param_row[2],
                       'value': param_row[3]}
         input_list.append(param_dict)
+        print(param_dict)
     # now we have all the data to reconstruct the form and fuzz it
     # send this as an immutable tuple
     reconstructed_form = (main_url, attributes, method, action, input_list)
@@ -62,7 +63,9 @@ def email_form_retriever(row):
             print(duplicate_rows)
             # means this form_id is already in the fuzzed_forms table => fuzzed
             print("Form with form_id %s ALREADY FUZZED!!! returning without further checks" % str(form_id))
-            return
+            # close the db connection
+            db.close()
+            return "Form with form_id %s ALREADY FUZZED!!!" % str(form_id)
 
         # Lets get all the email forms from the db and print them for now
         FORM_TABLE_NAME = 'form'
@@ -81,10 +84,13 @@ def email_form_retriever(row):
         for row in rows:
             reconstructed_form = reconstruct_form(cursor, row)
             #tasks.append(fuzzer.delay(reconstructed_form))
+            print("Calling fuzzer")
             fuzzer(reconstructed_form)
             # have to write up the fuzzer --> DONE
 
         db.commit()
+        db.close()
+        return "Success"
 
     except Exception as e:
         print("Definitely a database issue, well, hopefully. We are in %s" % (__name__))
