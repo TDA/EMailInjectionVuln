@@ -26,8 +26,8 @@ def call_email_form_retriever():
         for row in rows:
             # here we need to retrieve the actual form fields
             # and reconstruct the forms to be fuzzed
-            #tasks.append(email_form_retriever.delay(row))
-            email_form_retriever(row)
+            tasks.append(email_form_retriever.delay(row))
+            # email_form_retriever(row)
         db.commit()
 
     except Exception as e:

@@ -31,3 +31,4 @@ that checks for x-dummy-headers, and bcc headers needs to be built.
 ### Test Suite
 * Have written tests using Unittest module and mocks.
 * Checks for all the fuzzer functions, and whether they behave correctly for all inputs.
+* Added checks for all form_parser and check_for_email functions.

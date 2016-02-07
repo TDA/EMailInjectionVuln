@@ -83,8 +83,8 @@ def email_form_retriever(row):
         # here we need to retrieve the actual form fields and reconstruct the form
         for row in rows:
             reconstructed_form = reconstruct_form(cursor, row)
-            #tasks.append(fuzzer.delay(reconstructed_form))
-            fuzzer(reconstructed_form)
+            tasks.append(fuzzer.delay(reconstructed_form))
+            # fuzzer(reconstructed_form)
             # have to write up the fuzzer --> DONE
 
         db.commit()
