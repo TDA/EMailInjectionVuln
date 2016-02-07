@@ -27,7 +27,7 @@ def reconstruct_form(cursor, row):
     for param_id in params:
         TABLE_NAME = 'params'
         param_search_query = generate_search_query(TABLE_NAME, 'element_type, type, name, value', 'id', str(param_id))
-        print(param_search_query)
+        # print(param_search_query)
         cursor.execute(param_search_query)
         param_row = cursor.fetchone()
         if param_row == None or (len(param_row)) == 0:
@@ -39,7 +39,7 @@ def reconstruct_form(cursor, row):
                       'name' : param_row[2],
                       'value': param_row[3]}
         input_list.append(param_dict)
-        print(param_dict)
+        # print(param_dict)
     # now we have all the data to reconstruct the form and fuzz it
     # send this as an immutable tuple
     reconstructed_form = (main_url, attributes, method, action, input_list)
@@ -55,12 +55,12 @@ def email_form_retriever(row):
         # fuzzed_forms table, if so, skip and continue
         FUZZED_FORMS_TABLE_NAME = 'fuzzed_forms'
         duplicate_search_query = generate_search_query(FUZZED_FORMS_TABLE_NAME, '', 'form_id', str(form_id))
-        print(duplicate_search_query)
+        # print(duplicate_search_query)
         cursor.execute(duplicate_search_query)
 
         duplicate_rows = cursor.fetchall()
         if len(duplicate_rows) > 0:
-            print(duplicate_rows)
+            # print(duplicate_rows)
             # means this form_id is already in the fuzzed_forms table => fuzzed
             print("Form with form_id %s ALREADY FUZZED!!! returning without further checks" % str(form_id))
             # close the db connection
@@ -71,7 +71,7 @@ def email_form_retriever(row):
         FORM_TABLE_NAME = 'form'
         # we need the main url too
         search_query = generate_search_query(FORM_TABLE_NAME, 'url, attributes, method, absolute_action, params', 'id', str(form_id))
-        print(search_query)
+        # print(search_query)
         cursor.execute(search_query)
 
         # TODO: this SHOULD return only one row, might need to change this
@@ -84,7 +84,6 @@ def email_form_retriever(row):
         for row in rows:
             reconstructed_form = reconstruct_form(cursor, row)
             #tasks.append(fuzzer.delay(reconstructed_form))
-            print("Calling fuzzer")
             fuzzer(reconstructed_form)
             # have to write up the fuzzer --> DONE
 

@@ -9,7 +9,6 @@ import unittest
 import mock
 from Tests import fuzzer_tests
 from Fuzzer import email_form_retriever
-from Fuzzer import fuzzer
 
 main_url = 'http://localhost:63343/htdocs/TestProject/email.htm'
 # set this as a string cuz the script will parse
@@ -69,10 +68,13 @@ class EMailFormRetrieverTester(unittest.TestCase):
                     {'element_type': 'input', 'value': '', 'type': 'email', 'name': 'uname'}]
         row = [1, 42]
         data = email_form_retriever.email_form_retriever(row)
+        # test the fuzzer gets called
         self.assertTrue(fuzzer.called, "Fuzzer did not get called")
-        # TODO: write for fuzzer called with right params
+        # test that the fuzzer was called
+        # with the right params
+        fuzzer.assert_called_with((url,attributes, method, action, input_list))
+        # test that the return data was correct
         self.assertEqual(data, "Success")
-
 
 
 # to run a main program inside the modules, run like so:
