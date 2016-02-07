@@ -31,7 +31,7 @@ def check_for_email_field(tuple):
     value = "email|e-mail"
     search_string = re.compile(value, re.IGNORECASE)
     if(re.search(search_string, form_content) != None):
-        print("found somebody")
+        # print("found somebody")
         # we found an email field, possibly
         # so, try inserting into the db
         # insertion might fail for duplicate form_ids
@@ -48,6 +48,7 @@ def check_for_email_field(tuple):
             insert_query = insert_query_gen('email_forms', ('', form_id))
             cursor.execute(insert_query)
             db.commit()
+            db.close()
         except Exception as e:
             print("Definitely a database issue, well, hopefully.")
             print(e)
