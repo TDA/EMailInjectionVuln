@@ -74,6 +74,7 @@ def fuzzer(reconstructed_form):
 
         data = {}
         # TODO: change this email to the ones we will use for fuzzing
+        # add x-dummy-header too
         payload = 'saiprash_thegreatest@yahoo.co.in%0Abcc:schand31@asu.edu'
 
         for a_input in input_list:
@@ -98,7 +99,6 @@ def fuzzer(reconstructed_form):
                 if (check_input(a_input, r"name|username")):
                     data[str(a_input["name"])] = form_data_dict["name"]
                     continue
-                # TODO: find if submit button needs to be checked/fuzzed
                 if (check_input(a_input, r"submit")):
                     data["submit"] = form_data_dict["submit"]
                     continue

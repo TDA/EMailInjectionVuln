@@ -1,15 +1,9 @@
 from __future__ import absolute_import
 from bs4 import BeautifulSoup
-import re
-import os
 import urllib.request
 import urllib.error
 import urllib.parse
-import socket
-import ssl
-import sys
 import mysql.connector
-from xml.dom import minidom
 from celery import Celery
 
 
@@ -25,10 +19,12 @@ from Crawler.CeleryCrawler import app
 # all print statements are for logging purposes only, can be removed
 @app.task(name='Crawler.form_parser')
 def form_parse(url):
+    # print(url)
     page = None
     headers = None
     # set the page and headers to None
     try:
+        # no idea why this uses urllib instead of requests
         req = urllib.request.Request(url)
         req.add_header('Referer', req.origin_req_host)
         req.add_header('User-Agent', 'Mozilla/5.0')
@@ -44,7 +40,7 @@ def form_parse(url):
         # exit if the page couldnt be read.
         print("Could not open/read the page")
         print(e)
-        return
+        return("Could not open/read the page")
     try:
         soup = BeautifulSoup(page)
     except Exception as e:
@@ -167,4 +163,3 @@ def form_parse(url):
     # forget all the above, the return wont work, only one form will be returned,
     # not expected behaviour, so changed it
     # return str(form_id), escape_quotes(form)
-# configuring the database with queues might need some code, check that
