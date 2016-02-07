@@ -1,13 +1,9 @@
 from __future__ import absolute_import
 __author__ = 'saipc'
 
-import re
-
 from Crawler.functions import *
-
 import unittest
 import mock
-from Tests import fuzzer_tests
 from Fuzzer import email_form_retriever
 
 main_url = 'http://localhost:63343/htdocs/TestProject/email.htm'
@@ -31,12 +27,6 @@ class EMailFormRetrieverTester(unittest.TestCase):
     # A testcase is created by subclassing unittest.TestCase. The individual
     # tests are defined with methods whose names start with the word "test".
     # This naming convention informs the test runner about which methods represent tests.
-    fuzzer_tests.hello = mock.Mock()
-    def test_is_equal_values(self):
-        # self.assertEqual(actual_output, expected_output)
-        self.assertEqual("foo", "foo", "foo is not equal to foo")
-        fuzzer_tests.hello()
-        assert(fuzzer_tests.hello.called)
 
     def test_reconstruct_form(self):
         cursor = mock.MagicMock(name='cursor')

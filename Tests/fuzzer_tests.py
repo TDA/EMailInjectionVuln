@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 __author__ = 'saipc'
 
-import re
 from Crawler.functions import *
 from Fuzzer import fuzzer
 import mock
@@ -46,7 +45,6 @@ input_list_4 = [{'name': 'pass', 'value': '', 'element_type': 'input', 'type': '
 
 # fuzzer() is the thing we are testing here
 # subclass the unittest.TestCase
-
 class FuzzerTester(unittest.TestCase):
     # A testcase is created by subclassing unittest.TestCase. The individual
     # tests are defined with methods whose names start with the word "test".
