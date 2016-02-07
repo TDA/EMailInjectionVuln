@@ -58,11 +58,11 @@ class EMailFormRetrieverTester(unittest.TestCase):
                     {'element_type': 'input', 'value': '', 'type': 'email', 'name': 'uname'}]
         row = [1, 42]
         data = email_form_retriever.email_form_retriever(row)
-        # test the fuzzer gets called
-        self.assertTrue(fuzzer.called, "Fuzzer did not get called")
+        # test the fuzzer gets called, changed this to fuzzer.delay, cuz Celery
+        self.assertTrue(fuzzer.delay.called, "Fuzzer did not get called")
         # test that the fuzzer was called
         # with the right params
-        fuzzer.assert_called_with((url,attributes, method, action, input_list))
+        fuzzer.delay.assert_called_with((url,attributes, method, action, input_list))
         # test that the return data was correct
         self.assertEqual(data, "Success")
 
