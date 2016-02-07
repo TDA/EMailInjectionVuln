@@ -42,7 +42,7 @@ def form_parse(url):
         print(e)
         return("Could not open/read the page")
     try:
-        soup = BeautifulSoup(page)
+        soup = BeautifulSoup(page, "html.parser")
     except Exception as e:
         print("Error: error with BeautifulSoup")
         # once again, parsing errors mean page might not work, so better to
@@ -117,7 +117,7 @@ def form_parse(url):
             # convenient. Forgive me, Master :D
             for param in params:
                 param_insert_query = insert_query_gen('params', param)
-                print(param_insert_query)
+                # print(param_insert_query)
                 # insert every input field found into the db and store their
                 # ids so that we can connect them to the forms table.
                 cursor.execute(param_insert_query)
