@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 __author__ = 'saipc'
 
 # python3 -m Tests.email_form_retriever_tests --verbose
