@@ -27,3 +27,7 @@ and then does a parallel pass to the celery queue.
 analyzer script, seeing as we are only going to nuke them with BCC.
 * After discussion with the prof, a minimal email analyzer script 
 that checks for x-dummy-headers, and bcc headers needs to be built.
+
+### Test Suite
+* Have written tests using Unittest module and mocks.
+* Checks for all the fuzzer functions, and whether they behave correctly for all inputs.
