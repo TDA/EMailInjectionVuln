@@ -73,9 +73,11 @@ def fuzzer(reconstructed_form):
         }
 
         data = {}
+        data2 = {}
         # TODO: change this email to the ones we will use for fuzzing
         # add x-dummy-header too
-        payload = 'saiprash_thegreatest@yahoo.co.in%0Abcc:schand31@asu.edu'
+        payload = 'saiprash_thegreatest@yahoo.co.in%0abcc:schand31@asu.edu'
+        payload2 = 'saiprash_thegreatest@yahoo.co.in%0d%0abcc:schand31@asu.edu'
 
         for a_input in input_list:
             if (check_input(a_input, r"email|e-mail")):
@@ -84,6 +86,7 @@ def fuzzer(reconstructed_form):
                 # enter the fuzzing data here
                 # also add to the data list/tuple
                 data[str(a_input["name"])] = payload
+                data2[str(a_input["name"])] = payload2
                 # need to add the payload to the field here --> DONE
             else:
                 # this is a normal field, just enter
@@ -92,20 +95,25 @@ def fuzzer(reconstructed_form):
                 #  directly fill from the dict
                 if (check_input(a_input, r"date")):
                     data[str(a_input["name"])] = form_data_dict["date"]
+                    data2[str(a_input["name"])] = form_data_dict["date"]
                     continue
                 if (check_input(a_input, r"password")):
                     data[str(a_input["name"])] = form_data_dict["password"]
+                    data2[str(a_input["name"])] = form_data_dict["password"]
                     continue
                 if (check_input(a_input, r"name|username")):
                     data[str(a_input["name"])] = form_data_dict["name"]
+                    data2[str(a_input["name"])] = form_data_dict["name"]
                     continue
                 if (check_input(a_input, r"submit")):
                     data["submit"] = form_data_dict["submit"]
+                    data2["submit"] = form_data_dict["submit"]
                     continue
                 # this is the default case where the field is a text field,
                 # only reached if its none of the above
                 if (check_input(a_input, r"text")):
                     data[str(a_input["name"])] = form_data_dict["text"]
+                    data2[str(a_input["name"])] = form_data_dict["text"]
                     continue
         # print("HERES THE DATA", data)
 
@@ -117,10 +125,12 @@ def fuzzer(reconstructed_form):
             # make a get request with requests,
             # and pass the payload as params
             r = requests.get(url, params = data)
+            r2 = requests.get(url, params = data2)
         elif method == 'post':
             # make a post request with requests,
             # and pass the payload as data
             r = requests.post(url, data = data)
+            r2 = requests.post(url, data = data2)
         else:
             # we dont have to do this, we handle only gets
             # or posts, no need to complicate by handling put etc
@@ -131,7 +141,7 @@ def fuzzer(reconstructed_form):
         # this is only for testing that the data is right,
         # we do not do anything with the data
         # print("HERES THE DATA afterwards", data)
-        return data
+        return (data, data2)
 
     except Exception as e:
         print("Definitely a requests issue, well, hopefully. We are in %s" % (__name__))
