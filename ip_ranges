@@ -1,0 +1,348 @@
+iface eth0:2 inet static
+	address 129.219.234.197 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:3 inet static
+	address 129.219.234.198 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:4 inet static
+	address 129.219.234.199 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:5 inet static
+	address 129.219.234.200 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:6 inet static
+	address 129.219.234.201 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:7 inet static
+	address 129.219.234.202 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:8 inet static
+	address 129.219.234.203 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:9 inet static
+	address 129.219.234.204 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:10 inet static
+	address 129.219.234.205 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:11 inet static
+	address 129.219.234.206 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:12 inet static
+	address 129.219.234.207 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:13 inet static
+	address 129.219.234.208 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:14 inet static
+	address 129.219.234.209 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:15 inet static
+	address 129.219.234.210 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:16 inet static
+	address 129.219.234.211 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:17 inet static
+	address 129.219.234.212 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:18 inet static
+	address 129.219.234.213 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:19 inet static
+	address 129.219.234.214 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:20 inet static
+	address 129.219.234.215 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:21 inet static
+	address 129.219.234.216 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:22 inet static
+	address 129.219.234.217 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:23 inet static
+	address 129.219.234.218 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:24 inet static
+	address 129.219.234.219 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:25 inet static
+	address 129.219.234.220 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:26 inet static
+	address 129.219.234.221 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:27 inet static
+	address 129.219.234.222 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:28 inet static
+	address 129.219.234.223 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:29 inet static
+	address 129.219.234.224 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:30 inet static
+	address 129.219.234.225 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:31 inet static
+	address 129.219.234.226 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:32 inet static
+	address 129.219.234.227 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:33 inet static
+	address 129.219.234.228 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:34 inet static
+	address 129.219.234.229 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:35 inet static
+	address 129.219.234.230 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:36 inet static
+	address 129.219.234.231 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:37 inet static
+	address 129.219.234.232 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:38 inet static
+	address 129.219.234.233 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:39 inet static
+	address 129.219.234.234 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:40 inet static
+	address 129.219.234.235 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:41 inet static
+	address 129.219.234.236 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:42 inet static
+	address 129.219.234.237 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:43 inet static
+	address 129.219.234.238 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:44 inet static
+	address 129.219.234.239 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:45 inet static
+	address 129.219.234.240 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:46 inet static
+	address 129.219.234.241 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:47 inet static
+	address 129.219.234.242 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:48 inet static
+	address 129.219.234.243 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:49 inet static
+	address 129.219.234.244 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:50 inet static
+	address 129.219.234.245 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:51 inet static
+	address 129.219.234.246 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:52 inet static
+	address 129.219.234.247 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:53 inet static
+	address 129.219.234.248 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:54 inet static
+	address 129.219.234.249 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:55 inet static
+	address 129.219.234.250 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:56 inet static
+	address 129.219.234.251 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:57 inet static
+	address 129.219.234.252 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:58 inet static
+	address 129.219.234.253 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
+iface eth0:59 inet static
+	address 129.219.234.254 
+	netmask 255.255.255.192
+	gateway 129.219.234.193
+	dns-nameservers 129.219.17.200
+
