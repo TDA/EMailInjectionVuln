@@ -74,10 +74,9 @@ def fuzzer(reconstructed_form):
 
         data = {}
         data_2 = {}
-        # TODO: change this email to the ones we will use for fuzzing
         # add x-dummy-header too
-        payload = 'saiprash_thegreatest@yahoo.co.in%0abcc:schand31@asu.edu'
-        payload_2 = 'saiprash_thegreatest@yahoo.co.in%0d%0abcc:schand31@asu.edu'
+        payload = 'nuser123@wackopicko.com%0abcc:maluser123@wackopicko.com%0ax-check:in'
+        payload_2 = 'nuser123@wackopicko.com%0d%0abcc:maluser123@wackopicko.com%0d%0ax-check:in'
 
         for a_input in input_list:
             if (check_input(a_input, r"email|e-mail")):

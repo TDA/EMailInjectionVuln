@@ -22,6 +22,7 @@ def form_parse(url):
     # print(url)
     page = None
     headers = None
+    # TODO: might need to skip the requests part
     # set the page and headers to None
     try:
         # no idea why this uses urllib instead of requests

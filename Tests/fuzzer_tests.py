@@ -18,8 +18,9 @@ method_2 = 'Post'
 # test both types of url in the form
 action_1 = 'MailTest.php'
 action_2 = 'http://localhost:63343/htdocs/TestProject/MailTest.php'
-test_payload = 'saiprash_thegreatest@yahoo.co.in%0abcc:schand31@asu.edu'
-test_payload_2 = 'saiprash_thegreatest@yahoo.co.in%0d%0abcc:schand31@asu.edu'
+test_payload = 'nuser123@wackopicko.com%0abcc:maluser123@wackopicko.com%0ax-check:in'
+test_payload_2 = 'nuser123@wackopicko.com%0d%0abcc:maluser123@wackopicko.com%0d%0ax-check:in'
+
 
 # test all types of input fields in the form
 input_list_1 = [{'name': 'pass', 'value': '', 'element_type': 'input', 'type': 'password'},
