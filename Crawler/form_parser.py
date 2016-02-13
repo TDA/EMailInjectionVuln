@@ -18,30 +18,28 @@ from Crawler.CeleryCrawler import app
 # form_parse.delay(url)
 # all print statements are for logging purposes only, can be removed
 @app.task(name='Crawler.form_parser')
-def form_parse(url):
+def form_parse(url, html_content):
     # print(url)
-    page = None
-    headers = None
-    # TODO: might need to skip the requests part
-    # set the page and headers to None
-    try:
-        # no idea why this uses urllib instead of requests
-        req = urllib.request.Request(url)
-        req.add_header('Referer', req.origin_req_host)
-        req.add_header('User-Agent', 'Mozilla/5.0')
-
-        resp = urllib.request.urlopen(req)
-        page = resp.read()
-        # json dump to escape single quotes and store as list/dict.
-        headers = json.dumps(req.header_items())
-        # could be 400/500 and still wont result in any problem at all.
-        # print (resp.status)
-        # print (headers)
-    except Exception as e:
-        # exit if the page couldnt be read.
-        # print("Could not open/read the page")
-        print(e)
-        return("Could not open/read the page")
+    page = html_content
+    # headers = None
+    # try:
+    #     # no idea why this uses urllib instead of requests
+    #     req = urllib.request.Request(url)
+    #     req.add_header('Referer', req.origin_req_host)
+    #     req.add_header('User-Agent', 'Mozilla/5.0')
+    #
+    #     resp = urllib.request.urlopen(req)
+    #     page = resp.read()
+    #     # json dump to escape single quotes and store as list/dict.
+    #     headers = json.dumps(req.header_items())
+    #     # could be 400/500 and still wont result in any problem at all.
+    #     # print (resp.status)
+    #     # print (headers)
+    # except Exception as e:
+    #     # exit if the page couldnt be read.
+    #     # print("Could not open/read the page")
+    #     print(e)
+    #     return("Could not open/read the page")
     try:
         soup = BeautifulSoup(page, "html.parser")
     except Exception as e:
@@ -129,7 +127,7 @@ def form_parse(url):
             # store the requests' headers we used to fetch the page,
             # once again not really needed unless we use this for some other research.
             # the urls ARE required though.
-            req_insert_query = insert_query_gen('requests', ('', headers, url))
+            req_insert_query = insert_query_gen('requests', ('', url))
             cursor.execute(req_insert_query)
             req_id = cursor.lastrowid
 
