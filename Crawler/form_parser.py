@@ -7,8 +7,8 @@ import mysql.connector
 from celery import Celery
 
 
-from Crawler.functions import *
-from Crawler.CeleryCrawler import app
+from functions import *
+from CeleryCrawler import app
 
 
 # app = Celery('form_parser', broker='amqp://guest@localhost//')

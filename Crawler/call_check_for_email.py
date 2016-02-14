@@ -1,18 +1,15 @@
 from __future__ import absolute_import
 import re
 import os
-import urllib.request
-import urllib.error
-import urllib.parse
 import socket
 import ssl
 import sys
 import mysql.connector
 from celery import Celery
-from Crawler.CeleryCrawler import app
+from CeleryCrawler import app
 
-from Crawler.functions import *
-from Crawler.check_for_email import check_for_email_field
+from functions import *
+from check_for_email import check_for_email_field
 
 
 

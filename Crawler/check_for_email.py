@@ -11,8 +11,8 @@ import sys
 import mysql.connector
 from celery import Celery
 
-from Crawler.functions import *
-from Crawler.CeleryCrawler import app
+from functions import *
+from CeleryCrawler import app
 
 # This takes the feed from the queue and inserts into db if an email field is found
 # I am particularly searching for the word 'email' instead of an email field.
