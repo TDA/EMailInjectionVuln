@@ -1,14 +1,6 @@
 from __future__ import absolute_import
 from bs4 import BeautifulSoup
 import re
-import os
-import urllib.request
-import urllib.error
-import urllib.parse
-import socket
-import ssl
-import sys
-import mysql.connector
 from celery import Celery
 
 from functions import *

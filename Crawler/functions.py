@@ -1,14 +1,14 @@
 __author__ = 'Sai'
 from bs4 import BeautifulSoup
-import mysql.connector
+# import mysql.connector
+import MySQLdb
 import json
 import re
 
 
 def getopenconnection():
-    return mysql.connector.connect(user='root', password='',
-                                   host='localhost',
-                                   database='ejection')
+    return MySQLdb.connect('127.0.0.1', 'root', '',
+                                   'ejection')
 
 
 def extract_form_attrs(form):

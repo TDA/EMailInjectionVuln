@@ -1,10 +1,4 @@
 from __future__ import absolute_import
-import re
-import os
-import socket
-import ssl
-import sys
-import mysql.connector
 from celery import Celery
 
 from functions import *
@@ -31,9 +25,9 @@ class Starter:
         pass
 
     def callback(self, crawled_url):
-        print " [%d urls] Received %d bytes from %r" % (self.how_many,
-                len(crawled_url.content),crawled_url.url)
-        print "URL", crawled_url.url
+        print(" [%d urls] Received %d bytes from %r" % (self.how_many,
+                len(crawled_url.content),crawled_url.url))
+        print ("URL", crawled_url.url)
         tasks = []
         tasks.append(form_parse.delay(crawled_url.url, crawled_url.content))
         self.how_many += 1
@@ -45,8 +39,6 @@ class Starter:
 
 if __name__ == '__main__':
     crawler_listener.add_callback(Starter().callback)
-
-
 
 # def call_fp(urls):
 #

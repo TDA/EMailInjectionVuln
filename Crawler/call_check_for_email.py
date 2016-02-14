@@ -1,10 +1,4 @@
 from __future__ import absolute_import
-import re
-import os
-import socket
-import ssl
-import sys
-import mysql.connector
 from celery import Celery
 from CeleryCrawler import app
 

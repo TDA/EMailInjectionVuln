@@ -1,9 +1,5 @@
 from __future__ import absolute_import
 from bs4 import BeautifulSoup
-import urllib.request
-import urllib.error
-import urllib.parse
-import mysql.connector
 from celery import Celery
 
 
