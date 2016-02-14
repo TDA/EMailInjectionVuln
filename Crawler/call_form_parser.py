@@ -35,7 +35,6 @@ class Starter:
         print(t)
         # when t is full, the process has completed, so can chain onto next
         # function(call_check_for_email), which will in turn check for the email forms
-        call_check_for_email()
 
 if __name__ == '__main__':
     crawler_listener.add_callback(Starter().callback)

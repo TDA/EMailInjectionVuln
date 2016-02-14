@@ -5,6 +5,7 @@ from celery import Celery
 
 from functions import *
 from CeleryCrawler import app
+from check_for_email import check_for_email_field
 
 
 # app = Celery('form_parser', broker='amqp://guest@localhost//')
@@ -144,9 +145,13 @@ def form_parse(url, html_content):
                 str(form_id), str(param_ids[0]), str(param_ids[len(param_ids)-1]))
             cursor.execute(update_query)
             db.commit()
+            tasks = []
+            row = (form_id, form)
+            tasks.append(check_for_email_field.delay(row))
+
 
         except Exception as e:
-            print("Definitely a database issue, well, hopefully.")
+            print("Definitely a database issue, well, hopefully. We are in form_parser")
             print(e)
             return
 

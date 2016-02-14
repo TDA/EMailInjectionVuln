@@ -42,7 +42,7 @@ def check_for_email_field(tuple):
             db.commit()
             db.close()
         except Exception as e:
-            print("Definitely a database issue, well, hopefully.")
+            print("Definitely a database issue, well, hopefully. We are in check_for_email")
             print(e)
             # just ignore and move on
             return
