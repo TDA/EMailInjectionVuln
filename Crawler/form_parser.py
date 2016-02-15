@@ -4,6 +4,7 @@ from celery import Celery
 from functions import *
 from CeleryCrawler import app
 from check_for_email import check_for_email_field
+import json
 
 
 # app = Celery('form_parser', broker='amqp://guest@localhost//')
@@ -144,7 +145,7 @@ def form_parse(url, html_content):
             cursor.execute(update_query)
             db.commit()
             tasks = []
-            row = (form_id, form)
+            row = (form_id, escape_quotes(form))
             tasks.append(check_for_email_field.delay(row))
 
 

@@ -37,7 +37,7 @@ def check_for_email_field(tuple):
 
             db = getopenconnection()
             cursor = db.cursor()
-            insert_query = insert_query_gen('email_forms', ('', form_id))
+            insert_query = insert_query_gen('email_forms', (0, form_id))
             cursor.execute(insert_query)
             db.commit()
             db.close()
