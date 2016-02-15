@@ -38,6 +38,11 @@ that checks for x-dummy-headers, and bcc headers needs to be built.
 * Have written tests using Unittest module and mocks.
 * Checks for all the fuzzer functions, and whether they behave correctly for all inputs.
 * Added checks for all form_parser and check_for_email functions.
+* NOTE: The tests are in python3, while the code has been down-ported
+ to Python2 to ensure compatibility with the RabbitMQ queue :(
+ So, comment out the Python2 specific lines before running tests --> This is a 
+ LOT of work, but Python2 doesnt support the same Module structure as Python3, 
+ so rewriting tests is also a pain
 
 ### To SSH:
 ssh -p48064 sai@128.111.48.6
