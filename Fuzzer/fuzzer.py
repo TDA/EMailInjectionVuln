@@ -5,9 +5,13 @@ __author__ = 'saipc'
 
 import requests
 from urlparse import *
-# from urllib.parse import *
 from functions import *
+
+# for tests in python3
+# from urllib.parse import *
 # from Fuzzer.functions import *
+
+
 
 def construct_url(action, main_url):
     # only do the following IFF the action is relative, and NOT absolute
@@ -19,7 +23,7 @@ def construct_url(action, main_url):
     url = action
     if not str(action).startswith('http:'):
         # if action is empty, it means we submit to same page
-        if action == "#" or action == '':
+        if action == "#" or action == '' or action == '/':
             url = main_url
         else:
             # parse the url
