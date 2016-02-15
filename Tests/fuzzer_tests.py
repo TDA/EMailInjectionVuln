@@ -17,6 +17,9 @@ method_2 = 'Post'
 # test both types of url in the form
 action_1 = 'MailTest.php'
 action_2 = 'http://localhost:63343/htdocs/TestProject/MailTest.php'
+action_3 = ''
+action_4 = '#'
+action_5 = '/MailTest.php'
 test_payload = 'nuser123@wackopicko.com%0abcc:maluser123@wackopicko.com%0ax-check:in'
 test_payload_2 = 'nuser123@wackopicko.com%0d%0abcc:maluser123@wackopicko.com%0d%0ax-check:in'
 test_payload_3 = 'reguser123@wackopicko.com'
@@ -61,6 +64,11 @@ class FuzzerTester(unittest.TestCase):
         url1 = fuzzer.construct_url(action_1, main_url)
         url2 = fuzzer.construct_url(action_2, main_url)
         self.assertEqual(url1, url2, "The generated URLS are not the same")
+        url3 = fuzzer.construct_url(action_3, main_url)
+        url4 = fuzzer.construct_url(action_4, main_url)
+        self.assertEqual(url3, url4, "The generated URLS are not the same")
+        url5 = fuzzer.construct_url(action_5, main_url)
+        self.assertEqual(url1, url5, "The generated URLS are not the same")
 
     def test_send_get_request(self):
         requests.get = mock.Mock()

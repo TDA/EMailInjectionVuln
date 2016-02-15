@@ -5,14 +5,31 @@ __author__ = 'saipc'
 
 import requests
 from urlparse import *
+# from urllib.parse import *
 from functions import *
+# from Fuzzer.functions import *
 
 def construct_url(action, main_url):
-        # only do the following IFF the action is relative, and NOT absolute
-        # (ie) if /submit.php and NOT http://xyz.com/submit.php, since in the latter
-        # case, we can simply submit
-        if not str(action).startswith('http:'):
+    # only do the following IFF the action is relative, and NOT absolute
+    # (ie) if /submit.php and NOT http://xyz.com/submit.php, since in the latter
+    # case, we can simply submit
+
+    # initially we can directly get/post a request
+    # to the url, so set url to action
+    url = action
+    if not str(action).startswith('http:'):
+        # if action is empty, it means we submit to same page
+        if action == "#" or action == '':
+            url = main_url
+        else:
             # parse the url
+            if (str(action).startswith('/')):
+                # if the action starts
+                # with '/', remove actions '/'
+                # this is best effort, cant really know
+                # whether this is right or wrong, on a case by case basis
+                # this will be right for MOST things tho, so.
+                action = action[1:]
             scheme, netloc, path, params, query, fragment = urlparse(main_url, scheme='')
             # replace the paths last item alone with 'action'
             # this is for urls like: main_url = 'https://loc.com/sai/pc/ssspcs.php'
@@ -23,12 +40,8 @@ def construct_url(action, main_url):
             path = '/'.join(path_vars)
 
             url = urlunparse((scheme, netloc, path, params, query, fragment))
-        else:
-            # we can directly get/post a request to the url, so
-            # set url to action
-            url = action
-        # print("FINAL URL:", url)
-        return url
+    # print("FINAL URL:", url)
+    return url
 
 def fuzzer(reconstructed_form):
     try:
