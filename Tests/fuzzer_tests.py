@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 __author__ = 'saipc'
 
-from Crawler.functions import *
 from Fuzzer import fuzzer
 import mock
 import requests
@@ -20,6 +19,7 @@ action_1 = 'MailTest.php'
 action_2 = 'http://localhost:63343/htdocs/TestProject/MailTest.php'
 test_payload = 'nuser123@wackopicko.com%0abcc:maluser123@wackopicko.com%0ax-check:in'
 test_payload_2 = 'nuser123@wackopicko.com%0d%0abcc:maluser123@wackopicko.com%0d%0ax-check:in'
+test_payload_3 = 'reguser123@wackopicko.com'
 
 
 # test all types of input fields in the form
@@ -101,39 +101,43 @@ class FuzzerTester(unittest.TestCase):
         # even if the fields are different etc
         # input_list_1 needs to have payload in the "email" field
         reconstructed_form = (main_url, attributes, method_1, action_1, input_list_1)
-        data, data_2 = fuzzer.fuzzer(reconstructed_form)
+        data, data_2, data_3 = fuzzer.fuzzer(reconstructed_form)
         # print("HERES THE RECEIVED DATA", data)
         # now data needs to contain the test payload
         self.assertEqual(test_payload, data["email"], "Payload is incorrect")
         self.assertEqual(test_payload_2, data_2["email"], "Payload is incorrect")
+        self.assertEqual(test_payload_3, data_3["email"], "Payload is incorrect")
 
         # input_list_2 needs to have payload in the mail field
         reconstructed_form = (main_url, attributes, method_1, action_1, input_list_2)
-        data, data_2 = fuzzer.fuzzer(reconstructed_form)
+        data, data_2, data_3 = fuzzer.fuzzer(reconstructed_form)
         # now data needs to contain the test payload
         self.assertEqual(test_payload, data["mail"], "Payload is incorrect")
         self.assertEqual(test_payload_2, data_2["mail"], "Payload is incorrect")
+        self.assertEqual(test_payload_3, data_3["mail"], "Payload is incorrect")
 
         # input_list_3 needs to have payload in the madam field
         reconstructed_form = (main_url, attributes, method_1, action_1, input_list_3)
-        data, data_2 = fuzzer.fuzzer(reconstructed_form)
+        data, data_2, data_3 = fuzzer.fuzzer(reconstructed_form)
         # now data needs to contain the test payload
         self.assertEqual(test_payload, data["madam"], "Payload is incorrect")
         self.assertEqual(test_payload_2, data_2["madam"], "Payload is incorrect")
+        self.assertEqual(test_payload_3, data_3["madam"], "Payload is incorrect")
 
     def test_incorrect_fuzzer_data(self):
         requests.get = mock.Mock()
         requests.post = mock.Mock()
         reconstructed_form = (main_url, attributes, method_1, action_1, input_list_4)
-        data, data_2 = fuzzer.fuzzer(reconstructed_form)
+        data, data_2, data_3 = fuzzer.fuzzer(reconstructed_form)
         # test if the fuzzer injects stuff when no email is present
         values = [data[key] for key in data]
         values_2 = [data_2[key] for key in data_2]
+        values_3 = [data_3[key] for key in data_3]
         # print(values)
 
         self.assertTrue(test_payload not in values, "Payload injected incorrectly")
         self.assertTrue(test_payload_2 not in values_2, "Payload injected incorrectly")
-
+        self.assertTrue(test_payload_3 not in values_3, "Payload injected incorrectly")
 
 # to run a main program inside the modules, run like so:
 # python3 -m Tests.fuzzer_tests

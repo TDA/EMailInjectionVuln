@@ -2,7 +2,6 @@ __author__ = 'Sai'
 from bs4 import BeautifulSoup
 # import mysql.connector
 import MySQLdb
-import json
 import re
 
 
