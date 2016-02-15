@@ -7,6 +7,8 @@ that file, everything from there is marked in the comments.
 specifying it, then I will kick you myself, however improbable that may sound. 
 EIBTI !!! remember that, at least in Python :D :D
 
+*Note to self:* Had to downport to Python2, so this entire thing was rewritten :(
+
 ### Crawler
 1.  CeleryCrawler.py is the config file (kinda), and sets up the queue to execute.
 2.  The call_for_ scripts are basically built to use with Celery, 
@@ -15,6 +17,10 @@ they use the .delay() method to add the tasks asynchronously.
 but can definitely be reused with other projects.
 4.  form_parser and check_for_email are the backbone scripts of this Crawler, 
 they parse the forms and pull up the forms that have email fields respectively.
+5.  Start the crawler like so,
+        python CeleryCrawler.py worker -l INFO
+6.  And then run the parser, like so
+        python call_form_parser.py
 
 ### Fuzzer
 1. call_email_form_retriever makes a db query to get the forms with email fields,
