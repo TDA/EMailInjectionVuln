@@ -75,6 +75,7 @@ def email_form_retriever(row):
         cursor.execute(search_query)
 
         # TODO: this SHOULD return only one row, might need to change this
+        # WOULDNT REALLY AFFECT PERFORMANCE, AS IT HAS ONLY ONE ROW ANYWAY
         rows = cursor.fetchall()
 
         tasks = []

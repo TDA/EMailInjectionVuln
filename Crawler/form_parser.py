@@ -1,8 +1,6 @@
 from __future__ import absolute_import
 from bs4 import BeautifulSoup
 from celery import Celery
-
-
 from functions import *
 from CeleryCrawler import app
 from check_for_email import check_for_email_field

@@ -3,7 +3,6 @@ from celery import Celery
 
 from functions import *
 from form_parser import form_parse
-from call_check_for_email import call_check_for_email
 
 from CeleryCrawler import app
 
