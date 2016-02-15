@@ -4,8 +4,8 @@ import random
 __author__ = 'saipc'
 
 import requests
-from urllib.parse import *
-from Crawler.functions import *
+from urlparse import *
+from functions import *
 
 def construct_url(action, main_url):
         # only do the following IFF the action is relative, and NOT absolute
@@ -155,3 +155,5 @@ def fuzzer(reconstructed_form):
     except Exception as e:
         print("Definitely a requests issue, well, hopefully. We are in %s" % (__name__))
         print(e)
+        with open('log_fuzzer', 'a') as file_handle:
+            file_handle.write(str(e))

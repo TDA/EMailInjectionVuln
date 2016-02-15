@@ -1,11 +1,10 @@
 from __future__ import absolute_import
 __author__ = 'saipc'
-import mysql.connector
 from celery import Celery
 
-from Crawler.functions import *
-from Fuzzer.email_form_retriever import email_form_retriever
-from Fuzzer.CeleryFuzzer import app
+from functions import *
+from email_form_retriever import email_form_retriever
+from CeleryFuzzer import app
 
 # from Fuzzer.call_email_form_retriever import call_email_form_retriever
 # call_email_form_retriever.delay()
@@ -33,6 +32,8 @@ def call_email_form_retriever():
     except Exception as e:
         print("Definitely a database issue, well, hopefully. We are in %s" % (__name__))
         print(e)
+        with open('log_fuzzer', 'a') as file_handle:
+            file_handle.write(str(e))
         return
 
 

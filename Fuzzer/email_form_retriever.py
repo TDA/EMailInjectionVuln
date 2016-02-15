@@ -1,14 +1,12 @@
 from __future__ import absolute_import
 __author__ = 'saipc'
-from bs4 import BeautifulSoup
-import re
+
 import ast
-import mysql.connector
 from celery import Celery
 
-from Crawler.functions import *
-from Fuzzer.fuzzer import fuzzer
-from Fuzzer.CeleryFuzzer import app
+from functions import *
+from fuzzer import fuzzer
+from CeleryFuzzer import app
 
 def reconstruct_form(cursor, row):
     # this complicated looking line basically converts the --> nvm
@@ -95,6 +93,8 @@ def email_form_retriever(row):
     except Exception as e:
         print("Definitely a database issue, well, hopefully. We are in %s" % (__name__))
         print(e)
+        with open('log_fuzzer', 'a') as file_handle:
+            file_handle.write(str(e))
     return
 
 
