@@ -150,6 +150,8 @@ def form_parse(url, html_content):
 
         except Exception as e:
             print("Definitely a database issue, well, hopefully. We are in form_parser")
+            with open('log_form_parser', 'a') as file_handle:
+                file_handle.write(str(e))
             print(e)
             return
 
