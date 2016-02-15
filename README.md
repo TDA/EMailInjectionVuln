@@ -46,3 +46,4 @@ that checks for x-dummy-headers, and bcc headers needs to be built.
 
 ### To SSH:
 ssh -p48064 sai@128.111.48.6
+sudo ssh -p48064 -NL 5672:192.168.48.9:5672 sai@128.111.48.6 -v
