@@ -1,7 +1,9 @@
 from __future__ import absolute_import
 import random
+from CeleryFuzzer import app
 
 __author__ = 'saipc'
+from celery import Celery
 
 import requests
 from urlparse import *
@@ -47,10 +49,11 @@ def construct_url(action, main_url):
     # print("FINAL URL:", url)
     return url
 
-def fuzzer(reconstructed_form):
+@app.task(name='Fuzzer.fuzzer')
+def fuzzer(reconstructed_form, form_id):
     try:
         # lets print out everything we have so we know what all we have :O
-        # print(reconstructed_form)
+        # print(reconstructed_form, form_id)
         main_url, attributes, method, action, input_list = reconstructed_form
         # print("Main URL:", main_url)
         # print("Attributes:", attributes)
@@ -162,6 +165,15 @@ def fuzzer(reconstructed_form):
             # or posts, no need to complicate by handling put etc
             return
 
+        # UPDATE DB after fuzzing!!!!
+        db = getopenconnection()
+        cursor = db.cursor()
+        print("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload)))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload)))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_2)))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_3)))
+        db.commit()
+        db.close()
         # print(r.status_code)
         # print(r.text)
         # this is only for testing that the data is right,
@@ -173,4 +185,4 @@ def fuzzer(reconstructed_form):
         print("Definitely a requests issue, well, hopefully. We are in %s" % (__name__))
         print(e)
         with open('log_fuzzer', 'a') as file_handle:
-            file_handle.write(str(e))
+            file_handle.write(str(e) + '\n' + "We are in %s" % (__name__) + '\n')

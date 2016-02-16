@@ -17,9 +17,11 @@ def call_email_form_retriever():
         # Lets get all the email forms from the db and print them for now
         TABLE_NAME = 'email_forms'
         search_query = generate_search_query(TABLE_NAME)
+        search_query = search_query + " LIMIT 1500, 15000"
         print(search_query)
         cursor.execute(search_query)
         rows = cursor.fetchall()
+        print(len(rows))
         print(rows[0])
         tasks = []
         for row in rows:
@@ -33,7 +35,8 @@ def call_email_form_retriever():
         print("Definitely a database issue, well, hopefully. We are in %s" % (__name__))
         print(e)
         with open('log_fuzzer', 'a') as file_handle:
-            file_handle.write(str(e))
+            file_handle.write(str(e) + '\n' + "We are in %s" % (__name__) + '\n')
         return
 
-
+if __name__ == '__main__':
+    call_email_form_retriever()

@@ -114,7 +114,7 @@ ALTER TABLE `form`
 --
 ALTER TABLE `fuzzed_forms`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `form_id` (`form_id`);
+  ;
 
 --
 -- Indexes for table `params`

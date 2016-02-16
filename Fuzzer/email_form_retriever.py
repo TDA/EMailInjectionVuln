@@ -1,12 +1,13 @@
 from __future__ import absolute_import
+
 __author__ = 'saipc'
 
 import ast
 from celery import Celery
 
 from functions import *
-from fuzzer import fuzzer
 from CeleryFuzzer import app
+from fuzzer import fuzzer
 
 def reconstruct_form(cursor, row):
     # this complicated looking line basically converts the --> nvm
@@ -65,11 +66,10 @@ def email_form_retriever(row):
             db.close()
             return "Form with form_id %s ALREADY FUZZED!!!" % str(form_id)
 
-        # Lets get all the email forms from the db and print them for now
+        # retrieve that form
         FORM_TABLE_NAME = 'form'
         # we need the main url too
         search_query = generate_search_query(FORM_TABLE_NAME, 'url, attributes, method, absolute_action, params', 'id', str(form_id))
-        # print(search_query)
         cursor.execute(search_query)
 
         # TODO: this SHOULD return only one row, might need to change this
@@ -82,7 +82,7 @@ def email_form_retriever(row):
         # here we need to retrieve the actual form fields and reconstruct the form
         for row in rows:
             reconstructed_form = reconstruct_form(cursor, row)
-            tasks.append(fuzzer.delay(reconstructed_form))
+            tasks.append(fuzzer.delay(reconstructed_form, form_id))
             # fuzzer(reconstructed_form)
             # have to write up the fuzzer --> DONE
 
@@ -94,7 +94,7 @@ def email_form_retriever(row):
         print("Definitely a database issue, well, hopefully. We are in %s" % (__name__))
         print(e)
         with open('log_fuzzer', 'a') as file_handle:
-            file_handle.write(str(e))
+            file_handle.write(str(e) + '\n' + "We are in %s" % (__name__) + '\n')
     return
 
 
