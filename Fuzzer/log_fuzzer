@@ -1328,3 +1328,37 @@ Exceeded 30 redirects.
 We are in fuzzer
 ('Connection aborted.', error(54, 'Connection reset by peer'))
 We are in fuzzer
+HTTPConnectionPool(host='investage.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10403d090>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='investage.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10401b390>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='www.getcorrectionsjobs.com', port=80): Max retries exceeded with url: /opt-in/subscribe.php (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103fdbd10>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='www.getcorrectionsjobs.com', port=80): Max retries exceeded with url: /opt-in/subscribe.php (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x105f4ff90>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='investage.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103fdb8d0>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104024dd0>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='investage.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103faa310>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103faa790>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='cadys.ro', port=80): Read timed out. (read timeout=None)
+We are in fuzzer
+HTTPConnectionPool(host='cadys.ro', port=80): Read timed out. (read timeout=None)
+We are in fuzzer
+HTTPConnectionPool(host='cadys.ro', port=80): Read timed out. (read timeout=None)
+We are in fuzzer
+HTTPConnectionPool(host='cadys.ro', port=80): Read timed out. (read timeout=None)
+We are in fuzzer
+HTTPConnectionPool(host='cadys.ro', port=80): Read timed out. (read timeout=None)
+We are in fuzzer
+('Connection aborted.', error(54, 'Connection reset by peer'))
+We are in fuzzer
+HTTPConnectionPool(host='www.firstreportnews.com', port=80): Max retries exceeded with url: /https://www.aweber.com/scripts/addlead.pl (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103fcf150>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='culturekenya.com', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103fe00d0>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='culturekenya.com', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x105f79f50>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer

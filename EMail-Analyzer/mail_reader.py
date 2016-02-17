@@ -8,6 +8,8 @@ def read_mails(filename):
     mbox = mailbox.mbox(filename)
     for message in mbox:
        messages.append(message)
+    # returns instances of the mails,
+    # they behave like dictionaries
     return messages
 
 if __name__ == "__main__":

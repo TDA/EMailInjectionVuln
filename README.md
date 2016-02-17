@@ -33,6 +33,17 @@ and then does a parallel pass to the celery queue.
 analyzer script, seeing as we are only going to nuke them with BCC.
 * After discussion with the prof, a minimal email analyzer script 
 that checks for x-dummy-headers, and bcc headers needs to be built.
+* The mails in maluser are direct proof of the attack.
+* But the mails in normaluser could contain the x-check
+header, if they do, then that is a successful attack
+as well. 
+* This is due to pythons way of attaching
+headers, instead of overwriting, it ignores duplicate
+headers, so we need to inject a new one.
+* So, for php, (and unduplicated python) we use the malusers file, 
+for the duplicated headers, normaluser is checked.
+* The reguser is checked to see which sites actually sent out emails :D, 
+so that we can say, out of X sites, we got Y mails, out of which Z mails were fuzzed
 
 ### Test Suite
 * Have written tests using Unittest module and mocks.
