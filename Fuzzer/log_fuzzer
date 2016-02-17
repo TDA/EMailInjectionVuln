@@ -1402,3 +1402,99 @@ HTTPSConnectionPool(host='www.sirc.org.np', port=30000): Max retries exceeded wi
 We are in fuzzer
 HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103fd9350>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
 We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103fb3450>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='kaelascottcounselling.com', port=80): Max retries exceeded with url: //kaelascottcounselling.us4.list-manage.com/subscribe/post?u=6a2d5cdc5554540bb2f9bc77b&id=1bce37e80f (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x105fd8b50>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='kaelascottcounselling.com', port=80): Max retries exceeded with url: //kaelascottcounselling.us4.list-manage.com/subscribe/post?u=6a2d5cdc5554540bb2f9bc77b&id=2e0fc00c2c (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10401bc10>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10401bc90>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+Exceeded 30 redirects.
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10432b150>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x1042470d0>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+Exceeded 30 redirects.
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10432ed90>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10430e610>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+EOL while scanning string literal (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+EOL while scanning string literal (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+invalid syntax (<unknown>, line 1)
+We are in email_form_retriever
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104392ad0>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104374450>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x1062d9990>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x1062a6f90>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x1062a69d0>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104374190>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x1062d98d0>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+Exceeded 30 redirects.
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104339450>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+Exceeded 30 redirects.
+We are in fuzzer
+("bad handshake: SysCallError(-1, 'Unexpected EOF')",)
+We are in fuzzer
+HTTPConnectionPool(host='panchamrutenterprise.com', port=80): Max retries exceeded with url: /index.php/cruises2/item/199-tames-pede-elit/index.php (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104422f10>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+('Received response with content-encoding: gzip, but failed to decode it.', error('Error -3 while decompressing: incorrect data check',))
+We are in fuzzer
+('Connection aborted.', error(54, 'Connection reset by peer'))
+We are in fuzzer
+('Connection broken: IncompleteRead(0 bytes read)', IncompleteRead(0 bytes read))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104420fd0>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104443e50>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer

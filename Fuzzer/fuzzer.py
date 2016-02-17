@@ -13,7 +13,21 @@ from functions import *
 # from urllib.parse import *
 # from Fuzzer.functions import *
 
+def pretty_print_POST(req):
+    """
+    At this point it is completely built and ready
+    to be fired; it is "prepared".
 
+    However pay attention at the formatting used in
+    this function because it is programmed to be pretty
+    printed and may differ from the actual request.
+    """
+    print('{}\n{}\n{}\n\n{}'.format(
+        '-----------START-----------',
+        req.method + ' ' + req.url,
+        '\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+        req.body,
+    ))
 
 def construct_url(action, main_url):
     # only do the following IFF the action is relative, and NOT absolute
@@ -96,11 +110,11 @@ def fuzzer(reconstructed_form, form_id):
         data_2 = {}
         data_3 = {}
         # add x-dummy-header too
-        payload = 'nuser123@wackopicko.com%0abcc:maluser123@wackopicko.com%0ax-check:in'
+        payload = 'nuser123@wackopicko.com\nbcc:maluser123@wackopicko.com\nx-check:in'
         # nuser123%0abcc%3amaluser123@wackopicko.com
         # nuser123@wackopicko.com%0abcc%3amaluser123@wackopicko.com
         # nuser123@wackopicko.com%0abcc:maluser123@wackopicko.com
-        payload_2 = 'nuser123@wackopicko.com%0d%0abcc:maluser123@wackopicko.com%0d%0ax-check:in'
+        payload_2 = 'nuser123@wackopicko.com\r\nbcc:maluser123@wackopicko.com\r\nx-check:in'
         payload_3 = 'reguser123@wackopicko.com'
 
         for a_input in input_list:
@@ -146,12 +160,16 @@ def fuzzer(reconstructed_form, form_id):
                     data_3[str(a_input["name"])] = form_data_dict["text"]
                     continue
         # print("HERES THE DATA", data)
+        # print("HERES THE DATA", data_2)
+        # print("HERES THE DATA", data_3)
 
         method = str(method).lower()
+        headers = {'content-type': 'application/x-www-form-urlencoded',
+                   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0) Gecko/20100101 Firefox/45.0'}
         # Since we are using requests (yay!), we don't have
         # to construct the url as per get or post, just call
         # r.get or r.post and it'll take care of it
-        if method == 'get':
+        if method == 'get' or method == '':
             # make a get request with requests,
             # and pass the payload as params
             r = requests.get(url, params = data)
@@ -160,9 +178,12 @@ def fuzzer(reconstructed_form, form_id):
         elif method == 'post':
             # make a post request with requests,
             # and pass the payload as data
-            r = requests.post(url, data = data)
-            r_2 = requests.post(url, data = data_2)
-            r_3 = requests.post(url, data = data_3)
+            # req = requests.Request('POST', url, headers=headers,data=data)
+            # prepared = req.prepare()
+            # pretty_print_POST(prepared)
+            r = requests.post(url, data = data, headers = headers)
+            r_2 = requests.post(url, data = data_2, headers = headers)
+            r_3 = requests.post(url, data = data_3, headers = headers)
         else:
             # we dont have to do this, we handle only gets
             # or posts, no need to complicate by handling put etc
