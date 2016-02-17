@@ -1368,3 +1368,37 @@ Exceeded 30 redirects.
 We are in fuzzer
 ('Connection aborted.', error(54, 'Connection reset by peer'))
 We are in fuzzer
+('Connection aborted.', BadStatusLine("''",))
+We are in fuzzer
+('Connection aborted.', BadStatusLine("''",))
+We are in fuzzer
+HTTPSConnectionPool(host='www.sirc.org.np', port=30000): Max retries exceeded with url: /blocked.php?eventid=VsQ3U9G@YdIAAES3wS8AAAAJ (Caused by NewConnectionError('<requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x10401bd50>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103fb8350>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104047b10>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10401b810>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103fda310>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+Exceeded 30 redirects.
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x105fda690>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x105fa7cd0>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+Exceeded 30 redirects.
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104026d90>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x104037c90>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+("bad handshake: SysCallError(-1, 'Unexpected EOF')",)
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /login/reminder/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x105fd8e50>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
+HTTPSConnectionPool(host='www.sirc.org.np', port=30000): Max retries exceeded with url: /blocked.php?eventid=VsQ9D9G@YdIAACkRlgcAAAA@ (Caused by NewConnectionError('<requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x103fb3b10>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+We are in fuzzer
+HTTPConnectionPool(host='foodresto.ru', port=80): Max retries exceeded with url: /registration/ (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x103fd9350>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))
+We are in fuzzer
