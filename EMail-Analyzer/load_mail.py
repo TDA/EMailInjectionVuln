@@ -4,7 +4,10 @@ import os
 mail_folder = '/var/mail'
 os.chdir(mail_folder)
 
+# the mails in maluser are direct proof of the
 files = ['normaluser', 'maluser']
+NO_INJECTION_FILE = 'reguser'
+
 normal_mails = []
 injected_mails = []
 

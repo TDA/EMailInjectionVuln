@@ -127,8 +127,8 @@ def fuzzer(reconstructed_form, form_id):
                     continue
                 if (check_input(a_input, r"name|username")):
                     data[str(a_input["name"])] = form_data_dict["name"]
-                    data_2[str(a_input["name"])] = form_data_dict["name"]
-                    data_3[str(a_input["name"])] = form_data_dict["name"]
+                    data_2[str(a_input["name"])] = "asuSefcomResearcher2"
+                    data_3[str(a_input["name"])] = "asuSefcomResearcher3"
                     continue
                 if (check_input(a_input, r"submit")):
                     data["submit"] = form_data_dict["submit"]

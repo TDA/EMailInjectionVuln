@@ -85,7 +85,6 @@ def email_form_retriever(row):
             tasks.append(fuzzer.delay(reconstructed_form, form_id))
             # fuzzer(reconstructed_form)
             # have to write up the fuzzer --> DONE
-
         db.commit()
         db.close()
         return "Success"
