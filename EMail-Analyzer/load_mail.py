@@ -1,8 +1,7 @@
 __author__ = 'saipc'
 import os
 
-mail_folder = '/var/mail'
-os.chdir(mail_folder)
+from mail_reader import read_mails
 
 # the mails in maluser are direct proof of the attack
 files = ['normaluser', 'maluser']
@@ -21,3 +20,10 @@ for f in files:
     with open(f, 'r') as file_handle:
         mail_data = file_handle.read()
 
+# helper functions
+def check_total_mails(filename):
+    messages = read_mails(filename)
+    return len(messages)
+
+def is_header_present(message, header):
+    return message.contains(header)
