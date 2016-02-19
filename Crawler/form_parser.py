@@ -123,7 +123,7 @@ def form_parse(url, html_content):
             # store the requests' headers we used to fetch the page,
             # once again not really needed unless we use this for some other research.
             # the urls ARE required though.
-            req_insert_query = insert_query_gen('requests', ('', db.escape_string(url)))
+            req_insert_query = insert_query_gen('requests', (0, db.escape_string(url)))
             cursor.execute(req_insert_query)
             req_id = cursor.lastrowid
 
@@ -133,7 +133,7 @@ def form_parse(url, html_content):
             # using json.dumps so that the single quotes in the dict key:value pairs don't
             # mess with the single quotes in the SQL queries.
             insert_query = insert_query_gen('form', (0, db.escape_string(url), json.dumps(attributes), req_id, db.escape_string(
-                form), method, action, absolute_action, param_ids))
+                str(form)), method, action, absolute_action, param_ids))
             # print(insert_query)
             cursor.execute(insert_query)
             form_id = cursor.lastrowid
@@ -145,7 +145,8 @@ def form_parse(url, html_content):
             cursor.execute(update_query)
             db.commit()
             tasks = []
-            row = (form_id, db.escape_string(form))
+            print(db.escape_string(str(form)))
+            row = (form_id, db.escape_string(str(form)))
             tasks.append(check_for_email_field.delay(row))
 
 

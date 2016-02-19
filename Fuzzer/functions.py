@@ -1,11 +1,12 @@
 __author__ = 'Sai'
 import MySQLdb
+import DB
 import re
 
 
 def getopenconnection():
-    return MySQLdb.connect('127.0.0.1', 'root', '',
-                                   'ejection')
+    return MySQLdb.connect('127.0.0.1', 'root', '', 'ejection')
+    # return MySQLdb.connect(DB.ip, DB.username, DB.password, DB.database_name)
 
 
 def extract_form_attrs(form):

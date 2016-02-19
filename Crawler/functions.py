@@ -5,8 +5,8 @@ import re
 
 
 def getopenconnection():
-    return MySQLdb.connect(DB.ip, DB.username, DB.password,
-                                   DB.database_name)
+    return MySQLdb.connect('127.0.0.1', 'root', '', 'ejection')
+    # return MySQLdb.connect(DB.ip, DB.username, DB.password, DB.database_name)
 
 
 def extract_form_attrs(form):
@@ -64,7 +64,7 @@ def process_input(input, params_list):
     # have a name. Period.
     elt_type = input.name
     # this is a set, avoids duplicates.
-    params_list.add(('', elt_type, type, name, value, ''))
+    params_list.add((0, elt_type, type, name, value, ''))
 
 
 def check_input(input, value):
