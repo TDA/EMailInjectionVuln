@@ -132,7 +132,7 @@ def form_parse(url, html_content):
             # of the project.
             # using json.dumps so that the single quotes in the dict key:value pairs don't
             # mess with the single quotes in the SQL queries.
-            insert_query = insert_query_gen('form', ('', url, json.dumps(attributes), req_id, escape_quotes(
+            insert_query = insert_query_gen('form', (0, url, json.dumps(attributes), req_id, db.escape_string(
                 form), method, action, absolute_action, param_ids))
             # print(insert_query)
             cursor.execute(insert_query)
@@ -145,14 +145,14 @@ def form_parse(url, html_content):
             cursor.execute(update_query)
             db.commit()
             tasks = []
-            row = (form_id, escape_quotes(form))
+            row = (form_id, db.escape_string(form))
             tasks.append(check_for_email_field.delay(row))
 
 
         except Exception as e:
             print("Definitely a database issue, well, hopefully. We are in form_parser")
             with open('log_form_parser', 'a') as file_handle:
-                file_handle.write(str(e))
+                file_handle.write(str(e) + '\n')
             print(e)
             return
 
