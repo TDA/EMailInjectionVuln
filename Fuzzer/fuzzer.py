@@ -109,6 +109,8 @@ def fuzzer(reconstructed_form, form_id):
         data = {}
         data_2 = {}
         data_3 = {}
+        data_4 = {}
+        data_5 = {}
         # add x-dummy-header too
         payload = 'nuser123@wackopicko.com\nbcc:maluser123@wackopicko.com\nx-check:in'
         # nuser123%0abcc%3amaluser123@wackopicko.com
@@ -116,6 +118,8 @@ def fuzzer(reconstructed_form, form_id):
         # nuser123@wackopicko.com%0abcc:maluser123@wackopicko.com
         payload_2 = 'nuser123@wackopicko.com\r\nbcc:maluser123@wackopicko.com\r\nx-check:in'
         payload_3 = 'reguser123@wackopicko.com'
+        payload_4 = 'nuser123@wackopicko.com\nbcc:maluser123@wackopicko.com'
+        payload_5 = 'nuser123@wackopicko.com\r\nbcc:maluser123@wackopicko.com'
 
         for a_input in input_list:
             if (check_input(a_input, r"email|e-mail")):
@@ -126,6 +130,9 @@ def fuzzer(reconstructed_form, form_id):
                 data[str(a_input["name"])] = payload
                 data_2[str(a_input["name"])] = payload_2
                 data_3[str(a_input["name"])] = payload_3
+                data_4[str(a_input["name"])] = payload_4
+                data_5[str(a_input["name"])] = payload_5
+
                 # need to add the payload to the field here --> DONE
             else:
                 # this is a normal field, just enter
@@ -136,21 +143,29 @@ def fuzzer(reconstructed_form, form_id):
                     data[str(a_input["name"])] = form_data_dict["date"]
                     data_2[str(a_input["name"])] = form_data_dict["date"]
                     data_3[str(a_input["name"])] = form_data_dict["date"]
+                    data_4[str(a_input["name"])] = form_data_dict["date"]
+                    data_5[str(a_input["name"])] = form_data_dict["date"]
                     continue
                 if (check_input(a_input, r"password")):
                     data[str(a_input["name"])] = form_data_dict["password"]
                     data_2[str(a_input["name"])] = form_data_dict["password"]
                     data_3[str(a_input["name"])] = form_data_dict["password"]
+                    data_4[str(a_input["name"])] = form_data_dict["password"]
+                    data_5[str(a_input["name"])] = form_data_dict["password"]
                     continue
                 if (check_input(a_input, r"name|username")):
                     data[str(a_input["name"])] = form_data_dict["name"]
                     data_2[str(a_input["name"])] = "asuSefcomResearcher2"
                     data_3[str(a_input["name"])] = "asuSefcomResearcher3"
+                    data_4[str(a_input["name"])] = "asuSefcomResearcher4"
+                    data_5[str(a_input["name"])] = "asuSefcomResearcher5"
                     continue
                 if (check_input(a_input, r"submit")):
                     data["submit"] = form_data_dict["submit"]
                     data_2["submit"] = form_data_dict["submit"]
                     data_3["submit"] = form_data_dict["submit"]
+                    data_4[str(a_input["name"])] = form_data_dict["submit"]
+                    data_5[str(a_input["name"])] = form_data_dict["submit"]
                     continue
                 # this is the default case where the field is a text field,
                 # only reached if its none of the above
@@ -158,6 +173,8 @@ def fuzzer(reconstructed_form, form_id):
                     data[str(a_input["name"])] = form_data_dict["text"]
                     data_2[str(a_input["name"])] = form_data_dict["text"]
                     data_3[str(a_input["name"])] = form_data_dict["text"]
+                    data_4[str(a_input["name"])] = form_data_dict["text"]
+                    data_5[str(a_input["name"])] = form_data_dict["text"]
                     continue
         # print("HERES THE DATA", data)
         # print("HERES THE DATA", data_2)
@@ -172,9 +189,11 @@ def fuzzer(reconstructed_form, form_id):
         if method == 'get' or method == '':
             # make a get request with requests,
             # and pass the payload as params
-            r = requests.get(url, params = data)
-            r_2 = requests.get(url, params = data_2)
-            r_3 = requests.get(url, params = data_3)
+            r = requests.get(url, params = data, headers = headers)
+            r_2 = requests.get(url, params = data_2, headers = headers)
+            r_3 = requests.get(url, params = data_3, headers = headers)
+            r_4 = requests.get(url, params = data_4, headers = headers)
+            r_5 = requests.get(url, params = data_5, headers = headers)
         elif method == 'post':
             # make a post request with requests,
             # and pass the payload as data
@@ -184,6 +203,8 @@ def fuzzer(reconstructed_form, form_id):
             r = requests.post(url, data = data, headers = headers)
             r_2 = requests.post(url, data = data_2, headers = headers)
             r_3 = requests.post(url, data = data_3, headers = headers)
+            r_4 = requests.post(url, data = data_4, headers = headers)
+            r_5 = requests.post(url, data = data_5, headers = headers)
         else:
             # we dont have to do this, we handle only gets
             # or posts, no need to complicate by handling put etc
@@ -193,9 +214,11 @@ def fuzzer(reconstructed_form, form_id):
         db = getopenconnection()
         cursor = db.cursor()
         print("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload)))
-        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload)))
-        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_2)))
-        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_3)))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload), db.escape_string(data)))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_2), db.escape_string(data_2)))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_3), db.escape_string(data_3)))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_4), db.escape_string(data_4)))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_5), db.escape_string(data_5)))
         db.commit()
         db.close()
         # print(r.status_code)
@@ -203,7 +226,7 @@ def fuzzer(reconstructed_form, form_id):
         # this is only for testing that the data is right,
         # we do not do anything with the data
         # print("HERES THE DATA afterwards", data)
-        return (data, data_2, data_3)
+        return (data, data_2, data_3, data_4, data_5)
 
     except Exception as e:
         print("Definitely a requests issue, well, hopefully. We are in %s" % (__name__))
