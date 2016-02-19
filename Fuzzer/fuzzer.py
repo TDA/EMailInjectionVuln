@@ -8,6 +8,7 @@ from celery import Celery
 import requests
 from urlparse import *
 from functions import *
+from time import sleep
 
 # for tests in python3
 # from urllib.parse import *
@@ -37,7 +38,7 @@ def construct_url(action, main_url):
     # initially we can directly get/post a request
     # to the url, so set url to action
     url = action
-    if not str(action).startswith('http:'):
+    if not str(action).startswith('http'):
         # if action is empty, it means we submit to same page
         if action == "#" or action == '' or action == '/':
             url = main_url
@@ -161,11 +162,13 @@ def fuzzer(reconstructed_form, form_id):
                     data_5[str(a_input["name"])] = "asuSefcomResearcher5"
                     continue
                 if (check_input(a_input, r"submit")):
-                    data["submit"] = form_data_dict["submit"]
-                    data_2["submit"] = form_data_dict["submit"]
-                    data_3["submit"] = form_data_dict["submit"]
-                    data_4[str(a_input["name"])] = form_data_dict["submit"]
-                    data_5[str(a_input["name"])] = form_data_dict["submit"]
+                    if a_input["name"] == '':
+                        a_input["name"] = 'submit'
+                    data[str(a_input["name"])] = a_input.get('value') or form_data_dict["submit"]
+                    data_2[str(a_input["name"])] = a_input.get('value') or form_data_dict["submit"]
+                    data_3[str(a_input["name"])] = a_input.get('value') or form_data_dict["submit"]
+                    data_4[str(a_input["name"])] = a_input.get('value') or form_data_dict["submit"]
+                    data_5[str(a_input["name"])] = a_input.get('value') or form_data_dict["submit"]
                     continue
                 # this is the default case where the field is a text field,
                 # only reached if its none of the above
@@ -176,6 +179,16 @@ def fuzzer(reconstructed_form, form_id):
                     data_4[str(a_input["name"])] = form_data_dict["text"]
                     data_5[str(a_input["name"])] = form_data_dict["text"]
                     continue
+
+                # add hidden fields if present
+                if (check_input(a_input, r"hidden")):
+                    data[str(a_input["name"])] = a_input.get('value')
+                    data_2[str(a_input["name"])] = a_input.get('value')
+                    data_3[str(a_input["name"])] = a_input.get('value')
+                    data_4[str(a_input["name"])] = a_input.get('value')
+                    data_5[str(a_input["name"])] = a_input.get('value')
+                    continue
+
         # print("HERES THE DATA", data)
         # print("HERES THE DATA", data_2)
         # print("HERES THE DATA", data_3)
@@ -190,9 +203,13 @@ def fuzzer(reconstructed_form, form_id):
             # make a get request with requests,
             # and pass the payload as params
             r = requests.get(url, params = data, headers = headers)
+            sleep(0.5)
             r_2 = requests.get(url, params = data_2, headers = headers)
+            sleep(0.5)
             r_3 = requests.get(url, params = data_3, headers = headers)
+            sleep(0.5)
             r_4 = requests.get(url, params = data_4, headers = headers)
+            sleep(0.5)
             r_5 = requests.get(url, params = data_5, headers = headers)
         elif method == 'post':
             # make a post request with requests,
@@ -201,9 +218,13 @@ def fuzzer(reconstructed_form, form_id):
             # prepared = req.prepare()
             # pretty_print_POST(prepared)
             r = requests.post(url, data = data, headers = headers)
+            sleep(0.5)
             r_2 = requests.post(url, data = data_2, headers = headers)
+            sleep(0.5)
             r_3 = requests.post(url, data = data_3, headers = headers)
+            sleep(0.5)
             r_4 = requests.post(url, data = data_4, headers = headers)
+            sleep(0.5)
             r_5 = requests.post(url, data = data_5, headers = headers)
         else:
             # we dont have to do this, we handle only gets
@@ -213,19 +234,19 @@ def fuzzer(reconstructed_form, form_id):
         # UPDATE DB after fuzzing!!!!
         db = getopenconnection()
         cursor = db.cursor()
-        print("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload)))
-        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload), db.escape_string(data)))
-        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_2), db.escape_string(data_2)))
-        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_3), db.escape_string(data_3)))
-        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_4), db.escape_string(data_4)))
-        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_5), db.escape_string(data_5)))
+        # print("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload)))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload), db.escape_string(str(data))))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_2), db.escape_string(str(data_2))))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_3), db.escape_string(str(data_3))))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_4), db.escape_string(str(data_4))))
+        cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload_5), db.escape_string(str(data_5))))
         db.commit()
         db.close()
         # print(r.status_code)
         # print(r.text)
         # this is only for testing that the data is right,
         # we do not do anything with the data
-        # print("HERES THE DATA afterwards", data)
+        print("HERES THE DATA afterwards", data)
         return (data, data_2, data_3, data_4, data_5)
 
     except Exception as e:
