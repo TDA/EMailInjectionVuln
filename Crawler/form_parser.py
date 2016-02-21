@@ -145,7 +145,7 @@ def form_parse(url, html_content):
             cursor.execute(update_query)
             db.commit()
             tasks = []
-            print(db.escape_string(str(form)))
+            # print(db.escape_string(str(form)))
             row = (form_id, db.escape_string(str(form)))
             tasks.append(check_for_email_field.delay(row))
 

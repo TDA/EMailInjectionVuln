@@ -66,6 +66,10 @@ def construct_url(action, main_url):
 
 @app.task(name='Fuzzer.fuzzer')
 def fuzzer(reconstructed_form, form_id):
+    # TODO: make this entire thing into a function
+    # which takes in a payload and fuzzes that into
+    # every field. Changes after talking to Adam as
+    # of Feb 19, 2016.
     try:
         # lets print out everything we have so we know what all we have :O
         # print(reconstructed_form, form_id)
