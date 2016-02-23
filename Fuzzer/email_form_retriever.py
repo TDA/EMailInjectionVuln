@@ -7,7 +7,7 @@ from celery import Celery
 
 from functions import *
 from CeleryFuzzer import app
-from fuzzer import fuzzer
+from fuzzer import *
 
 def reconstruct_form(cursor, row):
     # this complicated looking line basically converts the --> nvm
@@ -82,7 +82,7 @@ def email_form_retriever(row):
         # here we need to retrieve the actual form fields and reconstruct the form
         for row in rows:
             reconstructed_form = reconstruct_form(cursor, row)
-            tasks.append(fuzzer.delay(reconstructed_form, form_id))
+            tasks.append(call_fuzzer_with_payload.delay(reconstructed_form, form_id))
             # fuzzer(reconstructed_form)
             # have to write up the fuzzer --> DONE
         db.commit()
