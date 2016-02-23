@@ -23,10 +23,14 @@ they parse the forms and pull up the forms that have email fields respectively.
         python call_form_parser.py
 
 ### Fuzzer
-1. call_email_form_retriever makes a db query to get the forms with email fields,
-then reconstucts them into a proper ast structure, 
+* call_email_form_retriever makes a db query to get the forms with email fields,
+then reconstructs them into a proper ast structure, 
 and then does a parallel pass to the celery queue.
-2. fuzzer then constructs the requests with the additional headers. 
+* fuzzer then constructs the requests with the additional headers.
+* The fuzzer has been split into multiple parts now, with malicious and non-malicious payloads.
+* This is to save time on fuzzing only the forms that sent us emails in the first place.
+* Also, the fuzzer uses a user_name that is set to (reg/mal/n)user followed by the form id.
+* Have rerouted all such emails to 3 mailboxes using postfix :D
 
 ### Email Analyzer
 * Thinking right about now (Jan 9) whether we need the E-Mail 
