@@ -65,7 +65,7 @@ def construct_url(action, main_url):
     return url
 
 @app.task(name='Fuzzer.fuzzer')
-def fuzzer(reconstructed_form, form_id):
+def fuzzer(reconstructed_form, form_id, payload):
     # TODO: make this entire thing into a function
     # which takes in a payload and fuzzes that into
     # every field. Changes after talking to Adam as
@@ -258,3 +258,7 @@ def fuzzer(reconstructed_form, form_id):
         print(e)
         with open('log_fuzzer', 'a') as file_handle:
             file_handle.write(str(e) + '\n' + "We are in %s" % (__name__) + '\n')
+
+
+def call_fuzzer_with_payload(reconstructed_form, form_id):
+    pass
