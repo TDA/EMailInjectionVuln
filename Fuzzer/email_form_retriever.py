@@ -7,7 +7,7 @@ from celery import Celery
 
 from functions import *
 from CeleryFuzzer import app
-from fuzzer import *
+from fuzzer import call_fuzzer_with_payload
 
 def reconstruct_form(cursor, row):
     # this complicated looking line basically converts the --> nvm

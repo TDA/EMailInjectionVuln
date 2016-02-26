@@ -14,6 +14,7 @@ app.conf.update(
     BROKER_URL = 'amqp://guest:guest@localhost:5678//',
     CELERY_ROUTES = {'Fuzzer.call_email_form_retriever': {'queue': 'fuzzing'},
                      'Fuzzer.call_fuzzer_with_payload': {'queue': 'fuzzing'},
+                     # 'Fuzzer.call_fuzzer_with_malicious_payload': {'queue': 'fuzzing'},
                      'Fuzzer.email_form_retriever': {'queue': 'fuzzing'},
                      'Fuzzer.fuzzer': {'queue': 'fuzzing'},
                      }

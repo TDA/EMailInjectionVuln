@@ -219,9 +219,11 @@ def call_fuzzer_with_payload(reconstructed_form, form_id):
     # user_id = random.randint(0, 100000)
     payload = 'reguser' + str(form_id) + '@wackopicko.com'
     fields_to_fuzz = []
-    fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz)
+    fuzzer.delay(reconstructed_form, form_id, payload, fields_to_fuzz)
     pass
 
+
+@app.task(name='Fuzzer.call_fuzzer_with_malicious_payload')
 def call_fuzzer_with_malicious_payload(reconstructed_form, form_id, fields_to_fuzz):
     payloads = [
                 'nuser' + form_id + '@wackopicko.com\r\nbcc:maluser' + form_id + '@wackopicko.com\r\nx-check:in',
@@ -230,5 +232,5 @@ def call_fuzzer_with_malicious_payload(reconstructed_form, form_id, fields_to_fu
                 'nuser' + form_id + '@wackopicko.com\r\nbcc:maluser' + form_id + '@wackopicko.com'
                 ]
     for payload in payloads:
-        fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz)
+        fuzzer.delay(reconstructed_form, form_id, payload, fields_to_fuzz)
     pass
