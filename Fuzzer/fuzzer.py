@@ -176,14 +176,14 @@ def fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz):
         if method == 'get' or method == '':
             # make a get request with requests,
             # and pass the payload as params
-            r = requests.get(url, params = data, headers = headers)
+            r = requests.get(url, params = data, headers = headers, timeout=1.2)
         elif method == 'post':
             # make a post request with requests,
             # and pass the payload as data
             # req = requests.Request('POST', url, headers=headers,data=data)
             # prepared = req.prepare()
             # pretty_print_POST(prepared)
-            r = requests.post(url, data = data, headers = headers)
+            r = requests.post(url, data = data, headers = headers, timeout=1.2)
         else:
             # we dont have to do this, we handle only gets
             # or posts, no need to complicate by handling put etc
