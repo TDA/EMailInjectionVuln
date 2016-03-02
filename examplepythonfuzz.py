@@ -1,20 +1,22 @@
 __author__ = 'saipc'
 
-from email.parser import Parser
+from email.parser import FeedParser
 
 to = input()
 #print to
-msg = 'To: '+ to + '\n' \
-        'From: <user@example.com>\n' \
-        'Subject: Test message\n' \
-        '\n'\
-        'Body would go here\n'
+msg = """To: """ + to + """\n
+        From: <user@example.com>\n
+        Subject: Test message\n
+        \n
+        Body would go here\n"""
 
 #print msg
-headers = Parser().parsestr(msg)
+f = FeedParser()
+f.feed(msg)
+headers = FeedParser.close(f)
 
 #  Now the header items can be accessed as a dictionary:
-# attack string => 'sai@sai.com\nBCC:spc\nbcc:saipc'
+# attack string => 'sai@sai.com\nBCC:spc@spc.com\nbcc:saipc@saipc.com'
 # Parser().parsestr checks for the BCC/bcc field, and
 # only takes in the FIRST found field
 # this behavior is opposite to that of
