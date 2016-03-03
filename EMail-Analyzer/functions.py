@@ -1,5 +1,5 @@
 __author__ = 'saipc'
-# import MySQLdb
+import MySQLdb
 
 
 def getopenconnection():
@@ -29,7 +29,7 @@ def generate_multi_search_query(tablename, fields = None, conditions = None):
         # constructs a list with items which look like,
         # a = b, which is then concated into one string 'and'
         # SO => a = b AND c = d AND e =f etc.
-        query = (' and '.join([("%s = %s")%(fieldname, value) for (fieldname, value) in conditions]))
+        query = (' and '.join([("`%s` = '%s'")%(fieldname, value) for (fieldname, value) in conditions]))
         search_query += query
     return search_query
     pass

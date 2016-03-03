@@ -14,8 +14,8 @@ def read_mails(filename):
 
 def get_body_content(m):
     # thanks to http://stackoverflow.com/questions/26567843/reading-the-mail-content-of-an-mbox-file-using-python-mailbox
-    if m.is_multipart():
-        content = ''.join(part.get_payload(decode=True) for part in m.get_payload())
+    if m.is_multipart() and m.get_payload():
+        content = ''.join(part.get_payload(decode=True) for part in m.get_payload() if part.get_payload(decode=True) != None)
     else:
         content = m.get_payload(decode=True)
     return content

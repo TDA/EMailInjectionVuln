@@ -10,7 +10,7 @@ import requests
 from urlparse import *
 from functions import *
 from time import sleep
-from Fuzzer.email_form_retriever import reconstruct_form
+from email_form_retriever import *
 # for tests in python3
 # from urllib.parse import *
 # from Fuzzer.functions import *

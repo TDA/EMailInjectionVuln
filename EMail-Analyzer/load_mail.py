@@ -1,9 +1,10 @@
+import ast
 import re
 
 __author__ = 'saipc'
 import os
 
-from mail_reader import read_mails
+from mail_reader import *
 from functions import *
 
 # the mails in maluser are direct proof of the attack
@@ -44,15 +45,33 @@ for m in messages:
     payload = matches.group(0)
     form_id = matches.group(1)
     print("Form id: ", form_id, payload)
+    body_content = get_body_content(m) # the body of the message
+    header_values = m.values() # all the header content
 
-    search_query = generate_multi_search_query('fuzzed_forms', 'input_data', [('form_id', form_id), ('payload', payload)])
-    print(search_query)
+    # get the input data we sent for this request
+    search_query = generate_multi_search_query('fuzzed_forms', 'input_data', [('form_id', form_id), ('payload_for_fuzzing', payload)])
+    # print(search_query)
     db = getopenconnection()
     cursor = db.cursor()
     cursor.execute(search_query)
     form_input_data_row = cursor.fetchone()
-    print(form_input_data_row)
-
+    fields_to_fuzz = []
+    # print(form_input_data_row)
+    # now compare what we sent, to what we received, which of
+    # the inputs we sent were in the actual email? if we find,
+    # lets say, the name and the email in the received email,
+    # then we should prolly try fuzzing both of those :D
+    if form_input_data_row:
+        form_input_data_row = ast.literal_eval(form_input_data_row[0])
+        for k in form_input_data_row.keys():
+            value = form_input_data_row.get(k)
+            if (value in body_content or value in header_values):
+                print("Value found", value)
+                fields_to_fuzz.append(k)
+            else:
+                print("Value not found", value)
+    print("These are the fields to fuzz", fields_to_fuzz)
+    # now we call the malicious payload fuzzer :D
 
     # keys = m.keys()
     # for k in keys:
