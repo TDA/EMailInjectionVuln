@@ -10,7 +10,7 @@ import requests
 from urlparse import *
 from functions import *
 from time import sleep
-
+from Fuzzer.email_form_retriever import reconstruct_form
 # for tests in python3
 # from urllib.parse import *
 # from Fuzzer.functions import *
@@ -224,13 +224,22 @@ def call_fuzzer_with_payload(reconstructed_form, form_id):
 
 
 @app.task(name='Fuzzer.call_fuzzer_with_malicious_payload')
-def call_fuzzer_with_malicious_payload(reconstructed_form, form_id, fields_to_fuzz):
+def call_fuzzer_with_malicious_payload(form_id, fields_to_fuzz):
+    # retrieve that form
+    FORM_TABLE_NAME = 'form'
+    db = getopenconnection()
+    cursor = db.cursor()
+    # we need the main url too
+    search_query = generate_search_query(FORM_TABLE_NAME, 'url, attributes, method, absolute_action, params', 'id', str(form_id))
+    cursor.execute(search_query)
+    row = cursor.fetchone()
     payloads = [
                 'nuser' + form_id + '@wackopicko.com\r\nbcc:maluser' + form_id + '@wackopicko.com\r\nx-check:in',
                 'nuser' + form_id + '@wackopicko.com\nbcc:maluser' + form_id + '@wackopicko.com\nx-check:in',
                 'nuser' + form_id + '@wackopicko.com\nbcc:maluser' + form_id + '@wackopicko.com',
                 'nuser' + form_id + '@wackopicko.com\r\nbcc:maluser' + form_id + '@wackopicko.com'
                 ]
+    reconstructed_form = reconstruct_form(cursor, row)
     for payload in payloads:
         fuzzer.delay(reconstructed_form, form_id, payload, fields_to_fuzz)
     pass
