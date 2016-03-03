@@ -17,7 +17,7 @@ def call_email_form_retriever():
         # Lets get all the email forms from the db and print them for now
         TABLE_NAME = 'email_forms'
         search_query = generate_search_query(TABLE_NAME)
-        search_query = search_query + " LIMIT 290000, 20000"
+        search_query = search_query + " LIMIT 310000, 20000"
         print(search_query)
         cursor.execute(search_query)
         rows = cursor.fetchall()
