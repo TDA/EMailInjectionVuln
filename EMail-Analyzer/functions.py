@@ -1,5 +1,5 @@
 __author__ = 'saipc'
-import MySQLdb
+# import MySQLdb
 
 
 def getopenconnection():
@@ -14,7 +14,7 @@ def insert_query_gen(tablename, attrs):
     return insert_query
     pass
 
-def generate_search_query(tablename, fields = None, fieldname = None, value = None):
+def generate_multi_search_query(tablename, fields = None, conditions = None):
     # this is just a simple search query generator function
     search_query = "SELECT "
     if fields:
@@ -23,7 +23,12 @@ def generate_search_query(tablename, fields = None, fieldname = None, value = No
         search_query += "*"
     search_query += " FROM " + tablename
 
-    if fieldname and value:
-        search_query += " WHERE %s = %s"%(fieldname, value)
+    if conditions:
+        search_query += " WHERE "
+        # this exceptionally cute line does this:
+        # constructs a list with items which look like,
+        # a = b, which is then concated into one string 'and'
+        query = (' and '.join([("%s = %s")%(fieldname, value) for (fieldname, value) in conditions]))
+        search_query += query
     return search_query
     pass
