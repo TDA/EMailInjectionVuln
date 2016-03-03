@@ -39,14 +39,19 @@ messages = read_mails(os.path.join('~', NO_INJECTION_FILE))
 user_regex = re.compile("(?:(?:reg)|(?:mal)|n)user(\d+)@wackopicko\.com")
 
 for m in messages:
-    print(m["to"], m["x-original-to"])
+    #print(m["to"], m["x-original-to"])
     matches = re.match(user_regex, m["x-original-to"])
-    print("Form id: ", matches.group(1), matches.group(0))
     payload = matches.group(0)
     form_id = matches.group(1)
-    #TODO: write a SQL query to fetch the right row
+    print("Form id: ", form_id, payload)
+
     search_query = generate_multi_search_query('fuzzed_forms', 'input_data', [('form_id', form_id), ('payload', payload)])
     print(search_query)
+    db = getopenconnection()
+    cursor = db.cursor()
+    cursor.execute(search_query)
+    form_input_data_row = cursor.fetchone()
+    print(form_input_data_row)
 
 
     # keys = m.keys()
