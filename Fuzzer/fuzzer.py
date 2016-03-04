@@ -9,8 +9,7 @@ from celery import Celery
 import requests
 from urlparse import *
 from functions import *
-from time import sleep
-from email_form_retriever import *
+# from time import sleep
 # for tests in python3
 # from urllib.parse import *
 # from Fuzzer.functions import *
@@ -121,9 +120,9 @@ def fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz):
             for field in fields_to_fuzz:
                 form_data_dict[field] = payload
 
-        print(form_data_dict)
+        # print(form_data_dict)
         data = {}
-
+        print("Data dict ", form_data_dict)
         for a_input in input_list:
             if (check_input(a_input, r"email|e-mail")):
                 # this is the field to be fuzzed
@@ -133,6 +132,11 @@ def fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz):
                 data[str(a_input["name"])] = payload
                 # need to add the payload to the field here --> DONE
             else:
+                # if the dict has the field, just use it, else check for other stuff
+                # this is for the second round of fuzzing :D
+                if (form_data_dict.has_key(a_input.get('name'))):
+                    data[str(a_input["name"])] = form_data_dict[a_input["name"]]
+                    continue
                 # this is a normal field, just enter
                 # valid, but irrelevant data
                 # if name, password, or date, OR submit!!!
@@ -225,6 +229,7 @@ def call_fuzzer_with_payload(reconstructed_form, form_id):
 
 @app.task(name='Fuzzer.call_fuzzer_with_malicious_payload')
 def call_fuzzer_with_malicious_payload(form_id, fields_to_fuzz):
+    print("RECEIVED ", form_id, fields_to_fuzz)
     # retrieve that form
     FORM_TABLE_NAME = 'form'
     db = getopenconnection()
@@ -243,6 +248,7 @@ def call_fuzzer_with_malicious_payload(form_id, fields_to_fuzz):
                 ]
     # get the reconstructed form
     reconstructed_form = reconstruct_form(cursor, row)
+    print(reconstructed_form, form_id, payloads, fields_to_fuzz)
     for payload in payloads:
         # fuzz the form with each payload, and multiple
         # fields in the form if necessary

@@ -7,42 +7,7 @@ from celery import Celery
 
 from functions import *
 from CeleryFuzzer import app
-from fuzzer import call_fuzzer_with_payload
-
-def reconstruct_form(cursor, row):
-    # this complicated looking line basically converts the --> nvm
-    # string into a list, and gets the first element of the --> nvm
-    # list, which is actually a dictionary, i have no idea --> nvm
-    # why i saved it that way in the db, but i think cuz json --> Fixed this in functions
-    main_url = row[0]
-    # now attributes is just a dict
-    attributes = ast.literal_eval(row[1])
-    method = row[2]
-    action = row[3]
-    params = row[4]
-    # lets you reconstruct a list from its string representation
-    params = ast.literal_eval(params)
-    input_list = []
-    for param_id in params:
-        TABLE_NAME = 'params'
-        param_search_query = generate_search_query(TABLE_NAME, 'element_type, type, name, value', 'id', str(param_id))
-        # print(param_search_query)
-        cursor.execute(param_search_query)
-        param_row = cursor.fetchone()
-        if param_row == None or (len(param_row)) == 0:
-            # no such params stored, return
-            continue
-        # construct a dict of the params of each input and append to list
-        param_dict = {'element_type' : param_row[0],
-                      'type' : param_row[1],
-                      'name' : param_row[2],
-                      'value': param_row[3]}
-        input_list.append(param_dict)
-        # print(param_dict)
-    # now we have all the data to reconstruct the form and fuzz it
-    # send this as an immutable tuple
-    reconstructed_form = (main_url, attributes, method, action, input_list)
-    return reconstructed_form
+from fuzzer import *
 
 @app.task(name='Fuzzer.email_form_retriever')
 def email_form_retriever(row):

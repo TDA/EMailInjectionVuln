@@ -15,7 +15,7 @@ app.conf.update(
     CELERY_IGNORE_RESULT = True,
     CELERY_ROUTES = {'Fuzzer.call_email_form_retriever': {'queue': 'fuzzing'},
                      'Fuzzer.call_fuzzer_with_payload': {'queue': 'fuzzing'},
-                     # 'Fuzzer.call_fuzzer_with_malicious_payload': {'queue': 'fuzzing'},
+                     'Fuzzer.call_fuzzer_with_malicious_payload': {'queue': 'fuzzing'},
                      'Fuzzer.email_form_retriever': {'queue': 'fuzzing'},
                      'Fuzzer.fuzzer': {'queue': 'fuzzing'},
                      }
