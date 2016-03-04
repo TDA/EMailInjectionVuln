@@ -52,6 +52,7 @@ def construct_url(action, main_url):
                 # this will be right for MOST things tho, so.
                 action = action[1:]
             scheme, netloc, path, params, query, fragment = urlparse(main_url, scheme='')
+
             # replace the paths last item alone with 'action'
             # this is for urls like: main_url = 'https://loc.com/sai/pc/ssspcs.php'
             # the form url might be like above, so we need to submit it right to
@@ -80,6 +81,24 @@ def fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz):
         # print("Input list:", input_list)
 
         url = construct_url(action, main_url)
+
+        ## THIS IS PURELY FOR BLACKLISTING
+        unparsed_url = urlparse(url, scheme='')
+        netloc = unparsed_url[1]
+        # print(netloc)
+
+        db = getopenconnection()
+        cursor = db.cursor()
+        search_query = "Select * from `blacklisted_urls` where `blacklist_url` like  '%s' " % (str('%' + netloc + '%'))
+        cursor.execute(search_query)
+        print(search_query)
+        rows = cursor.fetchall()
+        if (rows and len(rows) > 0):
+            # blacklisted, dont fuzz
+            # print("blacklisted, dont fuzz")
+            return("blacklisted, dont fuzz")
+        else:
+            print("Not blacklisted, proceed")
 
         # get the individual attrs and inputs
         # from the form, and make sure that the fuzzing is only
@@ -122,7 +141,7 @@ def fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz):
 
         # print(form_data_dict)
         data = {}
-        print("Data dict ", form_data_dict)
+        # print("Data dict ", form_data_dict)
         for a_input in input_list:
             if (check_input(a_input, r"email|e-mail")):
                 # this is the field to be fuzzed
@@ -194,8 +213,7 @@ def fuzzer(reconstructed_form, form_id, payload, fields_to_fuzz):
             return
 
         # UPDATE DB after fuzzing!!!!
-        db = getopenconnection()
-        cursor = db.cursor()
+
         # print("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`) VALUES (%s, '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload)))
         cursor.execute("INSERT INTO `fuzzed_forms`(`form_id`, `url_fuzzed`, `payload_for_fuzzing`, `input_data`) VALUES (%s, '%s', '%s', '%s')" % (form_id, db.escape_string(url), db.escape_string(payload), db.escape_string(json.dumps(data))))
         db.commit()
@@ -230,6 +248,7 @@ def call_fuzzer_with_payload(reconstructed_form, form_id):
 @app.task(name='Fuzzer.call_fuzzer_with_malicious_payload')
 def call_fuzzer_with_malicious_payload(form_id, fields_to_fuzz):
     print("RECEIVED ", form_id, fields_to_fuzz)
+    form_id = str(form_id)
     # retrieve that form
     FORM_TABLE_NAME = 'form'
     db = getopenconnection()
@@ -248,7 +267,7 @@ def call_fuzzer_with_malicious_payload(form_id, fields_to_fuzz):
                 ]
     # get the reconstructed form
     reconstructed_form = reconstruct_form(cursor, row)
-    print(reconstructed_form, form_id, payloads, fields_to_fuzz)
+    # print(reconstructed_form, form_id, payloads, fields_to_fuzz)
     for payload in payloads:
         # fuzz the form with each payload, and multiple
         # fields in the form if necessary
