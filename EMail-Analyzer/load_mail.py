@@ -52,6 +52,14 @@ def email_reader():
         payload = matches.group(0)
         form_id = matches.group(1)
         print("Form id: ", form_id, payload)
+        # first check if the form has been seen
+        search_query = "select * from `received_emails` where `form_id` = %s" % (form_id)
+        cursor.execute(search_query)
+        row = cursor.fetchall()
+        if (row and len(row) > 1):
+            #already seen, skip
+            continue
+
         body_content = get_body_content(m) # the body of the message
         header_values = m.values() # all the header content
 
