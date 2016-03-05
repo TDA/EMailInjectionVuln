@@ -20,7 +20,7 @@ files = ['normaluser', 'maluser']
 # as well. This is due to pythons way of attaching
 # headers, instead of overwriting, it ignores duplicate
 # headers, so we need to inject a new one.
-NO_INJECTION_FILE = 'reguser'
+NO_INJECTION_FILE = 'reguser3'
 
 normal_mails = []
 injected_mails = []
@@ -88,6 +88,8 @@ def email_reader():
                         print("Value not found", value)
                 print("These are the fields to fuzz", fields_to_fuzz)
                 # add these to the received_emails table
+                # if this fails due to duplicate, the fuzzer
+                # is never called, once again, this is by design
                 insert_query = "INSERT INTO `received_emails`(`form_id`, `fields_found`) VALUES (%s, '%s')"%(form_id, db.escape_string(json.dumps(fields_to_fuzz)))
                 cursor.execute(insert_query)
 
