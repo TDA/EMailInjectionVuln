@@ -9,16 +9,23 @@ import unittest
 class CheckForEmailTester(unittest.TestCase):
     @mock.patch("mysql.connector.connect")
     def test_db_connection_called(self, cursor):
-        retValue = check_for_email.check_for_email_field([1, "<form><input type=email></form"])
+        retValue = check_for_email.check_for_email_field([1, "<form><input type=email></form>"])
         self.assertTrue(cursor.called, "Cursor never called")
 
     @mock.patch("mysql.connector.connect")
     def test_check_for_email(self, cursor):
-        retValue = check_for_email.check_for_email_field([1, "<form><input type=email></form"])
+        retValue = check_for_email.check_for_email_field([1, "<form><input type=email></form>"])
         self.assertEqual(retValue, "Found")
-        retValue = check_for_email.check_for_email_field([1, "<form><input type=e-mail></form"])
+        retValue = check_for_email.check_for_email_field([1, "<form><input type=e-mail></form>"])
+        self.assertEqual(retValue, "Found")
+        retValue = check_for_email.check_for_email_field([1, "<form><input name=e-mail></form>"])
+        self.assertEqual(retValue, "Found")
+        retValue = check_for_email.check_for_email_field([1, "<form><input name=email></form>"])
         self.assertEqual(retValue, "Found")
 
+    def test_check_for_no_email(self, cursor):
+        retValue = check_for_email.check_for_email_field([1, "<form><input type=text></form>"])
+        self.assertEqual(retValue, "Not Found")
 
 # python3 -m Tests.form_parser_tests
 # with verbosity, python3 -m Tests.form_parser_tests --verbose OR -v
