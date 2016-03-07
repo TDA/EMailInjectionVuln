@@ -47,7 +47,7 @@ class EMailFormRetrieverTester(unittest.TestCase):
 
     # this patch due to namespace conflict :)
     @mock.patch('Fuzzer.email_form_retriever.fuzzer')
-    def test_email_form_retriever_new_fuzz(self, fuzzer):
+    def test_email_form_retriever_calls_fuzzer_for_new_fuzz(self, fuzzer):
         # NOTE: this REQUIRES THE DATABASE TO BE RUNNING
         # form_id 42 has NOT been fuzzed
         url = "http://localhost/VV/vv.htm"
