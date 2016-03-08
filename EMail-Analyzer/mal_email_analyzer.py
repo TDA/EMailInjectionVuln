@@ -34,6 +34,7 @@ def email_reader():
     # lets make these non-capturing, so we can directly
     # get the form_id, and the entire string alone :D double kill!!
     a = []
+    b = set()
     for m in messages:
         try:
             user_regex = re.compile(".*(?:(?:reg)|(?:mal)|n)user(\d+)(.*)?@wackopicko\.com.*")
@@ -45,6 +46,12 @@ def email_reader():
                 form_id = matches.group(1)
                 print("Mail to: ",  m["x-original-to"], form_id)
                 a.append(form_id)
+                b.add(form_id)
+                keys = m.keys()
+                if ('bcc' in keys):
+                    a.append(form_id)
+                    print("FOUND bcc")
+
             # first check if the form has been seen
             # db = getopenconnection()
             # cursor = db.cursor()
@@ -80,6 +87,7 @@ def email_reader():
             print("Prolly a duplicate thing", e)
             continue
         print(len(a))
+        print(len(b))
 
 if __name__ == "__main__":
     # print(check_total_mails("~/maluser"))

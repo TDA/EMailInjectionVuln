@@ -261,9 +261,9 @@ def call_fuzzer_with_malicious_payload(form_id, fields_to_fuzz):
     # set the payloads
     payloads = [
                 'nuser' + form_id + '@wackopicko.com\r\nbcc:maluser' + form_id + '@wackopicko.com\r\nx-check:in',
-                'nuser' + form_id + '@wackopicko.com\nbcc:maluser' + form_id + '@wackopicko.com\nx-check:in',
-                'nuser' + form_id + '@wackopicko.com\nbcc:maluser' + form_id + '@wackopicko.com',
-                'nuser' + form_id + '@wackopicko.com\r\nbcc:maluser' + form_id + '@wackopicko.com'
+                'nuser' + form_id + '_2@wackopicko.com\nbcc:maluser' + form_id + '_2@wackopicko.com\nx-check:in',
+                'nuser' + form_id + '_3@wackopicko.com\nbcc:maluser' + form_id + '_3@wackopicko.com',
+                'nuser' + form_id + '_4@wackopicko.com\r\nbcc:maluser' + form_id + '_4@wackopicko.com'
                 ]
     # get the reconstructed form
     reconstructed_form = reconstruct_form(cursor, row)
