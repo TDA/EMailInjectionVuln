@@ -20,7 +20,7 @@ from CeleryCrawler import app
 def check_for_email_field(tuple):
     form_id = tuple[0]
     form_content = tuple[1]
-    value = "email|e-mail"
+    value = "email|e-mail|mail"
     search_string = re.compile(value, re.IGNORECASE)
     if(re.search(search_string, form_content) != None):
         # print("found somebody")
