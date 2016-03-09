@@ -20,7 +20,7 @@ files = ['normaluser', 'maluser']
 # as well. This is due to pythons way of attaching
 # headers, instead of overwriting, it ignores duplicate
 # headers, so we need to inject a new one.
-NO_INJECTION_FILE = 'reguser6'
+NO_INJECTION_FILE = 'reguser7'
 
 normal_mails = []
 injected_mails = []
@@ -40,10 +40,11 @@ def is_header_present(message, header):
     return message.contains(header)
 
 def email_reader():
-    messages = read_mails(os.path.join('~', NO_INJECTION_FILE))
+    messages = read_mails(os.path.join('~/reguser_mails', NO_INJECTION_FILE))
 
     # lets make these non-capturing, so we can directly
     # get the form_id, and the entire string alone :D double kill!!
+    a = []
 
     for m in messages:
         try:
@@ -59,10 +60,11 @@ def email_reader():
             cursor = db.cursor()
             cursor.execute(search_query)
             row = cursor.fetchall()
-            if (row and len(row) > 1):
+            if (row != None and len(row) >= 1):
                 #already seen, skip
                 continue
 
+            print("Seeing for first time:", form_id)
             body_content = get_body_content(m) # the body of the message
             header_values = m.values() # all the header content
 
@@ -90,13 +92,14 @@ def email_reader():
                 # add these to the received_emails table
                 # if this fails due to duplicate, the fuzzer
                 # is never called, once again, this is by design
-                insert_query = "INSERT INTO `received_emails`(`form_id`, `fields_found`) VALUES (%s, '%s')"%(form_id, db.escape_string(json.dumps(fields_to_fuzz)))
-                cursor.execute(insert_query)
-
                 # now we call the malicious payload fuzzer :D
-                call_fuzzer_with_malicious_payload.delay(form_id, fields_to_fuzz)
-                db.commit()
-                db.close()
+            call_fuzzer_with_malicious_payload.delay(form_id, fields_to_fuzz)
+
+            insert_query = "INSERT INTO `received_emails`(`form_id`, `fields_found`) VALUES (%s, '%s')"%(form_id, db.escape_string(json.dumps(fields_to_fuzz)))
+            cursor.execute(insert_query)
+
+            db.commit()
+            db.close()
         except Exception as e:
             print("Prolly a duplicate thing")
             continue
