@@ -53,13 +53,7 @@ def email_reader():
                     print(key)
                     a.append(form_id)
                     b.add(form_id)
-            # if ():
-            #     matches = re.match(user_regex, m["x-original-to"])
-            #     payload = matches.group(0)
-            #     form_id = matches.group(1)
-            #     print("Mail to: ",  m["x-original-to"], form_id)
-            #     a.append(form_id)
-            #     b.add(form_id)
+
         except Exception as e:
             print("Prolly a duplicate thing", e)
             continue
@@ -67,6 +61,5 @@ def email_reader():
         print(len(b))
 
 if __name__ == "__main__":
-    # print(check_total_mails("~/maluser"))
     email_reader()
     pass
