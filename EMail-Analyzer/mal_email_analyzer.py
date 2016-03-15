@@ -47,7 +47,7 @@ def email_reader():
                 if str(key).__contains__('x-ch') or str(key).__contains__('X-Ch'):
                     x_check = True
             email = m["x-original-to"]
-            print(email)
+            # print(email)
             if (re.search(user_regex, m["x-original-to"])):
                 matches = re.match(user_regex, m["x-original-to"])
                 payload = matches.group(0)
@@ -59,7 +59,7 @@ def email_reader():
 
                 if ('bcc' in email):
                     to_injection = True
-                    print("FOUND bcc")
+                    # print("FOUND bcc")
 
             # first check if the form has been seen
                 db = getopenconnection()
@@ -68,20 +68,25 @@ def email_reader():
 
 
                 search_query = generate_multi_search_query('successful_attack_emails', 'form_id', [('form_id', form_id), ('recipient_email', email)])
-                print(search_query)
+                # print(search_query)
                 cursor.execute(search_query)
-                form_input_data_row = cursor.all()
+                form_input_data_row = cursor.fetchall()
 
 
                 # # cuz only the forms above 1446155 are multi payload
-                if form_input_data_row and (form_id >= 1446155):
+                if form_input_data_row and ((int(form_id) >= 1446155 or int(form_id) <= 124)):
                     # skip, already added
                     continue
                 else:
                     # gotta insert
-                    if (form_id < 1446155):
+                    if (int(form_id) < 1446155 and int(form_id) > 123):
                         # add the _2, _3 etc to the
-                        pass
+                        if ('bcc' not in email):
+                            updated_mail = str(email).split('@')[0] + '_' + str(len(form_input_data_row)) + '@' + str(email).split('@')[1]
+                        else:
+                            updated_mail = str(email).split('"@')[0] + '_' + str(len(form_input_data_row)) + '"@' + str(email).split('"@')[1]
+                        email = updated_mail
+
                     insert_query = "INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`) VALUES (%s, '%s', %s, %s)" % (form_id, email, to_injection, x_check)
                     print(insert_query)
                     cursor.execute(insert_query)
