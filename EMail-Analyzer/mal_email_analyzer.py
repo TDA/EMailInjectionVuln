@@ -39,50 +39,55 @@ def email_reader():
         try:
             user_regex = re.compile(".*(?:(?:reg)|(?:mal)|n)user(\d+)(.*)?@wackopicko\.com.*")
             #print(m["to"], m["x-original-to"])
+            keys = m.keys()
+            to_injection = False
+            x_check = False
 
+            for key in keys:
+                if str(key).__contains__('x-ch') or str(key).__contains__('X-Ch'):
+                    x_check = True
+            email = m["x-original-to"]
+            print(email)
             if (re.search(user_regex, m["x-original-to"])):
                 matches = re.match(user_regex, m["x-original-to"])
                 payload = matches.group(0)
                 form_id = matches.group(1)
-                print("Mail to: ",  m["x-original-to"], form_id)
+
+                # print("Mail to: ", email , form_id)
                 all.append(form_id)
                 unique.add(form_id)
-                keys = m.keys()
-                if ('bcc' in keys):
-                    all.append(form_id)
+
+                if ('bcc' in email):
+                    to_injection = True
                     print("FOUND bcc")
 
             # first check if the form has been seen
-            # db = getopenconnection()
-            # cursor = db.cursor()
-            #
-            # body_content = get_body_content(m) # the body of the message
-            # header_values = m.values() # all the header content
-            #
-            # # get the input data we sent for this request
-            # search_query = generate_multi_search_query('fuzzed_forms', 'input_data', [('form_id', form_id), ('payload_for_fuzzing', payload)])
-            # # print(search_query)
-            # cursor.execute(search_query)
-            # form_input_data_row = cursor.fetchone()
-            # fields_to_fuzz = []
-            # # print(form_input_data_row)
-            # # now compare what we sent, to what we received, which of
-            # # the inputs we sent were in the actual email? if we find,
-            # # lets say, the name and the email in the received email,
-            # # then we should prolly try fuzzing both of those :D
-            # if form_input_data_row:
-            #     form_input_data_row = ast.literal_eval(form_input_data_row[0])
-            #     for k in form_input_data_row.keys():
-            #         value = form_input_data_row.get(k)
-            #         # if (value in body_content or value in header_values):
-            #         #     print("Value found", value)
-            #         #     fields_to_fuzz.append(k)
-            #         # else:
-            #         #     print("Value not found", value)
-            #
-            #     # now we call the malicious payload fuzzer :D
-            #     db.commit()
-            #     db.close()
+                db = getopenconnection()
+                cursor = db.cursor()
+
+
+
+                search_query = generate_multi_search_query('successful_attack_emails', 'form_id', [('form_id', form_id), ('recipient_email', email)])
+                print(search_query)
+                cursor.execute(search_query)
+                form_input_data_row = cursor.all()
+
+
+                # # cuz only the forms above 1446155 are multi payload
+                if form_input_data_row and (form_id >= 1446155):
+                    # skip, already added
+                    continue
+                else:
+                    # gotta insert
+                    if (form_id < 1446155):
+                        # add the _2, _3 etc to the
+                        pass
+                    insert_query = "INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`) VALUES (%s, '%s', %s, %s)" % (form_id, email, to_injection, x_check)
+                    print(insert_query)
+                    cursor.execute(insert_query)
+
+                db.commit()
+                db.close()
         except Exception as e:
             print("Prolly a duplicate thing", e)
             continue
