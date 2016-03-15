@@ -74,18 +74,18 @@ def email_reader():
 
 
                 # # cuz only the forms above 1446155 are multi payload
-                if form_input_data_row and ((int(form_id) >= 1446155 or int(form_id) <= 124)):
+                if form_input_data_row:
                     # skip, already added
                     continue
                 else:
                     # gotta insert
-                    if (int(form_id) < 1446155 and int(form_id) > 123):
-                        # add the _2, _3 etc to the
-                        if ('bcc' not in email):
-                            updated_mail = str(email).split('@')[0] + '_' + str(len(form_input_data_row)) + '@' + str(email).split('@')[1]
-                        else:
-                            updated_mail = str(email).split('"@')[0] + '_' + str(len(form_input_data_row)) + '"@' + str(email).split('"@')[1]
-                        email = updated_mail
+                    # if (int(form_id) < 1446155 and int(form_id) > 123):
+                    #     # add the _2, _3 etc to the
+                    #     if ('bcc' not in email):
+                    #         updated_mail = str(email).split('@')[0] + '_' + str(len(form_input_data_row)) + '@' + str(email).split('@')[1]
+                    #     else:
+                    #         updated_mail = str(email).split('"@')[0] + '_' + str(len(form_input_data_row)) + '"@' + str(email).split('"@')[1]
+                    #     email = updated_mail
 
                     insert_query = "INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`) VALUES (%s, '%s', %s, %s)" % (form_id, email, to_injection, x_check)
                     print(insert_query)
