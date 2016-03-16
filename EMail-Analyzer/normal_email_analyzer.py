@@ -11,7 +11,7 @@ import sys
 
 
 # the mails in maluser are direct proof of the attack
-files = ['normaluser2', 'maluser2']
+files = ['normaluser', 'maluser2']
 # but the mails in normaluser could contain the x-check
 # header, if they do, then that is a successful attack
 # as well. This is due to pythons way of attaching
@@ -35,30 +35,47 @@ def email_reader():
     # get the form_id, and the entire string alone :D double kill!!
     a = []
     b = set()
+    repeats = set()
     for m in messages:
         try:
             user_regex = re.compile(".*(?:(?:reg)|(?:mal)|n)user(\d+)(.*)?@wackopicko\.com.*")
             #print(m["to"], m["x-original-to"])
-            keys = m.values()
+            keys = m.keys()
             # print(keys)
             form_id = ''
             if (re.search(user_regex, m["x-original-to"])):
                 matches = re.match(user_regex, m["x-original-to"])
                 payload = matches.group(0)
                 form_id = matches.group(1)
-                print("Mail to: ",  m["x-original-to"], form_id)
 
-            for key in keys:
-                if str(key).__contains__('x-ch') or str(key).__contains__('X-Ch'):
-                    print(key)
-                    a.append(form_id)
-                    b.add(form_id)
+                if (int(form_id) > 123):
+                    # print("Mail to: ",  m["x-original-to"], form_id)
+                    db = getopenconnection()
+                    cursor = db.cursor()
+
+                    search_query = generate_multi_search_query('successful_attack_emails', 'form_id', [('form_id', form_id), ('x-check', 1)])
+                    # print(search_query)
+                    cursor.execute(search_query)
+                    form_input_data_row = cursor.fetchone()
+                    if form_input_data_row:
+                        repeats.add(form_id)
+                        print("Found", len(form_input_data_row))
+
+                    for key in keys:
+                        if str(key).__contains__('x-check') or str(key).__contains__('X-Check'):
+                            print(key, m.get(key))
+                            a.append(form_id)
+                            b.add(form_id)
 
         except Exception as e:
             print("Prolly a duplicate thing", e)
             continue
-        print(len(a))
-        print(len(b))
+    print(len(a))
+    print(len(b))
+    print(b)
+    print(len(repeats))
+    print(repeats)
+    print(len(b.difference(repeats)))
 
 if __name__ == "__main__":
     email_reader()
