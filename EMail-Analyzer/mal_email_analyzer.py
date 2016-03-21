@@ -29,10 +29,12 @@ def is_header_present(message, header):
     return message.contains(header)
 
 def email_reader():
-    messages = read_mails(os.path.join('~', files[1]))
+    messages = read_mails(os.path.join('~', files[0]))
+    print(len(messages))
 
     # lets make these non-capturing, so we can directly
     # get the form_id, and the entire string alone :D double kill!!
+
     all = []
     unique = set()
     for m in messages:
@@ -48,7 +50,9 @@ def email_reader():
                     x_check = True
             email = m["x-original-to"]
             # print(email)
+
             if (re.search(user_regex, m["x-original-to"])):
+
                 matches = re.match(user_regex, m["x-original-to"])
                 payload = matches.group(0)
                 form_id = matches.group(1)
@@ -76,6 +80,7 @@ def email_reader():
                 # # cuz only the forms above 1446155 are multi payload
                 if form_input_data_row:
                     # skip, already added
+                    print("Skipping")
                     continue
                 else:
                     # gotta insert

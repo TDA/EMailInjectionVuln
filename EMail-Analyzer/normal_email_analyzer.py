@@ -38,10 +38,16 @@ def email_reader():
     repeats = set()
     for m in messages:
         try:
-            user_regex = re.compile(".*(?:(?:reg)|(?:mal)|n)user(\d+)(.*)?@wackopicko\.com.*")
+            user_regex = re.compile(".*(?:n)user(\d+)(.*)?@wackopicko\.com.*")
             #print(m["to"], m["x-original-to"])
             keys = m.keys()
+            to_injection = False
+            is_present = False
             # print(keys)
+            email = m["x-original-to"]
+            if ('bcc' in email):
+                to_injection = True
+
             form_id = ''
             if (re.search(user_regex, m["x-original-to"])):
                 matches = re.match(user_regex, m["x-original-to"])
@@ -53,20 +59,28 @@ def email_reader():
                     db = getopenconnection()
                     cursor = db.cursor()
 
-                    search_query = generate_multi_search_query('successful_attack_emails', 'form_id', [('form_id', form_id), ('x-check', 1)])
+                    search_query = generate_multi_search_query('successful_attack_emails', 'form_id', [('form_id', form_id), ('recipient_email', email)])
                     # print(search_query)
                     cursor.execute(search_query)
                     form_input_data_row = cursor.fetchone()
                     if form_input_data_row:
                         repeats.add(form_id)
-                        print("Found", len(form_input_data_row))
+                        print("Skipping")
+                        continue
 
                     for key in keys:
                         if str(key).__contains__('x-check') or str(key).__contains__('X-Check'):
                             print(key, m.get(key))
+                            is_present = True
                             a.append(form_id)
                             b.add(form_id)
 
+                    if is_present:
+                        insert_query = "INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`) VALUES (%s, '%s', %s, %s)" % (form_id, email, to_injection, 1)
+                        print(insert_query)
+                        cursor.execute(insert_query)
+            db.commit()
+            db.close()
         except Exception as e:
             print("Prolly a duplicate thing", e)
             continue
