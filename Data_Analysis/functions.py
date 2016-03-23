@@ -20,5 +20,5 @@ def generate_search_query(tablename, fields = None, fieldname = None, value = No
     search_query += " FROM " + tablename
 
     if fieldname and value:
-        search_query += " WHERE %s = %s"%(fieldname, value)
+        search_query += " WHERE `%s` = '%s'"%(fieldname, value)
     return search_query
