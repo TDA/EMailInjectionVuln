@@ -12,6 +12,9 @@ def xls2latex(filename):
         for row in contents:
             new_rows.append(' & '.join(row))
         latex_table = ' \\\\\n\hline\n'.join(new_rows)
+        # add padding
+        latex_table = '\\\\\n\hline\n' + latex_table + ' \\\\\n\hline\n'
+        latex_table = latex_table.replace("%", "\%")
         print(latex_table)
 
 if __name__ == '__main__':
