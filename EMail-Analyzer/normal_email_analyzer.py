@@ -11,7 +11,7 @@ import sys
 
 
 # the mails in maluser are direct proof of the attack
-files = ['normaluser', 'maluser2']
+files = ['normaluser2', 'maluser2']
 # but the mails in normaluser could contain the x-check
 # header, if they do, then that is a successful attack
 # as well. This is due to pythons way of attaching

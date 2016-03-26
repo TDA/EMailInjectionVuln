@@ -11,7 +11,7 @@ import sys
 
 
 # the mails in maluser are direct proof of the attack
-files = ['normaluser', 'maluser']
+files = ['normaluser', 'maluser2']
 # but the mails in normaluser could contain the x-check
 # header, if they do, then that is a successful attack
 # as well. This is due to pythons way of attaching
@@ -29,7 +29,7 @@ def is_header_present(message, header):
     return message.contains(header)
 
 def email_reader():
-    messages = read_mails(os.path.join('~', files[0]))
+    messages = read_mails(os.path.join('~', files[1]))
     print(len(messages))
 
     # lets make these non-capturing, so we can directly

@@ -20,7 +20,7 @@ files = ['normaluser', 'maluser']
 # as well. This is due to pythons way of attaching
 # headers, instead of overwriting, it ignores duplicate
 # headers, so we need to inject a new one.
-NO_INJECTION_FILE = 'reguser9c'
+NO_INJECTION_FILE = 'reguser10b'
 
 normal_mails = []
 injected_mails = []
