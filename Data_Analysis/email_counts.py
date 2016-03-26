@@ -11,18 +11,21 @@ def email_counts(form_name, field):
     cursor.execute(ehi_alone)
     form_ids = cursor.fetchall()
     print("Ehi Alone", len(form_ids))
+    ehi_alone_count = len(form_ids)
 
     # EHI and x-check -- 137
     ehi_and_x_check = "SELECT DISTINCT `form_id` FROM `successful_attack_emails` WHERE `recipient_email` NOT LIKE '%bcc%' AND `x-check` = 1 AND `recipient_email` LIKE '%mal%' LIMIT 0, 500"
     cursor.execute(ehi_and_x_check)
     form_ids = cursor.fetchall()
     print("Ehi and x check", len(form_ids))
+    ehi_and_x_check_ids = form_ids
 
     # To inj Alone - 83
     to_inj = "SELECT DISTINCT `form_id` FROM `successful_attack_emails` WHERE `to_injection` = 1"
     cursor.execute(to_inj)
     form_ids = cursor.fetchall()
     print("To inj Alone", len(form_ids))
+    to_inj_count = len(form_ids)
 
     #To inj AND x-check -- 8
     to_inj_and_x_check = "SELECT DISTINCT `form_id` FROM `successful_attack_emails` WHERE `to_injection` = 1 AND `x-check` = 1 LIMIT 0, 1000"
@@ -36,11 +39,30 @@ def email_counts(form_name, field):
     form_ids = cursor.fetchall()
     print("x-check alone", len(form_ids))
 
+
     # x-check AND nuser -- 40 (16 unique ones apart from mal)
     x_check_nuser = "SELECT DISTINCT `form_id` FROM `successful_attack_emails` WHERE `x-check` = 1 AND (`recipient_email` LIKE '%nuser%')"
     cursor.execute(x_check_nuser)
     form_ids = cursor.fetchall()
     print("x-check AND nuser", len(form_ids))
+    x_check_ids = form_ids
+
+    ehi_and_x_check_ids_set = set()
+    for x in ehi_and_x_check_ids:
+        ehi_and_x_check_ids_set.add(x)
+
+    x_check_ids_set = set()
+    for x in x_check_ids:
+        x_check_ids_set.add(x)
+
+    x_check_nuser_unique = x_check_ids_set.difference(ehi_and_x_check_ids_set)
+    print("Unique xchecks in nuser", len(x_check_nuser_unique))
+    x_check_nuser_unique_count = len(x_check_nuser_unique)
+
+    total_injections = ehi_alone_count + to_inj_count + x_check_nuser_unique_count
+    print("Total Injections", total_injections)
+
+
 
 if __name__ == '__main__':
     email_counts('successful_attack_emails', 'form_id')
