@@ -21,4 +21,4 @@ def total_unique_domains(form_name, field):
     return domains
 
 if __name__ == '__main__':
-    total_unique_domains('form', 'url')
+    total_unique_domains('form', 'url') # 650394
