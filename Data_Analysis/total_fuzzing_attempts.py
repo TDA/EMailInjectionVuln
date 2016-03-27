@@ -14,3 +14,6 @@ form_ids = cursor.fetchall()
 
 print("Fuzzed with normal", len(form_ids))
 print("Fuzzed with mal", len(fuzzed_form_ids))
+
+# ('Fuzzed with normal', 519251)
+# ('Fuzzed with mal', 37121)
