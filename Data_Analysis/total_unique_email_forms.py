@@ -26,6 +26,6 @@ def total_unique_email_forms(form_name, field):
 
 
 if __name__ == '__main__':
-    # total_unique_email_forms('email_forms', 'form_id') # 113,663
-    # total_unique_email_forms('received_emails', 'form_id') # 11,916
-    total_unique_email_forms('successful_attack_emails', 'form_id') # 114
+    total_unique_email_forms('email_forms', 'form_id') # 151,795
+    total_unique_email_forms('received_emails', 'form_id') # 16,306
+    total_unique_email_forms('successful_attack_emails', 'form_id') # 182
