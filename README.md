@@ -3,12 +3,6 @@
 Note: Starting point is call_form_parser.py, please check 
 that file, everything from there is marked in the comments.
 
-*Note to self:* If you ever write another project in Python3 without EXPLICITLY
-specifying it, then I will kick you myself, however improbable that may sound. 
-EIBTI !!! remember that, at least in Python :D :D
-
-*Note to self:* Had to downport to Python2, so this entire thing was rewritten :(
-
 ### Crawler
 1.  CeleryCrawler.py is the config file (kinda), and sets up the queue to execute.
 2.  The call_for_ scripts are basically built to use with Celery, 
@@ -59,6 +53,9 @@ so that we can say, out of X sites, we got Y mails, out of which Z mails were fu
  LOT of work, but Python2 doesnt support the same Module structure as Python3, 
  so rewriting tests is also a pain
 
-### To SSH:
-ssh -p48064 sai@128.111.48.6
-sudo ssh -p48064 -NL 5672:192.168.48.9:5672 sai@128.111.48.6 -v
+
+*Note to self:* If you ever write another project in Python3 without EXPLICITLY
+specifying it, then I will kick you myself, however improbable that may sound. 
+EIBTI !!! remember that, at least in Python :D :D
+
+*Note to self:* Had to downport to Python2, so this entire thing was rewritten :(
