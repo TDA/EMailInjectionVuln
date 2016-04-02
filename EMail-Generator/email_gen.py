@@ -36,27 +36,8 @@ Thanks for your help, and feel free to email me with any questions!
     filled_email_template = email_template%(domain, domain, urls)
     return filled_email_template
 
-def gather_urls(form_id):
+def gather_urls(form_ids):
     # looks at the form_ids, and gathers all URLs that need to be added to the email
-    pass
-
-def send_email(to, msg):
-    pass
-
-
-def remove_www(param):
-    if (str(param).startswith('www.')):
-        return str(param)[4:]
-    else:
-        return str(param)
-
-
-if __name__ == '__main__':
-    db = getopenconnection()
-    cursor = db.cursor()
-    query = "SELECT `form_id` FROM successful_attack_emails;"
-    cursor.execute(query)
-    ids = cursor.fetchall()
     domain_to_url_map = dict()
     for id in ids:
         retrieve_query = "SELECT url, absolute_action FROM form WHERE id = '%s';"%(id)
@@ -76,6 +57,26 @@ if __name__ == '__main__':
         domain_to_url_map[domain] = temp_set
 
     print(domain_to_url_map)
+    return domain_to_url_map
+
+def send_email(to, msg):
+    pass
+
+
+def remove_www(param):
+    if (str(param).startswith('www.')):
+        return str(param)[4:]
+    else:
+        return str(param)
+
+
+if __name__ == '__main__':
+    db = getopenconnection()
+    cursor = db.cursor()
+    query = "SELECT `form_id` FROM successful_attack_emails;"
+    cursor.execute(query)
+    ids = cursor.fetchall()
+    domain_to_url_map = gather_urls(ids)
     for x,y in domain_to_url_map.items():
         print(x,y)
     print(len(domain_to_url_map.keys()))
