@@ -1,9 +1,13 @@
 import MySQLdb
+from urlparse import *
 
 __author__ = 'saipc'
 
 def getopenconnection():
     return MySQLdb.connect('127.0.0.1', 'root', '', 'ejection')
+
+def get_domain(url):
+    return urlparse(url, scheme='')[1]
 
 def generate_email(domain, urls = None):
     if domain == None or urls == None:
@@ -30,3 +34,25 @@ Thanks for your help, and feel free to email me with any questions!
 def gather_urls(form_id):
     # looks at the form_ids, and gathers all URLs that need to be added to the email
     pass
+
+def send_email(to, msg):
+    pass
+
+if __name__ == '__main__':
+    db = getopenconnection()
+    cursor = db.cursor()
+    query = "SELECT `form_id` FROM successful_attack_emails;"
+    cursor.execute(query)
+    ids = cursor.fetchall()
+    domain_to_url_map = dict()
+    for id in ids:
+        retrieve_query = "SELECT url, absolute_action FROM form WHERE id = '%s';"%(id)
+        cursor.execute(retrieve_query)
+        tup = cursor.fetchone()
+        url, sub_url = tup
+        print(url, sub_url)
+        domain = get_domain(url)
+
+        # use a dict here :D
+
+    #urls = gather_urls()
