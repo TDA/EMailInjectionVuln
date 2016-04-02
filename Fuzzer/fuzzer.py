@@ -1,14 +1,14 @@
 from __future__ import absolute_import
 import json
 import random
-from CeleryFuzzer import app
+from Fuzzer.CeleryFuzzer import app
 
 __author__ = 'saipc'
 from celery import Celery
 
 import requests
 from urlparse import *
-from functions import *
+from Fuzzer.functions import *
 # from time import sleep
 # for tests in python3
 # from urllib.parse import *

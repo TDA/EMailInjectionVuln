@@ -1,6 +1,11 @@
 import MySQLdb
 from urlparse import *
 
+import sys
+# sys.path.insert(0, '')
+
+from Fuzzer.fuzzer import construct_url
+
 __author__ = 'saipc'
 
 def getopenconnection():
@@ -38,6 +43,14 @@ def gather_urls(form_id):
 def send_email(to, msg):
     pass
 
+
+def remove_www(param):
+    if (str(param).startswith('www.')):
+        return str(param)[4:]
+    else:
+        return str(param)
+
+
 if __name__ == '__main__':
     db = getopenconnection()
     cursor = db.cursor()
@@ -50,9 +63,20 @@ if __name__ == '__main__':
         cursor.execute(retrieve_query)
         tup = cursor.fetchone()
         url, sub_url = tup
-        print(url, sub_url)
-        domain = get_domain(url)
+
+        domain = remove_www(get_domain(url))
+        vuln_url = str(construct_url(sub_url, url))
 
         # use a dict here :D
+        if not domain_to_url_map.has_key(domain):
+            temp_set = set()
+        else:
+            temp_set = domain_to_url_map.get(domain)
+        temp_set.add(vuln_url)
+        domain_to_url_map[domain] = temp_set
 
+    print(domain_to_url_map)
+    for x,y in domain_to_url_map.items():
+        print(x,y)
+    print(len(domain_to_url_map.keys()))
     #urls = gather_urls()
