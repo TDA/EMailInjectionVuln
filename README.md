@@ -11,7 +11,7 @@ Dr. Adam Doupe - doupe (at) asu.edu
 Sai Prashanth Chandramouli - schand31 (at) asu.edu
 
 ### Details about the vulnerability
-This vulnerability is pretty old but has not received much attention. You can read more about it here: [Article about E-Mail header injection] (www.damonkohler.com/2008/12/email-injection.html).
+This vulnerability is pretty old but has not received much attention. You can read more about it here: [Article about E-Mail header injection] (http://www.damonkohler.com/2008/12/email-injection.html).
 
 Note: Starting point is call_form_parser.py, please check 
 that file, everything from there is marked in the comments.
