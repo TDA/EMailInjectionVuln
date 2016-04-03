@@ -106,6 +106,13 @@ if __name__ == '__main__':
     domain_to_url_map = gather_urls(ids)
 
     for domain in domain_to_url_map.keys():
+        dup_check_query = "SELECT `website` FROM emailed_websites WHERE `website` = '%s' ;" % (domain)
+        print(dup_check_query)
+        cursor.execute(dup_check_query)
+        is_exists = cursor.fetchone()
+        if (is_exists):
+            continue
+
         filled_email_template, subject = generate_email(domain, domain_to_url_map[domain])
         # print(filled_email_template)
         sec_to = "security@" + domain
@@ -113,5 +120,7 @@ if __name__ == '__main__':
         adm_to = "admin@" + domain
         print(sec_to, web_to, adm_to)
         # send_email(sec_to, subject, filled_email_template)
+        ins_query = "INSERT INTO emailed_websites (website, urls)  VALUES ('%s', '%s');" % (domain, ', '.join(domain_to_url_map[domain]))
+        print(ins_query)
 
     #urls = gather_urls()
