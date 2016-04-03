@@ -107,10 +107,11 @@ if __name__ == '__main__':
 
     for domain in domain_to_url_map.keys():
         filled_email_template, subject = generate_email(domain, domain_to_url_map[domain])
-        print(filled_email_template)
-        # print("security@" + domain)
-        # print("webmaster@" + domain)
-        # print("admin@" + domain)
-        # send_email(to, subject, filled_email_template)
+        # print(filled_email_template)
+        sec_to = "security@" + domain
+        web_to = "webmaster@" + domain
+        adm_to = "admin@" + domain
+        print(sec_to, web_to, adm_to)
+        # send_email(sec_to, subject, filled_email_template)
 
     #urls = gather_urls()
