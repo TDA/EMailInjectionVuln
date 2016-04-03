@@ -35,7 +35,7 @@ and it found this vulnerability in your website "%s" on the following URL(s): [%
 <p>When an application uses user input to construct emails, and does not sanitize the user input,
 it can result in E-Mail Header Injection. An attacker can then exploit this vulnerability by using
 a payload like "user@example.com%%0Abcc:maluser@example.com" to add additional headers (bcc header
-in this example) and potentially the contents of the email.</p><br>
+in this example) and and to completely alter the content of the email.</p><br>
 
 I would appreciate it if you could confirm our findings. I am happy to help reproduce the exploit input.
 <br><br>
