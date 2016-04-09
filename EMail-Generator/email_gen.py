@@ -8,7 +8,7 @@ import db as Data
 import sys
 # sys.path.insert(0, '')
 
-from Fuzzer.fuzzer import construct_url
+# from Fuzzer.fuzzer import construct_url
 
 __author__ = 'saipc'
 
@@ -57,17 +57,22 @@ def gather_urls(form_ids):
         url, sub_url = tup
 
         domain = remove_www(get_domain(url))
-        vuln_url = str(construct_url(sub_url, url))
 
-        # use a dict here :D
-        if not domain_to_url_map.has_key(domain):
-            temp_set = set()
-        else:
-            temp_set = domain_to_url_map.get(domain)
-        temp_set.add(vuln_url)
-        domain_to_url_map[domain] = temp_set
-
-    # print(domain_to_url_map)
+        # vuln_url = str(construct_url(sub_url, url))
+        get_fuzzed_url_query = "SELECT url_fuzzed FROM fuzzed_forms WHERE form_id = '%s';"%(id)
+        cursor.execute(get_fuzzed_url_query)
+        tup = cursor.fetchone()
+        if tup:
+            vuln_url = tup[0]
+            print(vuln_url)
+            # use a dict here :D
+            if not domain_to_url_map.has_key(domain):
+                temp_set = set()
+            else:
+                temp_set = domain_to_url_map.get(domain)
+            temp_set.add(vuln_url)
+            domain_to_url_map[domain] = temp_set
+    print(domain_to_url_map)
     return domain_to_url_map
 
 def send_email(to, subject, email_msg):
@@ -112,22 +117,25 @@ if __name__ == '__main__':
         cursor.execute(dup_check_query)
         is_exists = cursor.fetchone()
         if (is_exists):
+            print("Already emailed, continuing")
             continue
 
-        filled_email_template, subject = generate_email(domain, domain_to_url_map[domain])
+        # filled_email_template, subject = generate_email(domain, domain_to_url_map[domain])
         # print(filled_email_template)
         sec_to = "security@" + domain
         web_to = "webmaster@" + domain
         adm_to = "admin@" + domain
         print(sec_to, web_to, adm_to)
-        time.sleep(10)
-        send_email(sec_to, subject, filled_email_template)
-        time.sleep(15)
-        send_email(web_to, subject, filled_email_template)
-        time.sleep(15)
-        send_email(adm_to, subject, filled_email_template)
+        # time.sleep(10)
+        # send_email(sec_to, subject, filled_email_template)
+        # time.sleep(15)
+        # send_email(web_to, subject, filled_email_template)
+        # time.sleep(15)
+        # send_email(adm_to, subject, filled_email_template)
         ins_query = "INSERT INTO emailed_websites (website, urls)  VALUES ('%s', '%s');" % (domain, ', '.join(domain_to_url_map[domain]))
         cursor.execute(ins_query)
         print(ins_query)
+    db.commit()
+    db.close()
 
     #urls = gather_urls()
