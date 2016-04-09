@@ -40,6 +40,12 @@ def email_reader():
     for m in messages:
         try:
             user_regex = re.compile(".*(?:(?:reg)|(?:mal)|n)user(\d+)(.*)?@wackopicko\.com.*")
+            ip_regex = re.compile("(((\d{0,3})\.){3}\d{0,3})")
+            received = m["received"]
+            ip = ""
+            if (re.search(ip_regex, str(received))):
+                ip = re.search(ip_regex, str(received)).group(0)
+
             #print(m["to"], m["x-original-to"])
             keys = m.keys()
             to_injection = False
@@ -92,7 +98,7 @@ def email_reader():
                     #         updated_mail = str(email).split('"@')[0] + '_' + str(len(form_input_data_row)) + '"@' + str(email).split('"@')[1]
                     #     email = updated_mail
 
-                    insert_query = "INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`) VALUES (%s, '%s', %s, %s)" % (form_id, email, to_injection, x_check)
+                    insert_query = "INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`, `ip_addr`) VALUES (%s, '%s', %s, %s, %s)" % (form_id, email, to_injection, x_check, ip)
                     print(insert_query)
                     cursor.execute(insert_query)
 
