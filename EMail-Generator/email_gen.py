@@ -120,18 +120,18 @@ if __name__ == '__main__':
             print("Already emailed, continuing")
             continue
 
-        # filled_email_template, subject = generate_email(domain, domain_to_url_map[domain])
+        filled_email_template, subject = generate_email(domain, domain_to_url_map[domain])
         # print(filled_email_template)
         sec_to = "security@" + domain
         web_to = "webmaster@" + domain
         adm_to = "admin@" + domain
         print(sec_to, web_to, adm_to)
-        # time.sleep(10)
-        # send_email(sec_to, subject, filled_email_template)
-        # time.sleep(15)
-        # send_email(web_to, subject, filled_email_template)
-        # time.sleep(15)
-        # send_email(adm_to, subject, filled_email_template)
+        time.sleep(10)
+        send_email(sec_to, subject, filled_email_template)
+        time.sleep(15)
+        send_email(web_to, subject, filled_email_template)
+        time.sleep(15)
+        send_email(adm_to, subject, filled_email_template)
         ins_query = "INSERT INTO emailed_websites (website, urls)  VALUES ('%s', '%s');" % (domain, ', '.join(domain_to_url_map[domain]))
         cursor.execute(ins_query)
         print(ins_query)
