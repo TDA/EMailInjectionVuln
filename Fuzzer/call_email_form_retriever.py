@@ -19,7 +19,7 @@ def call_email_form_retriever():
         search_query = generate_search_query(TABLE_NAME)
         # LIMIT x, y ==>
         # done till x + y
-        search_query = search_query + " LIMIT 871727, 10000"
+        search_query = search_query + " LIMIT 871727, 8273"
         print(search_query)
         cursor.execute(search_query)
         rows = cursor.fetchall()
