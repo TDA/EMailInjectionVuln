@@ -11,7 +11,7 @@ import sys
 
 
 # the mails in maluser are direct proof of the attack
-files = ['normaluser', 'maluser2']
+files = ['normaluser', 'maluser3']
 # but the mails in normaluser could contain the x-check
 # header, if they do, then that is a successful attack
 # as well. This is due to pythons way of attaching
@@ -29,7 +29,7 @@ def is_header_present(message, header):
     return message.contains(header)
 
 def email_reader():
-    messages = read_mails(os.path.join('~', files[1]))
+    messages = read_mails(os.path.join('~/maluser', files[1]))
     print(len(messages))
 
     # lets make these non-capturing, so we can directly
@@ -98,7 +98,7 @@ def email_reader():
                     #         updated_mail = str(email).split('"@')[0] + '_' + str(len(form_input_data_row)) + '"@' + str(email).split('"@')[1]
                     #     email = updated_mail
 
-                    insert_query = "INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`, `ip_addr`) VALUES (%s, '%s', %s, %s, %s)" % (form_id, email, to_injection, x_check, ip)
+                    insert_query = "INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`, `ip_addr`) VALUES (%s, '%s', %s, %s, '%s')" % (form_id, email, to_injection, x_check, ip)
                     print(insert_query)
                     cursor.execute(insert_query)
 
