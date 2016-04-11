@@ -4,16 +4,16 @@ from functions import *
 db = getopenconnection()
 cursor = db.cursor()
 
-q1 = "SELECT DISTINCT form_id FROM `fuzzed_forms` WHERE `payload_for_fuzzing` LIKE '%nuser%'"
+q1 = "SELECT COUNT(DISTINCT form_id) FROM `fuzzed_forms` WHERE `payload_for_fuzzing` LIKE '%nuser%'"
 cursor.execute(q1)
-fuzzed_form_ids = cursor.fetchall()
+fuzzed_form_ids = cursor.fetchone()[0]
 
-q2 = "SELECT DISTINCT form_id FROM `fuzzed_forms` WHERE `payload_for_fuzzing` LIKE '%reguser%'"
+q2 = "SELECT COUNT(DISTINCT form_id) FROM `fuzzed_forms` WHERE `payload_for_fuzzing` LIKE '%reguser%'"
 cursor.execute(q2)
-form_ids = cursor.fetchall()
+form_ids = cursor.fetchone()[0]
 
-print("Fuzzed with normal", len(form_ids))
-print("Fuzzed with mal", len(fuzzed_form_ids))
+print("Fuzzed with normal", form_ids)
+print("Fuzzed with mal", fuzzed_form_ids)
 
-# ('Fuzzed with normal', 519251)
-# ('Fuzzed with mal', 37121)
+# ('Fuzzed with normal', 756588L)
+# ('Fuzzed with mal', 38989L)
