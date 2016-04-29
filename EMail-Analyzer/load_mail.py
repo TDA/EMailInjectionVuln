@@ -20,7 +20,7 @@ files = ['normaluser', 'maluser']
 # as well. This is due to pythons way of attaching
 # headers, instead of overwriting, it ignores duplicate
 # headers, so we need to inject a new one.
-NO_INJECTION_FILE = 'reguser12'
+NO_INJECTION_FILE = 'reguser13ad'
 
 normal_mails = []
 injected_mails = []
@@ -39,8 +39,9 @@ def check_total_mails(filename):
 def is_header_present(message, header):
     return message.contains(header)
 
-def email_reader():
+def email_reader(NO_INJECTION_FILE):
     messages = read_mails(os.path.join('~/reguser_mails', NO_INJECTION_FILE))
+    print("Reading mails from ", NO_INJECTION_FILE)
 
     # lets make these non-capturing, so we can directly
     # get the form_id, and the entire string alone :D double kill!!
@@ -105,4 +106,6 @@ def email_reader():
             continue
 
 if __name__ == "__main__":
-    email_reader()
+    mails = ["reguser13ae","reguser13af","reguser13ag","reguser13ah","reguser13ai","reguser13aj","reguser13ak","reguser13al","reguser13am","reguser13an"]
+    for m in mails:
+        email_reader(m)
