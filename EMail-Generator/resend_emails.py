@@ -23,30 +23,38 @@ def getopenconnection():
 if __name__ == '__main__':
     domains = populate_domains("failed_emails")
     mailed_domains = 0
+    need_to_mail = 0
     db = getopenconnection()
     cursor = db.cursor()
     for domain in domains:
         try:
             whois_info = whois.whois(domain)
-            print(domain)
+            #print(domain)
             if "emails" in whois_info and (whois_info["emails"] != None):
                 emails = whois_info["emails"]
+                if (isinstance(emails, basestring)):
+                    emails = [emails]
+                    print("NEED TO MAIL", emails)
+                    need_to_mail += 1
+                print(domain, emails)
                 mailed_domains += 1
                 mail_content, subject = reconstruct_emails(domain, emails)
-                # TODO: finish up the emailing, and update DB with contact details
                 for email in emails:
                     if ("abuse" in email):
-                        print("Skipping this", email)
+                        print("Skipping this email", email)
                         continue
-                    send_email(email, subject, mail_content)
+                    #send_email(email, subject, mail_content)
                     query = "SELECT `contact_email` from `emailed_websites` WHERE website LIKE '%s'"%(domain)
                     cursor.execute(query)
                     val = cursor.fetchone()[0]
-                    print(val)
                     val = email if (val == '') else (val + ',' + email)
-                    update_query = "UPDATE `emailed_websites` SET `contact_email` = '%s'"%(val)
+                    print(val)
+                    update_query = "UPDATE `emailed_websites` SET `contact_email` = '%s' WHERE website LIKE '%s'"%(val, domain)
+                    print(update_query)
                     cursor.execute(update_query)
                     db.commit()
-            db.close()
         except Exception as e:
-            print("Skipping " + domain)
+            print("Skipping " + domain + " cuz " + str(e))
+    db.close()
+    print(mailed_domains)
+    print(need_to_mail)
