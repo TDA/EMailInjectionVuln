@@ -36,6 +36,6 @@ def total_unique_ips(form_name, field):
     return ips
 
 if __name__ == '__main__':
-    # total_unique_domains('form', 'url') # 650394
-    total_unique_ips('successful_attack_emails', 'ip_addr') # 241
-    total_unique_domains('fuzzed_forms', 'url_fuzzed') # 157970
+    total_unique_domains('form', 'url') # 650394
+    # total_unique_ips('successful_attack_emails', 'ip_addr') # 292
+    # total_unique_domains('fuzzed_forms', 'url_fuzzed') # 197,570
