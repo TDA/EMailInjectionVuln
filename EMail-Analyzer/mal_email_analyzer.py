@@ -11,7 +11,7 @@ import sys
 
 
 # the mails in maluser are direct proof of the attack
-files = ['normaluser', 'maluser5']
+files = ['normaluser', 'maluser6']
 # but the mails in normaluser could contain the x-check
 # header, if they do, then that is a successful attack
 # as well. This is due to pythons way of attaching
@@ -71,10 +71,9 @@ def email_reader():
                     to_injection = True
                     # print("FOUND bcc")
 
-            # first check if the form has been seen
+                # first check if the form has been seen
                 db = getopenconnection()
                 cursor = db.cursor()
-
 
 
                 search_query = generate_multi_search_query('successful_attack_emails', 'form_id', [('form_id', form_id), ('recipient_email', email)])
@@ -97,7 +96,6 @@ def email_reader():
                     #     else:
                     #         updated_mail = str(email).split('"@')[0] + '_' + str(len(form_input_data_row)) + '"@' + str(email).split('"@')[1]
                     #     email = updated_mail
-
                     insert_query = "INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`, `ip_addr`) VALUES (%s, '%s', %s, %s, '%s')" % (form_id, email, to_injection, x_check, ip)
                     print(insert_query)
                     cursor.execute(insert_query)
@@ -106,6 +104,7 @@ def email_reader():
                 db.close()
         except Exception as e:
             print("Prolly a duplicate thing", e)
+            print("INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`, `ip_addr`) VALUES (%s, '%s', %s, %s, '%s')" % (form_id, email, to_injection, x_check, ip))
             continue
         # print unique
 

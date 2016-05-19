@@ -11,7 +11,7 @@ import sys
 
 
 # the mails in maluser are direct proof of the attack
-files = ['normaluser5', 'maluser2']
+files = ['normaluser6', 'maluser2']
 # but the mails in normaluser could contain the x-check
 # header, if they do, then that is a successful attack
 # as well. This is due to pythons way of attaching
@@ -89,6 +89,7 @@ def email_reader():
             db.close()
         except Exception as e:
             print("Prolly a duplicate thing", e)
+            print("INSERT INTO `successful_attack_emails`(`form_id`, `recipient_email`, `to_injection`, `x-check`, `ip_addr`) VALUES (%s, '%s', %s, %s, '%s')" % (form_id, email, to_injection, 1, ip))
             continue
     print(len(a))
     print(len(b))
