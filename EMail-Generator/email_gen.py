@@ -106,7 +106,7 @@ def remove_www(param):
 if __name__ == '__main__':
     db = getopenconnection()
     cursor = db.cursor()
-    query = "SELECT `form_id` FROM successful_attack_emails LIMIT 1379, 100;"
+    query = "SELECT `form_id` FROM successful_attack_emails LIMIT 1479, 581;"
     cursor.execute(query)
     ids = cursor.fetchall()
     domain_to_url_map = gather_urls(ids)
