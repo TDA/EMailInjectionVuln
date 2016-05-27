@@ -46,7 +46,7 @@ def email_reader(NO_INJECTION_FILE):
     # lets make these non-capturing, so we can directly
     # get the form_id, and the entire string alone :D double kill!!
     a = []
-
+    db = getopenconnection()
     for m in messages:
         try:
             user_regex = re.compile("(?:(?:reg)|(?:mal)|n)user(\d+)@wackopicko\.com")
@@ -57,7 +57,7 @@ def email_reader(NO_INJECTION_FILE):
             print("Form id: ", form_id, payload)
             # first check if the form has been seen
             search_query = "select * from `received_emails` where `form_id` = %s" % (form_id)
-            db = getopenconnection()
+
             cursor = db.cursor()
             cursor.execute(search_query)
             row = cursor.fetchall()
@@ -100,12 +100,12 @@ def email_reader(NO_INJECTION_FILE):
             cursor.execute(insert_query)
 
             db.commit()
-            db.close()
+
         except Exception as e:
             print("Prolly a duplicate thing")
             continue
-
+    db.close()
 if __name__ == "__main__":
-    mails = ["reguser13ae","reguser13af","reguser13ag","reguser13ah","reguser13ai","reguser13aj","reguser13ak","reguser13al","reguser13am","reguser13an"]
+    mails = ["reguser14ae"]
     for m in mails:
         email_reader(m)
