@@ -32,4 +32,6 @@ for page_number in xrange(1000):
 driver.close()
 end_time = time.time()
 elapsed_time = end_time - start_time
-print "Total elapsed time: " + elapsed_time
+print "Start time: " + str(start_time)
+print "End time: " + str(end_time)
+print "Total elapsed time: " + str(elapsed_time)
