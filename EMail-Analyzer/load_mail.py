@@ -106,6 +106,6 @@ def email_reader(NO_INJECTION_FILE):
             continue
     db.close()
 if __name__ == "__main__":
-    mails = ["reguser14ae"]
+    mails = ["reguser14ah","reguser14ai","reguser14aj"]
     for m in mails:
         email_reader(m)
