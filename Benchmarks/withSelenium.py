@@ -1,14 +1,15 @@
-import re
+import time
 
 __author__ = 'saipc'
-
-
 from selenium import webdriver
+import re
+
 
 # Launching web driver instance
-driver = webdriver.Firefox()
+driver = webdriver.Chrome()
 random_url = 'https://en.wikipedia.org/wiki/Special:Random'
 
+start_time = time.time()
 # for loop to load random wikipedia articles
 for page_number in xrange(1000):
     # Loading en.wikipedia random page article
@@ -16,17 +17,19 @@ for page_number in xrange(1000):
 
     src = driver.page_source
     # check if theres an input field
-    # is_email_present = re.search(r'email|e-mail|mail', src)
+    is_email_present = re.search(r'email|e-mail|mail', src)
 
     # The URL for this article
     page_url = driver.current_url
 
     task = '%4d: ' % (page_number+1)
     print '------------------------------------'
-    # print task + 'Input field?: ' + str(is_email_present)
+    print task + 'Input field?: ' + str(is_email_present)
     print task + 'Page url: ' + page_url
     print '------------------------------------'
-    print
 
 # Close web driver instance
 driver.close()
+end_time = time.time()
+elapsed_time = end_time - start_time
+print "Total elapsed time: " + elapsed_time
