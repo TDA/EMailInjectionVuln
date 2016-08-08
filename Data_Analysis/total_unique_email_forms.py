@@ -28,4 +28,4 @@ def total_unique_email_forms(form_name, field):
 if __name__ == '__main__':
     # total_unique_email_forms('email_forms', 'form_id') # 151,795
     # total_unique_email_forms('received_emails', 'form_id') # 16,306
-    total_unique_email_forms('successful_attack_emails', 'form_id') # 188
+    total_unique_email_forms('successful_attack_emails', 'form_id') # 394 DOMAINS

@@ -8,7 +8,7 @@ bls = ["zen.spamhaus.org", "spam.abuse.ch", "cbl.abuseat.org", "virbl.dnsbl.bit.
     "dnsbl-3.uceprotect.net", "db.wpbl.info"]
 
 db = getopenconnection()
-query = "SELECT `id`, `ip_addr` FROM `successful_attack_emails` GROUP BY(`ip_addr`) ORDER BY id"
+query = "SELECT `id`, `ip_addr` FROM `successful_attack_emails` WHERE `id`>6543 GROUP BY(`ip_addr`) ORDER BY id"
 cursor = db.cursor()
 cursor.execute(query)
 rows = cursor.fetchall()
