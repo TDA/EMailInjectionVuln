@@ -6,8 +6,6 @@ import time
 from bs4 import BeautifulSoup
 import re
 
-random_url = 'https://en.wikipedia.org/wiki/Special:Random'
-
 def check_input(input, value):
     search_string = re.compile(value, re.IGNORECASE)
     is_present = False
@@ -23,6 +21,9 @@ def check_input(input, value):
     # OR type set to be the 'value' provided,
     # else returns false.
 
+
+random_url = 'https://en.wikipedia.org/wiki/Special:Random'
+# random_url = 'https://www.dollartree.com/user/subscribe.jsp'
 start_time = time.time()
 # for loop to load random wikipedia articles
 for page_number in xrange(1000):
