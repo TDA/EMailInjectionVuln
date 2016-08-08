@@ -8,7 +8,7 @@ def form_counts(form_name):
     cursor = db.cursor()
     cursor.execute(query)
     count = cursor.fetchone()[0]
-    print(count)
+    print(form_name, count)
     return count
 
 if __name__ == '__main__':
