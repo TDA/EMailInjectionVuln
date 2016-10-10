@@ -14,5 +14,5 @@ def find_positives(json_data):
 if __name__ == '__main__':
     json_data = load_json_file('Data/vt_results.json')
     positives = find_positives(json_data)
-    print("Positives found: ", len(positives))
+    print("Positives found: ", len(positives)) # 265 unique entries
     save_json_file('Data/virus_positives.json', positives)
