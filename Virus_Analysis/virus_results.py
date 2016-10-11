@@ -12,6 +12,8 @@ def find_positives(json_data):
     return positive_hits
 
 if __name__ == '__main__':
+    # not really sure if this is the file we need to be testing on,
+    # seems like this is the results from the reguser, we might need to check maluser
     json_data = load_json_file('Data/vt_results.json')
     positives = find_positives(json_data)
     print("Positives found: ", len(positives)) # 265 unique entries
