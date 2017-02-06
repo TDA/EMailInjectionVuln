@@ -2,7 +2,7 @@ from urlparse import urlparse
 
 __author__ = 'saipc'
 
-from functions import *
+# from functions import *
 
 def total_unique_domains(form_name, field):
     db = getopenconnection()
