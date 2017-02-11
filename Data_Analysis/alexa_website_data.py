@@ -50,5 +50,7 @@ if __name__ == '__main__':
       ranks_list.append(get_alexa_data(domain))
     ranks_list = filter(None, ranks_list)
     print(len(ranks_list))
+    # this doesnt seem to work due to an exception thrown
+    # elsewhere, need to fix this.
     with open('output_alexa_domains_list', 'w') as op_file:
       op_file.write(",\n".join(ranks_list))
